@@ -28,7 +28,10 @@
     </b-row>
     <b-row>
       <b-col>
-        <form-table type="Past Indicative" :conj="conj.past_indicative"></form-table>
+        <form-table
+          type="Past Indicative"
+          :conj="conj.past_indicative"
+        ></form-table>
       </b-col>
     </b-row>
     <b-row>
@@ -38,7 +41,10 @@
     </b-row>
     <b-row>
       <b-col>
-        <form-table type="Past Presumptive" :conj="conj.past_presumptive"></form-table>
+        <form-table
+          type="Past Presumptive"
+          :conj="conj.past_presumptive"
+        ></form-table>
       </b-col>
     </b-row>
     <b-row>
@@ -48,7 +54,10 @@
     </b-row>
     <b-row>
       <b-col>
-        <form-table type="Past Progressive" :conj="conj.past_progressive"></form-table>
+        <form-table
+          type="Past Progressive"
+          :conj="conj.past_progressive"
+        ></form-table>
       </b-col>
     </b-row>
     <b-row>
@@ -98,12 +107,12 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import { conjugate } from "@/assets/conjugate.ts";
-import FormTable from "@/components/FormTable.vue"
+// import { conjugate } from "@/assets/conjugate.ts";
+import FormTable from "@/components/FormTable.vue";
 
 @Component({
   components: {
-    "form-table": FormTable
+    "form-table": FormTable,
   },
   //methods: {
   //},
@@ -113,16 +122,15 @@ import FormTable from "@/components/FormTable.vue"
   //  }
   //}
 })
-
 export default class VueDetails extends Vue {
   @Prop() verb!: any;
 
-  get conj(){
+  get conj() {
     const self: any = this;
-    return conjugate.verb(self.verb);
+    // return conjugate.verb(self.verb);
+    return self.verb.conjugations;
   }
 }
-
 </script>
 
 <style scoped lang="scss">

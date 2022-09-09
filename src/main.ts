@@ -8,7 +8,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import {
   FontAwesomeIcon,
-  FontAwesomeLayers
+  FontAwesomeLayers,
 } from "@fortawesome/vue-fontawesome";
 library.add(faExclamationTriangle);
 Vue.component("font-awesome-icon");
@@ -29,7 +29,9 @@ import {
   BTbody,
   BTr,
   BTh,
-  BTd
+  BTd,
+  BTabs,
+  BTab,
 } from "bootstrap-vue";
 Vue.component("b-container", BContainer);
 Vue.component("b-row", BRow);
@@ -44,6 +46,8 @@ Vue.component("b-tbody", BTbody);
 Vue.component("b-tr", BTr);
 Vue.component("b-th", BTh);
 Vue.component("b-td", BTd);
+Vue.component("b-tabs", BTabs);
+Vue.component("b-tab", BTab);
 
 Vue.config.productionTip = false;
 

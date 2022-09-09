@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
+import store from "@/store/index";
 
 Vue.use(VueRouter);
 
@@ -23,14 +24,27 @@ const routes: Array<RouteConfig> = [
     path: "/login",
     name: "login",
     component: () =>
-      import(/* webpackChunkName: "login" */ "../views/Login.vue")
+      import(/* webpackChunkName: "login" */ "../views/Login.vue"),
+  },
+  {
+    path: "/test",
+    name: "test",
+    component: () => import(/* webpackChunkName: "test" */ "../views/Test.vue"),
   },
   {
     path: "/verbs",
     name: "verbs",
     component: () =>
-      import(/* webpackChunkName: "login" */ "../views/Verbs.vue")
-  }
+      import(/* webpackChunkName: "login" */ "../views/Verbs.vue"),
+    beforeEnter: (to, from, next) => {
+      const test = store.getters;
+      if (!store.getters["userData/getLoggedIn"]) {
+        next("/login");
+      } else {
+        next();
+      }
+    },
+  },
 ];
 
 const router = new VueRouter({

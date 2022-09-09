@@ -5,22 +5,27 @@ import { Verb } from "@/assets/classes.ts";
 
 export const namespaced = true;
 
-const state = {
+export interface State {
+  verbs: Array<any>;
+}
+
+const state: State = {
   // kanji: [],
   // vocab: [],
-  verbs: []
+  verbs: [],
 };
 
 const mutations = {
   // updateSubjectsKanji: (state: any, data: any) => {
   //   state.kanji = data;
   // },
-    // updateSubjectsVocab: (state: any, data: any) => {
-    //   state.vocab = data;
-    // },
-      updateSubjectsVerbs: (state: any, data: any) => {
-        state.verbs = data;
-      }
+  // updateSubjectsVocab: (state: any, data: any) => {
+  //   state.vocab = data;
+  // },
+  updateSubjectsVerbs: (state: any, data: any) => {
+    debugger;
+    state.verbs = data;
+  },
 };
 
 const actions = {
@@ -86,22 +91,36 @@ const actions = {
   // },
   fetchSubjectsVerbs: (context: any, data: any) => {
     return new Promise((resolve, reject) => {
-      const url = `subjects?types=vocabulary&levels=${data}`
-    axiosWaniKani
-      .get(url, {})
-      .then((ret: any) => {
-        context.commit("updateSubjectsVerbs", ret.filter((v: any) => v.data.parts_of_speech.includes("intransitive verb") || v.data.parts_of_speech.includes("transitive verb")).map((v: any) => new Verb(v)));
-      })
-      .catch((error: any) => {
-        alert(error.message);
-      })
-      .then((response: any) => {
-            resolve(response);  // Let the calling function know that http is done. You may send some data back
-        }, (error: any) => {
+      const url = `subjects?types=vocabulary&levels=${data}`;
+      axiosWaniKani
+        .get(url, {})
+        .then((ret: any) => {
+          context.commit(
+            "updateSubjectsVerbs",
+            ret
+              .filter(
+                (v: any) =>
+                  (v.data.parts_of_speech.includes("intransitive verb") ||
+                    v.data.parts_of_speech.includes("transitive verb")) &&
+                  v.data.slug.slice(-2) != "ない" &&
+                  !v.data.parts_of_speech.includes("する verb")
+              )
+              .map((v: any) => new Verb(v))
+          );
+        })
+        .catch((error: any) => {
+          alert(error.message);
+        })
+        .then(
+          (response: any) => {
+            resolve(response); // Let the calling function know that http is done. You may send some data back
+          },
+          (error: any) => {
             // http failed, let the calling function know that action did not work out
             reject(error);
-        });
-      })
+          }
+        );
+    });
   },
 };
 
@@ -112,7 +131,6 @@ const getters = {
   // getVerbs: (state: any) => {
   //   const all = state.vocab;
   //   const verbs = all.filter((v: any) => v.data.parts_of_speech.includes("intransitive verb") || v.data.parts_of_speech.includes("transitive verb"));
-  //   // debugger;
   //   // verbs.forEach((v: any) => {
   //   //   delete v.created_at;
   //   //   delete v.hidden_at;
@@ -125,7 +143,15 @@ const getters = {
   // }
   getVerb: (state: any) => (verb: any) => {
     return state.verbs.find((v: any) => v.verb == verb);
-  }
+  },
+  getVerbsForLevel: (state: any) => (level: number) => {
+    //debugger;
+    return state.verbs.filter((v: any) => v.level == level);
+  },
+  GetQuestion: (state: any) => {
+    debugger;
+    return "hello";
+  },
 };
 
 export default {
@@ -133,5 +159,5 @@ export default {
   state,
   mutations,
   getters,
-  actions
+  actions,
 };

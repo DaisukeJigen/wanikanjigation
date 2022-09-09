@@ -1,7 +1,7 @@
 import router from "@/router";
 import Vue from "vue";
 // import wkof from "wkof";
-declare var wkof: any;
+declare let wkof: any;
 
 export const namespaced = true;
 
@@ -16,13 +16,13 @@ function process_items(items: any) {
 }
 
 const state = {
-  wkof_data: []
+  wkof_data: [],
 };
 
 const mutations = {
   loadWKOF: (state: any, data: any) => {
     state.wkof_data = data;
-  }
+  },
 };
 
 const actions = {
@@ -31,14 +31,12 @@ const actions = {
     wkof.include("ItemData");
     // wkof.ready("ItemData").then(fetch_items);
     wkof.ready("ItemData").then((data: any) => {
-      debugger;
       wkof.ItemData.get_items().then((data2: any) => {
-        debugger;
         context.commit("loadWKOF", data2);
-      })
+      });
     });
     // context.commit("loadWKOF", data);
-  }
+  },
 };
 
 const getters = {
@@ -52,5 +50,5 @@ export default {
   state,
   mutations,
   getters,
-  actions
+  actions,
 };

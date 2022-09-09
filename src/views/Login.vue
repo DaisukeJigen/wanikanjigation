@@ -8,13 +8,13 @@
           img-alt="Image"
           img-top
           tag="div"
-          style="max-width: 20rem;"
+          style="max-width: 20rem"
           class="mb-2"
         >
           <b-form @submit.prevent="login">
             <b-form-input
               id="txtApiKey"
-              v-model="apiKey"
+              v-model="key"
               required
               placeholder="API Key V2"
             ></b-form-input>
@@ -28,26 +28,49 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { mapActions } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 import router from "@/router";
 
 @Component({
   components: {},
+  computed: {
+    ...mapState("userData", ["apiKey"]),
+  },
   methods: {
-    ...mapActions("userData", ["updateApiKey"])
+    ...mapActions("userData", ["updateApiKey", "fetchUserData"]),
+    ...mapActions("subjects", ["fetchSubjectsVerbs"]),
+    ...mapGetters("userData", ["getLevels"]),
   },
   data() {
     return {
-      apiKey: ""
+      // apiKey: ""
     };
-  }
+  },
 })
 export default class Login extends Vue {
   login(evt: any) {
     const self: any = this;
-    self.updateApiKey(self.apiKey).then(() => {
-      router.push("verbs");
+    // self.updateApiKey(self.apiKey).then(() => {
+    // router.push("verbs");
+    // });
+    self.fetchUserData().then(() => {
+      self.fetchSubjectsVerbs(self.levels.join(",")).then(() => {
+        router.push("test");
+      });
     });
+  }
+  get levels() {
+    const self: any = this;
+    return self.getLevels();
+  }
+  get key() {
+    const self: any = this;
+    return self.apiKey;
+  }
+
+  set key(value) {
+    const self: any = this;
+    self.updateApiKey(value);
   }
 }
 </script>
