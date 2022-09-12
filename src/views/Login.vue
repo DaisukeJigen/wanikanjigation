@@ -21,6 +21,7 @@
             <b-button type="submit" variant="primary">Login</b-button>
           </b-form>
         </b-card>
+        <!-- <options></options> -->
       </b-col>
     </b-row>
   </b-container>
@@ -30,9 +31,12 @@
 import { Component, Vue } from "vue-property-decorator";
 import { mapActions, mapState, mapGetters } from "vuex";
 import router from "@/router";
+// import Options from "@/components/Options"
 
 @Component({
-  components: {},
+  components: {
+    // options: Options
+  },
   computed: {
     ...mapState("userData", ["apiKey"]),
   },

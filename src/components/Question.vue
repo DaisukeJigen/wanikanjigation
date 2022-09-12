@@ -2,31 +2,108 @@
   <b-container>
     <b-row>
       <b-col>
-        {{ RandomQuestion() }}
+        {{ fullQuestion }}
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <ul>
+          <li><span>Verb: </span><span>{{ pathPieces[0] }}</span></li>
+          <li><span>Form: </span><span>{{ pathPieces[1] }}</span></li>
+          <li><span>Politeness: </span>{{ pathPieces[2] }}<span></span></li>
+          <li><span>Positivitiy: </span><span>{{ pathPieces[3] }}</span></li>
+        </ul>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-form-input v-model="answer" ref="input" @keyup.enter="enter"></b-form-input>
+        <span v-if="answered">{{ correct ? "Correct" : "Incorrect" }}</span>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-button v-if="!answered" @click.prevent="submit">Submit</b-button>
+        <b-button v-else @click.prevent="$emit('next', true)">Next</b-button>
       </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { mapGetters } from "vuex";
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
+import { mapGetters, mapActions } from "vuex";
+// import { random } from "lodash";
+import { eUserAnswer } from "@/assets/interfaces";
+import { bind } from "wanakana";
 
 @Component({
   components: {},
   methods: {
-    ...mapGetters("subjects", ["GetQuestion"]),
+    ...mapGetters("subjects", ["getQuestions", "getQuestion"]),
+    ...mapActions("subjects", ["updateAnswer"])
   },
-  //data() {
-  //  return {
-  //
-  //  }
-  //}
+  data() {
+   return {
+     // question: null,
+     answer: "",
+     answered: false
+   }
+  }
 })
 export default class Question extends Vue {
-  RandomQuestion() {
+  @Prop() question: any;
+  mounted(){
     const self: any = this;
-    return self.GetQuestion();
+    // self.question = self.RandomQuestion();
+    bind(self.$refs["input"].$el);
+  }
+
+pathPieces(){
+  const self: any = this;
+  return self.fullQuestion.path.split(",");
+}
+
+  // nextQuestion(){
+  //   // self.question = self.RandomQuestion();
+  //   self.answer = "";
+  //   self.answered = false;
+  // }
+
+  get fullQuestion(){
+    const self: any = this;
+    return self.getQuestion()(self.question);
+  }
+
+  // RandomQuestion() {
+  //   const self: any = this;
+  //   // return self.getQuestions();
+  //   const qs = self.getQuestions();
+  //   return self.getQuestion()(qs[random(0, qs.length - 1)]);
+  // }
+
+  submit(){
+    const self: any = this;
+    self.correct = self.answer == self.fullQuestion.kana || self.answer == self.fullQuestion.kanji;
+    self.answered = true;
+    debugger;
+    self.updateAnswer({path: self.fullQuestion.path, answer: self.correct ? eUserAnswer.Correct : eUserAnswer.Incorrect});
+  }
+
+  enter(){
+    const self: any = this;
+    if(!self.answered){
+      self.submit();
+    } else {
+      self.$emit('next', true);
+    }
+  }
+
+  @Watch("question")
+  questionChange(){
+    const self: any = this;
+    self.answer = "";
+    self.answered = false;
   }
 }
 </script>

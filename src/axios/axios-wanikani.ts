@@ -16,13 +16,13 @@ instance.interceptors.response.use((response: any) => {
   const data = response.data.data;
   if (response.data.pages !== undefined) {
     if (response.data.pages.next_url !== null) {
-      console.log("getting more");
+      // console.log("getting more");
       response.config.url = response.data.pages.next_url;
       return instance.request(response.config).then((ret: any) => {
         return data.concat(ret);
       });
     } else {
-      console.log("all done");
+      // console.log("all done");
       return data;
     }
   } else {

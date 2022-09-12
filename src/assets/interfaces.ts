@@ -56,7 +56,10 @@ interface iSign {
 
 interface iConjugation extends iKanjiAndKana {
   answered: eUserAnswer;
-  testOn: eTest
+  id: string;
+  test: () => any;
+  path: string;
+  // testable: eTest
   // attempts: 0;
 }
 
@@ -68,12 +71,12 @@ interface iKanjiAndKana {
 enum eUserAnswer {
   Incorrect = -1,
   Unanswered = 0,
-  Correct = 1
+  Correct = 1,
 }
 
 enum eTest {
-  No = false,
-  Yes = true
+  No = 0,
+  Yes = 1,
 }
 
 export {
@@ -87,5 +90,5 @@ export {
   iConjugation,
   iKanjiAndKana,
   eUserAnswer,
-  eTest
+  eTest,
 };

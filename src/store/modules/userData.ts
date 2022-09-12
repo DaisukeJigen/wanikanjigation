@@ -41,14 +41,17 @@ const actions = {
     context.commit("updateApiKey", data);
   },
   fetchUserData: (context: any, data: any) => {
+    context.commit("app/updateLoading", 1, { root: true });
     return new Promise((resolve, reject) => {
       const url = `user`;
       axiosWaniKani
         .get(url, {})
         .then((ret: any) => {
+          context.commit("app/updateLoading", -1, { root: true });
           context.commit("updateUserData", ret);
         })
         .catch((error: any) => {
+          context.commit("app/updateLoading", -1, { root: true });
           alert(error.message);
         })
         .then(

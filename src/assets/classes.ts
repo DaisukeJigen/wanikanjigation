@@ -9,10 +9,12 @@ import {
   iConjugation,
   iKanjiAndKana,
   eUserAnswer,
-  eTest
+  eTest,
 } from "@/assets/interfaces.ts";
 import { conjugate } from "@/assets/conjugate.ts";
 import { merge } from "lodash";
+// import { store } from "@/store";
+import { v4 as uuidv4 } from "uuid";
 
 class Verb implements iVerb {
   id: number;
@@ -27,7 +29,7 @@ class Verb implements iVerb {
   conjugations: iConjugationObject;
 
   constructor(data: any) {
-    console.log(data.data.slug);
+    // console.log(data.data.slug);
     this.id = data.id;
     // this.object = data.object;
     // this.url = data.url;
@@ -39,7 +41,7 @@ class Verb implements iVerb {
     this.partsOfSpeech = data.data.parts_of_speech;
     // debugger;
     // this.conjugations = Object.assign({}, new ConjugationObject(), conjugate.verb(this));
-    this.conjugations = merge(new ConjugationObject(), conjugate.verb(this));
+    this.conjugations = merge(new ConjugationObject(data.data.slug), conjugate.verb(this));
     // this.conjugations.forEach((conj: any) => {
     //   if(conj.polite.kanji == ""){
     //     delete conj.polite;
@@ -67,21 +69,21 @@ class ConjugationObject implements iConjugationObject {
   te_stem: iKanjiAndKana;
   // testOn: () => boolean;
 
-  constructor() {
-    this.causative = new ConjugationTypeStandard();
-    this.conditional = new ConjugationTypeStandard();
-    this.imperative = new ConjugationTypeAbrupt();
-    this.indicative = new ConjugationTypeStandard();
-    this.passive = new ConjugationTypeStandard();
-    this.past_indicative = new ConjugationTypeStandard();
-    this.past_presumptive = new ConjugationTypeStandard();
-    this.past_progressive = new ConjugationTypeStandard();
-    this.potential = new ConjugationTypeStandard();
-    this.presumptive = new ConjugationTypeStandard();
-    this.progressive = new ConjugationTypeStandard();
-    this.provisional = new ConjugationTypeOnlyPlain();
-    this.request = new ConjugationTypeHonorific();
-    this.volitional = new ConjugationTypeStandard();
+  constructor(path = "") {
+    this.causative = new ConjugationTypeStandard(`${path}.causative`);
+    this.conditional = new ConjugationTypeStandard(`${path}.conditional`);
+    this.imperative = new ConjugationTypeAbrupt(`${path}.imperative`);
+    this.indicative = new ConjugationTypeStandard(`${path}.indicative`);
+    this.passive = new ConjugationTypeStandard(`${path}.passive`);
+    this.past_indicative = new ConjugationTypeStandard(`${path}.past_indicative`);
+    this.past_presumptive = new ConjugationTypeStandard(`${path}.past_presumptive`);
+    this.past_progressive = new ConjugationTypeStandard(`${path}.past_progressive`);
+    this.potential = new ConjugationTypeStandard(`${path}.potential`);
+    this.presumptive = new ConjugationTypeStandard(`${path}.presumptive`);
+    this.progressive = new ConjugationTypeStandard(`${path}.progressive`);
+    this.provisional = new ConjugationTypeOnlyPlain(`${path}.provisional`);
+    this.request = new ConjugationTypeHonorific(`${path}.request`);
+    this.volitional = new ConjugationTypeStandard(`${path}.volitional`);
     this.i_stem = new KanjiAndKana();
     this.te_stem = new KanjiAndKana();
 
@@ -95,17 +97,17 @@ class ConjugationTypeStandard implements iConjugationTypeStandard {
   plain: iSign;
   polite: iSign;
 
-  constructor() {
-    this.plain = new Sign();
-    this.polite = new Sign();
+  constructor(path = "") {
+    this.plain = new Sign(`${path}.plain`);
+    this.polite = new Sign(`${path}.polite`);
   }
 }
 
 class ConjugationTypeOnlyPlain implements iConjugationTypeOnlyPlain {
   plain: iSign;
 
-  constructor() {
-    this.plain = new Sign();
+  constructor(path = "") {
+    this.plain = new Sign(`${path}.plain`);
   }
 }
 
@@ -113,9 +115,9 @@ class ConjugationTypeAbrupt implements iConjugationTypeAbrupt {
   abrupt: iSign;
   plain: iSign;
 
-  constructor() {
-    this.abrupt = new Sign();
-    this.plain = new Sign();
+  constructor(path = "") {
+    this.abrupt = new Sign(`${path}.abrupt`);
+    this.plain = new Sign(`${path}.plain`);
   }
 }
 
@@ -123,9 +125,9 @@ class ConjugationTypeHonorific implements iConjugationTypeHonorific {
   polite: iSign;
   honorific: iSign;
 
-  constructor() {
-    this.polite = new Sign();
-    this.honorific = new Sign();
+  constructor(path = "") {
+    this.polite = new Sign(`${path}.polite`);
+    this.honorific = new Sign(`${path}.honorific`);
   }
 }
 
@@ -133,23 +135,33 @@ class Sign implements iSign {
   negative: iConjugation;
   positive: iConjugation;
 
-  constructor() {
-    this.negative = new Conjugation();
-    this.positive = new Conjugation();
+  constructor(path = "") {
+    this.negative = new Conjugation(`${path}.negative`);
+    this.positive = new Conjugation(`${path}.positive`);
   }
 }
 
 class Conjugation implements iConjugation {
   answered: eUserAnswer;
-  testOn: eTest;
+  id: string;
+  // testable: eTest;
   kana: string;
   kanji: string;
+  path: string;
+  test() {
+    debugger;
+    // console.log(this.parentNode);
+  }
 
-  constructor() {
+  constructor(path = "") {
+    // debugger;
     this.answered = eUserAnswer.Unanswered;
-    this.testOn = eTest.Yes;
+    this.id = uuidv4();
+    // this.testable = eTest.Yes;
+    // this.testable = store.getters.getSelectedOptions().positivity.includes("")
     this.kana = "";
     this.kanji = "";
+    this.path = `${path}`
   }
 }
 

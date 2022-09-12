@@ -30,6 +30,14 @@ const routes: Array<RouteConfig> = [
     path: "/test",
     name: "test",
     component: () => import(/* webpackChunkName: "test" */ "../views/Test.vue"),
+    beforeEnter: (to, from, next) => {
+      const test = store.getters;
+      if (!store.getters["userData/getLoggedIn"]) {
+        next("/login");
+      } else {
+        next();
+      }
+    },
   },
   {
     path: "/verbs",

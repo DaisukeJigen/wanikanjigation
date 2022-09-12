@@ -32,6 +32,10 @@ import {
   BTd,
   BTabs,
   BTab,
+  BFormGroup,
+  BFormCheckboxGroup,
+  BSpinner,
+  BOverlay,
 } from "bootstrap-vue";
 Vue.component("b-container", BContainer);
 Vue.component("b-row", BRow);
@@ -48,6 +52,10 @@ Vue.component("b-th", BTh);
 Vue.component("b-td", BTd);
 Vue.component("b-tabs", BTabs);
 Vue.component("b-tab", BTab);
+Vue.component("b-form-group", BFormGroup);
+Vue.component("b-form-checkbox-group", BFormCheckboxGroup);
+Vue.component("b-spinner", BSpinner);
+Vue.component("b-overlay", BOverlay);
 
 Vue.config.productionTip = false;
 

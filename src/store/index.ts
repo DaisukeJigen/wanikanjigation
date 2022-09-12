@@ -11,29 +11,44 @@ import userDataModule, {
 import subjectsModule, {
   State as subjectsState,
 } from "@/store/modules/subjects";
+import optionsModule, { State as optionsState } from "@/store/modules/options";
+import appModule, { State as appState } from "@/store/modules/app";
 import VuexPersistence from "vuex-persist";
+
+export interface State {
+  userData: userDataState;
+  subjects: subjectsState;
+  options: optionsState;
+  app: appState;
+}
 
 const vuexLocal = new VuexPersistence<State>({
   storage: window.localStorage,
-  reducer: (state) => ({ userData: { apiKey: state.userData.apiKey } }), //only save userData module
+  reducer: (state) => ({
+    userData: { apiKey: state.userData.apiKey },
+    options: {
+      selected: state.options.selected,
+      //{
+      //  positivity: state.options.selected.positivity,
+      //  politeness: state.options.selected.politeness,
+      //  form: state.options.selected.form,
+      //  levels: state.options.selected.levels
+      //}
+    },
+  }), //only save userData module
   // filter: (mutation) => mutation.type == 'updateApiKey'
 });
 
 Vue.use(Vuex);
-export interface State {
-  userData: userDataState;
-  subjects: subjectsState;
-}
 
 const store = new Vuex.Store<State>({
-  // state: {},
-  // mutations: {},
-  // actions: {},
   modules: {
     userData: userDataModule,
     // Assignments,
     subjects: subjectsModule,
     // wkof
+    options: optionsModule,
+    app: appModule
   },
   plugins: [vuexLocal.plugin],
 });
