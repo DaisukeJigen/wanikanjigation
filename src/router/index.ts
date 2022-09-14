@@ -43,7 +43,21 @@ const routes: Array<RouteConfig> = [
     path: "/verbs",
     name: "verbs",
     component: () =>
-      import(/* webpackChunkName: "login" */ "../views/Verbs.vue"),
+      import(/* webpackChunkName: "verbs" */ "../views/Verbs.vue"),
+    beforeEnter: (to, from, next) => {
+      const test = store.getters;
+      if (!store.getters["userData/getLoggedIn"]) {
+        next("/login");
+      } else {
+        next();
+      }
+    },
+  },
+  {
+    path: "/verblookup/:verb",
+    name: "verblookup",
+    component: () =>
+      import(/* webpackChunkName: "verblookup" */ "../views/VerbLookup.vue"),
     beforeEnter: (to, from, next) => {
       const test = store.getters;
       if (!store.getters["userData/getLoggedIn"]) {

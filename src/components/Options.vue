@@ -64,7 +64,11 @@ import { mapState, mapActions, mapGetters } from "vuex";
   methods: {
     ...mapActions("options", [
       // "updatedSelected",
-      "updateSelectedPositivity", "updateSelectedPoliteness", "updateSelectedForm", "updateSelectedLevels"]),
+      "updateSelectedPositivity",
+      "updateSelectedPoliteness",
+      "updateSelectedForm",
+      "updateSelectedLevels",
+    ]),
     ...mapGetters("userData", ["getLevels"]),
   },
   data() {
@@ -94,35 +98,35 @@ export default class Options extends Vue {
     const self: any = this;
     return self.getLevels();
   }
-  get selectedPositivity(){
+  get selectedPositivity() {
     const self: any = this;
-     return self.selected.positivity;
+    return self.selected.positivity;
   }
-  set selectedPositivity(value){
+  set selectedPositivity(value) {
     const self: any = this;
     self.updateSelectedPositivity(value);
   }
-  get selectedPoliteness(){
+  get selectedPoliteness() {
     const self: any = this;
-     return self.selected.politeness;
+    return self.selected.politeness;
   }
-  set selectedPoliteness(value){
+  set selectedPoliteness(value) {
     const self: any = this;
     self.updateSelectedPoliteness(value);
   }
-  get selectedForm(){
+  get selectedForm() {
     const self: any = this;
-     return self.selected.form;
+    return self.selected.form;
   }
-  set selectedForm(value){
+  set selectedForm(value) {
     const self: any = this;
     self.updateSelectedForm(value);
   }
-  get selectedLevels(){
+  get selectedLevels() {
     const self: any = this;
-     return self.selected.levels;
+    return self.selected.levels;
   }
-  set selectedLevels(value){
+  set selectedLevels(value) {
     const self: any = this;
     self.updateSelectedLevels(value);
   }

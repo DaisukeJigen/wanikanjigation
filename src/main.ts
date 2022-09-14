@@ -36,6 +36,14 @@ import {
   BFormCheckboxGroup,
   BSpinner,
   BOverlay,
+  BNavbar,
+  BNavItem,
+  BNavbarBrand,
+  BNavbarNav,
+  BNavForm,
+  BNavItemDropdown,
+  BAvatar,
+  BDropdownItem,
 } from "bootstrap-vue";
 Vue.component("b-container", BContainer);
 Vue.component("b-row", BRow);
@@ -56,6 +64,14 @@ Vue.component("b-form-group", BFormGroup);
 Vue.component("b-form-checkbox-group", BFormCheckboxGroup);
 Vue.component("b-spinner", BSpinner);
 Vue.component("b-overlay", BOverlay);
+Vue.component("b-navbar", BNavbar);
+Vue.component("b-nav-item", BNavItem);
+Vue.component("b-navbar-brand", BNavbarBrand);
+Vue.component("b-navbar-nav", BNavbarNav);
+Vue.component("b-nav-form", BNavForm);
+Vue.component("b-nav-item-dropdown", BNavItemDropdown);
+Vue.component("b-avatar", BAvatar);
+Vue.component("b-dropdown-item", BDropdownItem);
 
 Vue.config.productionTip = false;
 

@@ -1,10 +1,10 @@
 <template>
   <b-overlay id="loading" :show="isLoading">
-  <div id="app">
-    <!-- <b-overlay id="loading" :show="isLoading">
+    <div id="app">
+      <!-- <b-overlay id="loading" :show="isLoading">
         <b-spinner></b-spinner>
       </b-overlay> -->
-    <div id="nav">
+      <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link v-if="!loggedIn" to="/login">Login</router-link>
@@ -12,17 +12,22 @@
         <router-link to="/verbs">Verbs</router-link> |
         <router-link to="/test">Test</router-link>
       </template>
+    </div> -->
+      <nav-bar></nav-bar>
+      <router-view />
     </div>
-    <router-view />
-  </div>
   </b-overlay>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { mapState, mapGetters } from "vuex";
+import NavBar from "@/components/NavBar.vue";
 
 @Component({
+  components: {
+    "nav-bar": NavBar,
+  },
   computed: {
     ...mapState("userData", ["userData"]),
   },

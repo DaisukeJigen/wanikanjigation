@@ -1,24 +1,42 @@
 <template>
   <b-container>
-    <b-row>
+    <!-- <b-row>
       <b-col>
         {{ fullQuestion }}
       </b-col>
-    </b-row>
+    </b-row> -->
     <b-row>
       <b-col>
         <ul>
-          <li><span>Verb: </span><span>{{ pathPieces[0] }}</span></li>
-          <li><span>Form: </span><span>{{ pathPieces[1] }}</span></li>
+          <li>
+            <span>Verb: </span><span>{{ pathPieces[0] }}</span>
+          </li>
+          <li>
+            <span>Form: </span><span>{{ pathPieces[1] }}</span>
+          </li>
           <li><span>Politeness: </span>{{ pathPieces[2] }}<span></span></li>
-          <li><span>Positivitiy: </span><span>{{ pathPieces[3] }}</span></li>
+          <li>
+            <span>Positivitiy: </span><span>{{ pathPieces[3] }}</span>
+          </li>
         </ul>
       </b-col>
     </b-row>
     <b-row>
       <b-col>
-        <b-form-input v-model="answer" ref="input" @keyup.enter="enter"></b-form-input>
-        <span v-if="answered">{{ correct ? "Correct" : "Incorrect" }}</span>
+        <b-form-input
+          v-model="answer"
+          ref="input"
+          @keyup.enter="enter"
+        ></b-form-input>
+        <!-- <span v-if="answered">{{ correct ? "Correct" : "Incorrect" }}</span> -->
+        <template v-if="answered">
+          <span v-if="correct">Correct</span>
+          <span v-else
+            >Incorrect - {{ self.fullQuestion.kanji }} ({{
+              self.fullQuestion.kana
+            }})</span
+          >
+        </template>
       </b-col>
     </b-row>
     <b-row>
@@ -41,28 +59,28 @@ import { bind } from "wanakana";
   components: {},
   methods: {
     ...mapGetters("subjects", ["getQuestions", "getQuestion"]),
-    ...mapActions("subjects", ["updateAnswer"])
+    ...mapActions("subjects", ["updateAnswer"]),
   },
   data() {
-   return {
-     // question: null,
-     answer: "",
-     answered: false
-   }
-  }
+    return {
+      // question: null,
+      answer: "",
+      answered: false,
+    };
+  },
 })
 export default class Question extends Vue {
   @Prop() question: any;
-  mounted(){
+  mounted() {
     const self: any = this;
     // self.question = self.RandomQuestion();
     bind(self.$refs["input"].$el);
   }
 
-pathPieces(){
-  const self: any = this;
-  return self.fullQuestion.path.split(",");
-}
+  get pathPieces() {
+    const self: any = this;
+    return self.fullQuestion.path.split(".");
+  }
 
   // nextQuestion(){
   //   // self.question = self.RandomQuestion();
@@ -70,7 +88,7 @@ pathPieces(){
   //   self.answered = false;
   // }
 
-  get fullQuestion(){
+  get fullQuestion() {
     const self: any = this;
     return self.getQuestion()(self.question);
   }
@@ -82,25 +100,33 @@ pathPieces(){
   //   return self.getQuestion()(qs[random(0, qs.length - 1)]);
   // }
 
-  submit(){
+  submit() {
     const self: any = this;
-    self.correct = self.answer == self.fullQuestion.kana || self.answer == self.fullQuestion.kanji;
+    self.correct =
+      self.answer == self.fullQuestion.kana ||
+      self.answer == self.fullQuestion.kanji;
     self.answered = true;
-    debugger;
-    self.updateAnswer({path: self.fullQuestion.path, answer: self.correct ? eUserAnswer.Correct : eUserAnswer.Incorrect});
+    self.updateAnswer({
+      path: self.fullQuestion.path,
+      answer: self.correct ? eUserAnswer.Correct : eUserAnswer.Incorrect,
+    });
   }
 
-  enter(){
+  enter() {
     const self: any = this;
-    if(!self.answered){
+    if (!self.answered) {
       self.submit();
     } else {
-      self.$emit('next', true);
+      // const p = {id: self.fullQuestion.id, answer: self.correct ? eUserAnswer.Correct : eUserAnswer.Incorrect};
+      self.$emit(
+        "next",
+        self.correct ? eUserAnswer.Correct : eUserAnswer.Incorrect
+      );
     }
   }
 
   @Watch("question")
-  questionChange(){
+  questionChange() {
     const self: any = this;
     self.answer = "";
     self.answered = false;
@@ -108,4 +134,9 @@ pathPieces(){
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+ul {
+  text-align: left;
+  list-style: none;
+}
+</style>

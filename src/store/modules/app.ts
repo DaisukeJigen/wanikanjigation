@@ -8,26 +8,25 @@ export interface State {
 }
 
 const state: State = {
-  loading: 0
+  loading: 0,
 };
 
 const mutations = {
-    updateLoading: (state: any, data: any) => {
-      state.loading = state.loading + data;
-    },
+  updateLoading: (state: any, data: any) => {
+    state.loading = state.loading + data;
+  },
 };
 
 const actions = {
-    upadteLoading: (context: any, data: any) => {
-      debugger;
-      context.commit("updateLoading", data);
-    }
+  upadteLoading: (context: any, data: any) => {
+    context.commit("updateLoading", data);
+  },
 };
 
 const getters = {
-    getLoading: (state: any) => {
-      return state.loading > 0;
-    },
+  getLoading: (state: any) => {
+    return state.loading > 0;
+  },
 };
 
 export default {
@@ -35,5 +34,5 @@ export default {
   state,
   mutations,
   getters,
-  actions
+  actions,
 };

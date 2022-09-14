@@ -4,7 +4,7 @@
       <b-col>
         <b-card
           title="WaniKani Login"
-          img-src="https://picsum.photos/600/300/?image=25"
+          :img-src="require('../assets/logo.png')"
           img-alt="Image"
           img-top
           tag="div"
@@ -59,7 +59,7 @@ export default class Login extends Vue {
     // });
     self.fetchUserData().then(() => {
       self.fetchSubjectsVerbs(self.levels.join(",")).then(() => {
-        router.push("test");
+        router.push("/");
       });
     });
   }

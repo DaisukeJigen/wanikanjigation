@@ -1,11 +1,15 @@
 {
   "name": "wanikanjigation",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "version prerelease": "npm version prerelease",
+    "version patch": "npm version patch",
+    "version minor": "npm version minor",
+    "version major": "npm version major"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",

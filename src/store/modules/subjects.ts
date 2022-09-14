@@ -97,8 +97,8 @@ const actions = {
   // },
   updateAnswer: (context: any, data: any) => {
     return new Promise((resolve, reject) => {
-      context.commit("UpdateAnswer", data);
-    })
+      context.commit("updateAnswer", data);
+    });
   },
   fetchSubjectsVerbs: (context: any, data: any) => {
     context.commit("app/updateLoading", 1, { root: true });
@@ -159,11 +159,12 @@ const getters = {
     return state.verbs.find((v: any) => v.verb == verb);
   },
   getVerbsForLevel: (state: any) => (level: number) => {
-    //debugger;
     return state.verbs.filter((v: any) => v.level == level);
   },
 
-    getQuestion: (state: any, context: any, rootState: any, rootContext: any) => (item: any) => {
+  getQuestion:
+    (state: any, context: any, rootState: any, rootContext: any) =>
+    (item: any) => {
       const parts = item.path.split(".");
       const verb = state.verbs.find((v: any) => v.slug == parts[0]);
       return verb.conjugations[parts[1]][parts[2]][parts[3]];
@@ -244,7 +245,9 @@ const getters = {
       c.map((d: any) => values(pick(d, rootState.options.selected.positivity)))
     );
     // return d;
-    return d.map((d: any) => { return { id: d.id, path: d.path } });
+    return d.map((d: any) => {
+      return { id: d.id, path: d.path };
+    });
   },
 };
 

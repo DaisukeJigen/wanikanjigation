@@ -39,9 +39,11 @@ class Verb implements iVerb {
     this.meanings = data.data.meanings.map((m: any) => m.meaning);
     this.readings = data.data.readings.map((r: any) => r.reading);
     this.partsOfSpeech = data.data.parts_of_speech;
-    // debugger;
     // this.conjugations = Object.assign({}, new ConjugationObject(), conjugate.verb(this));
-    this.conjugations = merge(new ConjugationObject(data.data.slug), conjugate.verb(this));
+    this.conjugations = merge(
+      new ConjugationObject(data.data.slug),
+      conjugate.verb(this)
+    );
     // this.conjugations.forEach((conj: any) => {
     //   if(conj.polite.kanji == ""){
     //     delete conj.polite;
@@ -75,9 +77,15 @@ class ConjugationObject implements iConjugationObject {
     this.imperative = new ConjugationTypeAbrupt(`${path}.imperative`);
     this.indicative = new ConjugationTypeStandard(`${path}.indicative`);
     this.passive = new ConjugationTypeStandard(`${path}.passive`);
-    this.past_indicative = new ConjugationTypeStandard(`${path}.past_indicative`);
-    this.past_presumptive = new ConjugationTypeStandard(`${path}.past_presumptive`);
-    this.past_progressive = new ConjugationTypeStandard(`${path}.past_progressive`);
+    this.past_indicative = new ConjugationTypeStandard(
+      `${path}.past_indicative`
+    );
+    this.past_presumptive = new ConjugationTypeStandard(
+      `${path}.past_presumptive`
+    );
+    this.past_progressive = new ConjugationTypeStandard(
+      `${path}.past_progressive`
+    );
     this.potential = new ConjugationTypeStandard(`${path}.potential`);
     this.presumptive = new ConjugationTypeStandard(`${path}.presumptive`);
     this.progressive = new ConjugationTypeStandard(`${path}.progressive`);
@@ -149,19 +157,17 @@ class Conjugation implements iConjugation {
   kanji: string;
   path: string;
   test() {
-    debugger;
     // console.log(this.parentNode);
   }
 
   constructor(path = "") {
-    // debugger;
     this.answered = eUserAnswer.Unanswered;
     this.id = uuidv4();
     // this.testable = eTest.Yes;
     // this.testable = store.getters.getSelectedOptions().positivity.includes("")
     this.kana = "";
     this.kanji = "";
-    this.path = `${path}`
+    this.path = `${path}`;
   }
 }
 

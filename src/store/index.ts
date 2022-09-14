@@ -13,6 +13,7 @@ import subjectsModule, {
 } from "@/store/modules/subjects";
 import optionsModule, { State as optionsState } from "@/store/modules/options";
 import appModule, { State as appState } from "@/store/modules/app";
+import jishoModule, { State as jishoState } from "@/store/modules/jisho";
 import VuexPersistence from "vuex-persist";
 
 export interface State {
@@ -20,6 +21,7 @@ export interface State {
   subjects: subjectsState;
   options: optionsState;
   app: appState;
+  jisho: jishoState;
 }
 
 const vuexLocal = new VuexPersistence<State>({
@@ -48,7 +50,8 @@ const store = new Vuex.Store<State>({
     subjects: subjectsModule,
     // wkof
     options: optionsModule,
-    app: appModule
+    app: appModule,
+    jisho: jishoModule,
   },
   plugins: [vuexLocal.plugin],
 });
