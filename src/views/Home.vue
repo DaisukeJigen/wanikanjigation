@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <img class="logo" alt="Vue logo" src="../assets/logo.png" />
     <h2>WaniKanjigation</h2>
     <br />
     <p>Very much a WIP</p>
@@ -19,6 +19,13 @@
     </p>
     <p v-if="!loggedIn">
       <b-button @click="login">Login</b-button>
+    </p>
+    <p v-else>
+      <b-button to="verbs">List Verbs</b-button>
+      <b-button to="test">Test Verbs</b-button>
+      <br />
+      <b-button to="naadjectives">NA Adjectives</b-button>
+      <b-button to="naadjectives">I Adjectives</b-button>
     </p>
   </div>
 </template>
@@ -45,3 +52,9 @@ export default class Home extends Vue {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.logo {
+  width: 500px;
+}
+</style>

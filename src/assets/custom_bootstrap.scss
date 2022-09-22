@@ -42,3 +42,12 @@
 @import "../../node_modules/bootstrap/scss/spinners";
 @import "../../node_modules/bootstrap/scss/utilities";
 @import "../../node_modules/bootstrap/scss/print";
+
+.error{
+  color: $danger;
+}
+.is-invalid{
+  border: 2px solid $danger;
+  border-radius: 5px;
+  padding: 0 5px 0 5px;
+}

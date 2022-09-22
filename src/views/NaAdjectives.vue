@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col>
-        <b-tabs v-if="allVerbs.length > 0" pills vertical>
+        <b-tabs v-if="allNaAdjectives.length > 0" pills vertical>
           <b-tab
             lazy
             v-for="level in levels"
@@ -12,11 +12,14 @@
             <b-tabs pills vertical>
               <b-tab
                 lazy
-                v-for="verb in verbsForLevel(level)"
-                :title="verb.slug"
-                :key="verb.slug"
+                v-for="naAdjective in naAdjectivesForLevel(level)"
+                :title="naAdjective.slug"
+                :key="naAdjective.slug"
               >
-                <verb-details :verb="verb" :key="verb.slug"></verb-details>
+                <adjective-details
+                  :adjective="naAdjective"
+                  :key="naAdjective.slug"
+                ></adjective-details>
               </b-tab>
             </b-tabs>
           </b-tab>
@@ -29,52 +32,40 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { mapState, mapActions, mapGetters } from "vuex";
-// import verbs from "@/assets/verbs.json";
-import VerbDetails from "@/components/VerbDetails";
+import AdjectiveDetails from "@/components/AdjectiveDetails";
 
 @Component({
   components: {
-    "verb-details": VerbDetails,
+    "adjective-details": AdjectiveDetails,
   },
   computed: {
-    ...mapState("subjects", ["verbs"]),
+    ...mapState("subjects", ["naAdjectives"]),
   },
   methods: {
-    // ...mapActions("subjects", ["fetchSubjectsVerbs"]),
-    ...mapGetters("subjects", ["getVerbsForLevel"]),
+    ...mapGetters("subjects", ["getNaAdjectivesForLevel"]),
     ...mapGetters("userData", ["getLevels"]),
   },
   data() {
-    return {
-      // allVerbs: verbs
-    };
+    return {};
   },
 })
-export default class Verbs extends Vue {
+export default class NaAdjectives extends Vue {
   mounted() {
     const self: any = this;
-    // self.fetchSubjectsVerbs(self.levels.join(","));//.then(() => {});
-    // self.fetchSubjectsVerbs("1");
   }
   get levels() {
     const self: any = this;
     return self.getLevels();
   }
-  verbsForLevel(level: number) {
+  naAdjectivesForLevel(level: number) {
     const self: any = this;
     console.log("level " + level);
-    return self.getVerbsForLevel()(level);
+    return self.getNaAdjectivesForLevel()(level);
   }
-  get allVerbs() {
+  get allNaAdjectives() {
     const self: any = this;
-    // return self.verbs;
-    // return self.getVerbs();
-    return self.verbs;
+    return self.naAdjectives;
   }
-  // get allVerbs(){
-  //   const self: any = this;
-  //   return self.verbs;
-  // }
   download(data: any, filename: any, type: any) {
     var file = new Blob([data], { type: type });
     if (window.navigator.msSaveOrOpenBlob)

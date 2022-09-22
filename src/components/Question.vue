@@ -9,7 +9,10 @@
       <b-col>
         <ul>
           <li>
-            <span>Verb: </span><span>{{ pathPieces[0] }}</span>
+            <span>Verb: </span><span>{{ pathPieces[0] }}</span
+            ><span class="originalKana">
+              ({{ fullQuestion.originalKana }})</span
+            >
           </li>
           <li>
             <span>Form: </span><span>{{ pathPieces[1] }}</span>
@@ -30,11 +33,11 @@
         ></b-form-input>
         <!-- <span v-if="answered">{{ correct ? "Correct" : "Incorrect" }}</span> -->
         <template v-if="answered">
-          <span v-if="correct">Correct</span>
-          <span v-else
-            >Incorrect - {{ self.fullQuestion.kanji }} ({{
-              self.fullQuestion.kana
-            }})</span
+          <span :class="correct ? 'correct' : 'incorrect'">{{
+            correct ? "Correct" : "Incorrect"
+          }}</span>
+          <span class="correctAnswer">
+            - {{ fullQuestion.kanji }} ({{ fullQuestion.kana }})</span
           >
         </template>
       </b-col>
@@ -43,6 +46,7 @@
       <b-col>
         <b-button v-if="!answered" @click.prevent="submit">Submit</b-button>
         <b-button v-else @click.prevent="$emit('next', true)">Next</b-button>
+        <b-button @click.prevent="$emit('early-finish', true)">Done</b-button>
       </b-col>
     </b-row>
   </b-container>
@@ -52,7 +56,7 @@
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { mapGetters, mapActions } from "vuex";
 // import { random } from "lodash";
-import { eUserAnswer } from "@/assets/interfaces";
+import { eUserAnswer } from "@/interfaces/verbs";
 import { bind } from "wanakana";
 
 @Component({
@@ -138,5 +142,20 @@ export default class Question extends Vue {
 ul {
   text-align: left;
   list-style: none;
+}
+.correct,
+.incorrect,
+.correctAnswer {
+  font-size: 18px;
+  font-weight: bold;
+}
+.correct {
+  color: $success;
+}
+.incorrect {
+  color: $danger;
+}
+.originalKana {
+  font-size: 0.8rem;
 }
 </style>

@@ -20,6 +20,7 @@ export interface State {
 interface selectOption {
   text: string;
   value: string;
+  help?: string;
 }
 
 const state: State = {
@@ -35,20 +36,64 @@ const state: State = {
       { text: "Abrupt", value: "abrupt" },
     ],
     form: [
-      { text: "Causative", value: "causative" },
-      { text: "Conditional", value: "conditional" },
-      { text: "Imperative", value: "imperative" },
-      { text: "Indicative", value: "indicative" },
-      { text: "Passive", value: "passive" },
-      { text: "Past Indicative", value: "past_indicative" },
-      { text: "Past Presumptive", value: "past_presumptive" },
-      { text: "Past Progressive", value: "past_progressive" },
-      { text: "Potential", value: "potential" },
-      { text: "Presumptive", value: "presumptive" },
-      { text: "Progressive", value: "progressive" },
-      { text: "Provisional", value: "provisional" },
-      { text: "Request", value: "request" },
-      { text: "Volitional", value: "volitional" },
+      {
+        text: "Causative",
+        value: "causative",
+        help: "used to express that a subject was forced or allowed to do something",
+      },
+      {
+        text: "Conditional",
+        value: "conditional",
+        help: 'is broadly equivalent to the English conditionals "if…" or "when…"',
+      },
+      {
+        text: "Imperative",
+        value: "imperative",
+        help: "used to give orders to subordinates",
+      },
+      { text: "Indicative", value: "indicative", help: "" },
+      {
+        text: "Passive",
+        value: "passive",
+        help: "emphasizes the action as the detail of importance",
+      },
+      { text: "Past Indicative", value: "past_indicative", help: "" },
+      {
+        text: "Past Presumptive",
+        value: "past_presumptive",
+        help: "to make a guess or supposition",
+      },
+      {
+        text: "Past Progressive",
+        value: "past_progressive",
+        help: 'such as in the English sentence "I was shopping',
+      },
+      {
+        text: "Potential",
+        value: "potential",
+        help: 'used to ask favors from others, just as "Can you…?" does in English',
+      },
+      {
+        text: "Presumptive",
+        value: "presumptive",
+        help: "to make a guess or supposition",
+      },
+      {
+        text: "Progressive",
+        value: "progressive",
+        help: 'such as in the English sentence "I am shopping',
+      },
+      {
+        text: "Provisional",
+        value: "provisional",
+        help: 'broadly equivalent to the English conditionals "if…" or "when…"',
+      },
+      { text: "Request", value: "request", help: "" },
+      {
+        text: "Volitional",
+        value: "volitional",
+        help: "is used to express speaker's will or intention",
+      },
     ],
   },
   selected: {

@@ -2,12 +2,47 @@
   <b-container>
     <b-row>
       <b-col>
-        <span class="title">verb: {{ verb.slug }}</span>
+        <span class="title">Adjective: {{ adjective.slug }}</span>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table type="Adverb" :conj="conj.adverb"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table type="Attributive" :conj="conj.attributive"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table type="Become" :conj="conj.become"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table type="Conditional" :conj="conj.conditional"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table type="Continuative" :conj="conj.continuative"></form-table>
       </b-col>
     </b-row>
     <b-row>
       <b-col>
         <form-table type="Indicative" :conj="conj.indicative"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table type="Looks" :conj="conj.looks"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table type="Noun" :conj="conj.noun"></form-table>
       </b-col>
     </b-row>
     <b-row>
@@ -20,11 +55,6 @@
     </b-row>
     <b-row>
       <b-col>
-        <form-table type="Presumptive" :conj="conj.presumptive"></form-table>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
         <form-table
           type="Past Presumptive"
           :conj="conj.past_presumptive"
@@ -33,45 +63,7 @@
     </b-row>
     <b-row>
       <b-col>
-        <form-table type="Progressive" :conj="conj.progressive"></form-table>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <form-table
-          type="Past Progressive"
-          :conj="conj.past_progressive"
-        ></form-table>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <form-table type="Imperative" :conj="conj.imperative"></form-table>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <form-table type="Request" :conj="conj.request"></form-table>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <form-table type="Potential" :conj="conj.potential"></form-table>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <form-table type="Volitional" :conj="conj.volitional"></form-table>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <form-table type="Causative" :conj="conj.causative"></form-table>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <form-table type="Passive" :conj="conj.passive"></form-table>
+        <form-table type="Presumptive" :conj="conj.presumptive"></form-table>
       </b-col>
     </b-row>
     <b-row>
@@ -81,7 +73,12 @@
     </b-row>
     <b-row>
       <b-col>
-        <form-table type="Conditional" :conj="conj.conditional"></form-table>
+        <form-table type="Too" :conj="conj.too"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table type="Unbearably" :conj="conj.unbearably"></form-table>
       </b-col>
     </b-row>
   </b-container>
@@ -106,13 +103,13 @@ import FormTable from "@/components/FormTable.vue";
   //  }
   //}
 })
-export default class VueDetails extends Vue {
-  @Prop() verb!: any;
+export default class AdjectiveDetails extends Vue {
+  @Prop() adjective!: any;
 
   get conj() {
     const self: any = this;
-    // return conjugate.verb(self.verb);
-    return self.verb.conjugations;
+    // return conjugate.adjective(self.adjective);
+    return self.adjective.conjugations;
   }
 }
 </script>

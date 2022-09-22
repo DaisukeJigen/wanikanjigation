@@ -1,63 +1,113 @@
 <template>
-  <b-container>
-    <b-row>
-      <b-col>
-        <b-form-group label="Levels" label-for="chkLevels">
-          <b-form-checkbox-group
-            id="chkLevels"
+  <ValidationObserver ref="observer" v-slot="{ invalid }">
+    <b-container>
+      <b-row>
+        <b-col>
+          <ValidationProvider
             name="Levels"
-            v-model="selectedLevels"
-            :options="levels"
-          />
-        </b-form-group>
-      </b-col>
-      <b-col>
-        <b-form-group label="Positivity" label-for="chkPositivity">
-          <b-form-checkbox-group
-            id="chkPositivity"
+            rules="required"
+            mode="eager"
+            v-slot="{ errors, classes }"
+          >
+            <b-form-group label="Levels" label-for="chkLevels">
+              <b-form-checkbox-group
+                :class="['chk', classes]"
+                id="chkLevels"
+                name="Levels"
+                v-model="selectedLevels"
+                :options="levels"
+              />
+            </b-form-group>
+            <span class="error">{{ errors[0] }}</span>
+          </ValidationProvider>
+        </b-col>
+        <b-col>
+          <ValidationProvider
             name="Positivity"
-            v-model="selectedPositivity"
-            :options="ops.positivity"
-          />
-        </b-form-group>
-      </b-col>
+            rules="required"
+            mode="eager"
+            v-slot="{ errors, classes }"
+          >
+            <b-form-group label="Positivity" label-for="chkPositivity">
+              <b-form-checkbox-group
+                :class="['chk', classes]"
+                id="chkPositivity"
+                name="Positivity"
+                v-model="selectedPositivity"
+                :options="ops.positivity"
+              />
+            </b-form-group>
+            <span class="error">{{ errors[0] }}</span>
+          </ValidationProvider>
+        </b-col>
 
-      <b-col>
-        <b-form-group label="Politeness" label-for="chkPoliteness">
-          <b-form-checkbox-group
-            id="chkPoliteness"
+        <b-col>
+          <ValidationProvider
             name="Politeness"
-            v-model="selectedPoliteness"
-            :options="ops.politeness"
-          />
-        </b-form-group>
-      </b-col>
+            rules="required"
+            mode="eager"
+            v-slot="{ errors, classes }"
+          >
+            <b-form-group label="Politeness" label-for="chkPoliteness">
+              <b-form-checkbox-group
+                :class="['chk', classes]"
+                id="chkPoliteness"
+                name="Politeness"
+                v-model="selectedPoliteness"
+                :options="ops.politeness"
+              />
+            </b-form-group>
+            <span class="error">{{ errors[0] }}</span>
+          </ValidationProvider>
+        </b-col>
 
-      <b-col>
-        <b-form-group label="Form" label-for="chkForm">
-          <b-form-checkbox-group
-            id="chkForm"
+        <b-col>
+          <ValidationProvider
             name="Form"
-            v-model="selectedForm"
-            :options="ops.form"
-          />
-        </b-form-group>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-button @click.prevent="$emit('optionsSet', true)">Go</b-button>
-      </b-col>
-    </b-row>
-  </b-container>
+            rules="required"
+            mode="eager"
+            v-slot="{ errors, classes }"
+          >
+            <b-form-group label="Form" label-for="chkForm">
+              <b-form-checkbox-group
+                :class="['chk', classes]"
+                id="chkForm"
+                name="Form"
+                v-model="selectedForm"
+                ><template v-for="form in ops.form">
+                  <div class="formDiv" :key="form.text">
+                    <b-form-checkbox :value="form.value">
+                      {{ form.text }}
+                    </b-form-checkbox>
+                    <hover-help
+                      :title="form.text"
+                      :body="form.help"
+                    ></hover-help></div
+                ></template>
+              </b-form-checkbox-group>
+            </b-form-group>
+            <span class="error">{{ errors[0] }}</span>
+          </ValidationProvider>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
+          <b-button @click.prevent="setOptions">Go</b-button>
+        </b-col>
+      </b-row>
+    </b-container>
+  </ValidationObserver>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { mapState, mapActions, mapGetters } from "vuex";
+import HoverHelp from "@/components/HoverHelp.vue";
 
 @Component({
-  components: {},
+  components: {
+    "hover-help": HoverHelp,
+  },
   computed: {
     ...mapState("options", ["options", "selected"]),
   },
@@ -82,6 +132,13 @@ import { mapState, mapActions, mapGetters } from "vuex";
   },
 })
 export default class Options extends Vue {
+  async setOptions() {
+    const self: any = this;
+    const isValid = await this.$refs.observer.validate();
+    if (isValid) {
+      self.$emit("optionsSet", true);
+    }
+  }
   get ops() {
     const self: any = this;
     return self.options;
@@ -133,4 +190,14 @@ export default class Options extends Vue {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.chk {
+  display: flex;
+  flex-direction: column;
+  max-height: 75vh;
+  flex-wrap: wrap;
+}
+.formDiv {
+  display: flex;
+}
+</style>

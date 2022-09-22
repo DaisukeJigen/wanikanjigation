@@ -14,15 +14,23 @@
     </b-row>
     <b-row>
       <b-col>
-        <span v-if="questions.length == 0">All Done</span>
-        <options
-          v-else-if="currentQuestion == null"
-          @optionsSet="start"
-        ></options>
+        <template v-if="progress == 0 && questions.length == 0">
+          <span class="error">No questions returned for criteria</span><br />
+          <b-button @click.prevent="progress = -1">Retry</b-button>
+        </template>
+        <options v-if="progress == -1" @optionsSet="start"></options>
+        <results
+          v-else-if="(progress > -1 && questions.length == 0) || EarlyFinish"
+        ></results>
         <question
           v-else
           @next="nextQuestion"
           :question.sync="currentQuestion"
+          @early-finish="
+            () => {
+              EarlyFinish = true;
+            }
+          "
         ></question>
       </b-col>
     </b-row>
@@ -35,12 +43,14 @@ import Question from "@/components/Question.vue";
 import Options from "@/components/Options";
 import { mapGetters } from "vuex";
 import { random } from "lodash";
-import { eUserAnswer } from "@/assets/interfaces";
+import { eUserAnswer } from "@/interfaces/common.ts";
+import Results from "@/components/Results.vue";
 
 @Component({
   components: {
     question: Question,
     options: Options,
+    results: Results,
   },
   methods: {
     ...mapGetters("subjects", ["getQuestions"]),
@@ -50,16 +60,17 @@ import { eUserAnswer } from "@/assets/interfaces";
       questions: [],
       currentQuestion: null,
       totalQuestions: 0,
-      progress: 0,
+      progress: -1,
+      EarlyFinish: false,
     };
   },
 })
 export default class Test extends Vue {
-  mounted() {
-    const self: any = this;
-    self.questions = self.getQuestions();
-    self.totalQuestions = self.questions.length;
-  }
+  // mounted() {
+  //   const self: any = this;
+  //   self.questions = self.getQuestions();
+  //   self.totalQuestions = self.questions.length;
+  // }
 
   // get correctSoFar(){
   //   const self: any = this;
@@ -73,7 +84,12 @@ export default class Test extends Vue {
 
   start() {
     const self: any = this;
+    self.progress = 0;
+    // self.questions = self.getQuestions();.then(() => {
+    self.questions = self.getQuestions()();
+    self.totalQuestions = self.questions.length;
     self.currentQuestion = self.randomQuestion();
+    // })
   }
 
   nextQuestion(answer = eUserAnswer.Incorrect) {

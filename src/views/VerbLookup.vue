@@ -3,7 +3,7 @@
     <b-row>
       <b-col> Verb Lookup </b-col>
     </b-row>
-    <b-row v-for="verb in verbs">
+    <b-row v-for="verb in verbs" :key="verb.slug">
       <b-col>
         <verb-details
           v-if="verb != null"
@@ -19,7 +19,7 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { conjugate } from "@/assets/conjugate.ts";
 import VerbDetails from "@/components/VerbDetails";
-import { Verb } from "@/assets/classes";
+import { Verb } from "@/classes/verbs";
 import { mapState, mapActions } from "vuex";
 import { flattenDeep } from "lodash";
 
@@ -58,11 +58,9 @@ export default class VerbLookup extends Vue {
 
   go() {
     const self: any = this;
-    debugger;
     self.verbs = [];
     self.fetchWord(self.verbFromParam).then(() => {
       self.word.data.words.forEach((el: any) => {
-        debugger;
         const v = new Verb({
           //data: {
           data: {
@@ -82,7 +80,6 @@ export default class VerbLookup extends Vue {
             //}
           },
         });
-        debugger;
         self.verbs.push(v);
       });
     });

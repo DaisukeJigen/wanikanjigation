@@ -54,6 +54,36 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
+    path: "/naAdjectives",
+    name: "naAdjectives",
+    component: () =>
+      import(
+        /* webpackChunkName: "naAdjectives" */ "../views/NaAdjectives.vue"
+      ),
+    beforeEnter: (to, from, next) => {
+      const test = store.getters;
+      if (!store.getters["userData/getLoggedIn"]) {
+        next("/login");
+      } else {
+        next();
+      }
+    },
+  },
+  {
+    path: "/iAdjectives",
+    name: "iAdjectives",
+    component: () =>
+      import(/* webpackChunkName: "iAdjectives" */ "../views/IAdjectives.vue"),
+    beforeEnter: (to, from, next) => {
+      const test = store.getters;
+      if (!store.getters["userData/getLoggedIn"]) {
+        next("/login");
+      } else {
+        next();
+      }
+    },
+  },
+  {
     path: "/verblookup/:verb",
     name: "verblookup",
     component: () =>

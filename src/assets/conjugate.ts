@@ -1688,7 +1688,7 @@ const o_sounds = [
 
 const i_adjective = function (word: any) {
   const stem = {
-    kanji: word.word.substring(0, word.word.length - 1),
+    kanji: word.slug.substring(0, word.slug.length - 1),
     kana: word.readings[0].substring(0, word.readings[0].length - 1),
   };
   let gstem = {
@@ -1731,12 +1731,12 @@ const i_adjective = function (word: any) {
   return {
     indicative: {
       plain: {
-        positive: { kanji: word.word, kana: word.readings[0] },
+        positive: { kanji: word.slug, kana: word.readings[0] },
         negative: { kanji: stem.kanji + "くない", kana: stem.kana + "くない" },
       },
       polite: {
         positive: {
-          kanji: word.word + "です",
+          kanji: word.slug + "です",
           kana: word.readings[0] + "です",
         },
         negative: {
@@ -1767,7 +1767,7 @@ const i_adjective = function (word: any) {
     presumptive: {
       plain: {
         positive: {
-          kanji: word.word + "だろう",
+          kanji: word.slug + "だろう",
           kana: word.readings[0] + "だろう",
         },
         negative: {
@@ -1777,7 +1777,7 @@ const i_adjective = function (word: any) {
       },
       polite: {
         positive: {
-          kanji: word.word + "でしょう",
+          kanji: word.slug + "でしょう",
           kana: word.readings[0] + "でしょう",
         },
         negative: {
@@ -1867,7 +1867,7 @@ const i_adjective = function (word: any) {
     noun: { kanji: stem.kanji + "さ", kana: stem.kana + "さ" },
     looks: { kanji: stem.kanji + "そう", kana: stem.kana + "そう" },
     too: { kanji: stem.kanji + "すぎる", kana: stem.kana + "すぎる" },
-    attributive: { kanji: word.word, kana: word.readings[0] },
+    attributive: { kanji: word.slug, kana: word.readings[0] },
   };
 };
 
@@ -1875,19 +1875,19 @@ const na_adjective = function (word: any) {
   return {
     indicative: {
       plain: {
-        positive: { kanji: word.word + "だ", kana: word.readings[0] + "だ" },
+        positive: { kanji: word.slug + "だ", kana: word.readings[0] + "だ" },
         negative: {
-          kanji: word.word + "ではない",
+          kanji: word.slug + "ではない",
           kana: word.readings[0] + "ではない",
         },
       },
       polite: {
         positive: {
-          kanji: word.word + "です",
+          kanji: word.slug + "です",
           kana: word.readings[0] + "です",
         },
         negative: {
-          kanji: word.word + "ではありません",
+          kanji: word.slug + "ではありません",
           kana: word.readings[0] + "ではありません",
         },
       },
@@ -1895,21 +1895,21 @@ const na_adjective = function (word: any) {
     past_indicative: {
       plain: {
         positive: {
-          kanji: word.word + "だった",
+          kanji: word.slug + "だった",
           kana: word.readings[0] + "だった",
         },
         negative: {
-          kanji: word.word + "ではなかった",
+          kanji: word.slug + "ではなかった",
           kana: word.readings[0] + "ではなかった",
         },
       },
       polite: {
         positive: {
-          kanji: word.word + "でした",
+          kanji: word.slug + "でした",
           kana: word.readings[0] + "でした",
         },
         negative: {
-          kanji: word.word + "ではありませんでした",
+          kanji: word.slug + "ではありませんでした",
           kana: word.readings[0] + "ではありませんでした",
         },
       },
@@ -1917,21 +1917,21 @@ const na_adjective = function (word: any) {
     presumptive: {
       plain: {
         positive: {
-          kanji: word.word + "だろう",
+          kanji: word.slug + "だろう",
           kana: word.readings[0] + "だろう",
         },
         negative: {
-          kanji: word.word + "ではなかろう",
+          kanji: word.slug + "ではなかろう",
           kana: word.readings[0] + "ではなかろう",
         },
       },
       polite: {
         positive: {
-          kanji: word.word + "でしょう",
+          kanji: word.slug + "でしょう",
           kana: word.readings[0] + "でしょう",
         },
         negative: {
-          kanji: word.word + "ではないでしょう",
+          kanji: word.slug + "ではないでしょう",
           kana: word.readings[0] + "ではないでしょう",
         },
       },
@@ -1939,21 +1939,21 @@ const na_adjective = function (word: any) {
     past_presumptive: {
       plain: {
         positive: {
-          kanji: word.word + "だったろう",
+          kanji: word.slug + "だったろう",
           kana: word.readings[0] + "だったろう",
         },
         negative: {
-          kanji: word.word + "ではなかったろう",
+          kanji: word.slug + "ではなかったろう",
           kana: word.readings[0] + "ではなかったろう",
         },
       },
       polite: {
         positive: {
-          kanji: word.word + "だったでしょう",
+          kanji: word.slug + "だったでしょう",
           kana: word.readings[0] + "だったでしょう",
         },
         negative: {
-          kanji: word.word + "ではなかったでしょう",
+          kanji: word.slug + "ではなかったでしょう",
           kana: word.readings[0] + "ではなかったでしょう",
         },
       },
@@ -1961,30 +1961,30 @@ const na_adjective = function (word: any) {
     provisional: {
       plain: {
         positive: {
-          kanji: word.word + "なら",
+          kanji: word.slug + "なら",
           kana: word.readings[0] + "なら",
         },
         negative: {
-          kanji: word.word + "でなければ",
+          kanji: word.slug + "でなければ",
           kana: word.readings[0] + "でなければ",
         },
       },
     },
     continuative: {
       plain: {
-        positive: { kanji: word.word + "で", kana: word.readings[0] + "で" },
+        positive: { kanji: word.slug + "で", kana: word.readings[0] + "で" },
         negative: {
-          kanji: word.word + "ではなくて",
+          kanji: word.slug + "ではなくて",
           kana: word.readings[0] + "ではなくて",
         },
       },
       polite: {
         positive: {
-          kanji: word.word + "でして",
+          kanji: word.slug + "でして",
           kana: word.readings[0] + "でして",
         },
         negative: {
-          kanji: word.word + "ではありませんでして",
+          kanji: word.slug + "ではありませんでして",
           kana: word.readings[0] + "ではありませんでして",
         },
       },
@@ -1992,35 +1992,35 @@ const na_adjective = function (word: any) {
     conditional: {
       plain: {
         positive: {
-          kanji: word.word + "だったら",
+          kanji: word.slug + "だったら",
           kana: word.readings[0] + "だったら",
         },
         negative: {
-          kanji: word.word + "でなかったら",
+          kanji: word.slug + "でなかったら",
           kana: word.readings[0] + "でなかったら",
         },
       },
       polite: {
         positive: {
-          kanji: word.word + "でしたら",
+          kanji: word.slug + "でしたら",
           kana: word.readings[0] + "でしたら",
         },
         negative: {
-          kanji: word.word + "でありませんでしたら",
+          kanji: word.slug + "でありませんでしたら",
           kana: word.readings[0] + "でありませんでしたら",
         },
       },
     },
-    adverb: { kanji: word.word + "に", kana: word.readings[0] + "に" },
-    become: { kanji: word.word + "になる", kana: word.readings[0] + "になる" },
+    adverb: { kanji: word.slug + "に", kana: word.readings[0] + "に" },
+    become: { kanji: word.slug + "になる", kana: word.readings[0] + "になる" },
     unbearably: {
-      kanji: word.word + "でたまらない",
+      kanji: word.slug + "でたまらない",
       kana: word.readings[0] + "でたまらない",
     },
-    noun: { kanji: word.word, kana: word.readings[0] },
-    looks: { kanji: word.word + "そう", kana: word.readings[0] + "そう" },
-    too: { kanji: word.word + "すぎる", kana: word.readings[0] + "すぎる" },
-    attributive: { kanji: word.word + "な", kana: word.readings[0] + "な" },
+    noun: { kanji: word.slug, kana: word.readings[0] },
+    looks: { kanji: word.slug + "そう", kana: word.readings[0] + "そう" },
+    too: { kanji: word.slug + "すぎる", kana: word.readings[0] + "すぎる" },
+    attributive: { kanji: word.slug + "な", kana: word.readings[0] + "な" },
   };
 };
 

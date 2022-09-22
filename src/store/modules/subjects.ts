@@ -1,19 +1,25 @@
 import router from "@/router";
 import Vue from "vue";
 import axiosWaniKani from "@/axios/axios-wanikani";
-import { Verb } from "@/assets/classes.ts";
-import { pick, values, flatten, chain } from "lodash";
+import { Verb } from "@/classes/verbs";
+import { NaAdjective, IAdjective } from "@/classes/adjectives";
+import { pick, values, flatten, chain, uniq } from "lodash";
+import { eUserAnswer } from "@/interfaces/common.ts";
 
 export const namespaced = true;
 
 export interface State {
   verbs: Array<any>;
+  naAdjectives: Array<any>;
+  iAdjectives: Array<any>;
 }
 
 const state: State = {
   // kanji: [],
   // vocab: [],
   verbs: [],
+  naAdjectives: [],
+  iAdjectives: [],
 };
 
 const mutations = {
@@ -26,11 +32,18 @@ const mutations = {
   updateSubjectsVerbs: (state: any, data: any) => {
     state.verbs = data;
   },
+  updateNaAdjectives: (state: any, data: any) => {
+    state.naAdjectives = data;
+  },
+  updateIAdjectives: (state: any, data: any) => {
+    state.iAdjectives = data;
+  },
   updateAnswer: (state: any, data: any) => {
     const parts = data.path.split(".");
     const verb = state.verbs.find((v: any) => v.slug == parts[0]);
     const conj = verb.conjugations[parts[1]][parts[2]][parts[3]];
     conj.answered = data.answer;
+    conj.attempts = conj.attempts + 1;
   },
 };
 
@@ -120,6 +133,36 @@ const actions = {
               )
               .map((v: any) => new Verb(v))
           );
+          context.commit(
+            "updateNaAdjectives",
+            uniq(
+              flatten(
+                ret
+                  .filter(
+                    (v: any) =>
+                      v.data.parts_of_speech.includes("な adjective") &&
+                      v.data.slug.slice(-2) != "ない"
+                  )
+                  .map((v: any) => new NaAdjective(v))
+                // .map((v: any) => v.data.parts_of_speech)))
+              )
+            )
+          );
+          context.commit(
+            "updateIAdjectives",
+            uniq(
+              flatten(
+                ret
+                  .filter(
+                    (v: any) =>
+                      v.data.parts_of_speech.includes("い adjective") &&
+                      v.data.slug.slice(-2) != "ない"
+                  )
+                  .map((v: any) => new IAdjective(v))
+                // .map((v: any) => v.data.parts_of_speech)))
+              )
+            )
+          );
         })
         .catch((error: any) => {
           context.commit("app/updateLoading", -1, { root: true });
@@ -161,80 +204,35 @@ const getters = {
   getVerbsForLevel: (state: any) => (level: number) => {
     return state.verbs.filter((v: any) => v.level == level);
   },
+  getNaAdjective: (state: any) => (verb: any) => {
+    return state.naAdjectives.find((a: any) => a.naAdjective == verb);
+  },
+  getNaAdjectivesForLevel: (state: any) => (level: number) => {
+    return state.naAdjectives.filter((a: any) => a.level == level);
+  },
+  getIAdjective: (state: any) => (verb: any) => {
+    return state.iAdjectives.find((a: any) => a.iAdjective == verb);
+  },
+  getIAdjectivesForLevel: (state: any) => (level: number) => {
+    return state.iAdjectives.filter((a: any) => a.level == level);
+  },
 
   getQuestion:
-    (state: any, context: any, rootState: any, rootContext: any) =>
+    (state: any, getters: any, rootState: any, rootGetters: any) =>
     (item: any) => {
       const parts = item.path.split(".");
       const verb = state.verbs.find((v: any) => v.slug == parts[0]);
       return verb.conjugations[parts[1]][parts[2]][parts[3]];
     },
-  // getQuestion: (state: any, context: any, rootState: any, rootContext: any) => (id: any) => {
-  //   // return "hello";
-  //   return state.verbs.find((v: any) =>
-  //     v.conjugations.causative.plain.negative.id == id ||
-  //     v.conjugations.causative.plain.positive.id == id ||
-  //     v.conjugations.causative.polite.negative.id == id ||
-  //     v.conjugations.causative.polite.positive.id == id ||
-  //     v.conjugations.conditional.plain.negative.id == id ||
-  //     v.conjugations.conditional.plain.positive.id == id ||
-  //     v.conjugations.conditional.polite.negative.id == id ||
-  //     v.conjugations.conditional.polite.positive.id == id ||
-  //     v.conjugations.imperative.abrupt.negative.id == id ||
-  //     v.conjugations.imperative.abrupt.positive.id == id ||
-  //     v.conjugations.imperative.plain.negative.id == id ||
-  //     v.conjugations.imperative.plain.positive.id == id ||
-  //     v.conjugations.indicative.plain.negative.id == id ||
-  //     v.conjugations.indicative.plain.positive.id == id ||
-  //     v.conjugations.indicative.polite.negative.id == id ||
-  //     v.conjugations.indicative.polite.positive.id == id ||
-  //     v.conjugations.passive.plain.negative.id == id ||
-  //     v.conjugations.passive.plain.positive.id == id ||
-  //     v.conjugations.passive.polite.negative.id == id ||
-  //     v.conjugations.passive.polite.positive.id == id ||
-  //     v.conjugations.past_indicative.plain.negative.id == id ||
-  //     v.conjugations.past_indicative.plain.positive.id == id ||
-  //     v.conjugations.past_indicative.polite.negative.id == id ||
-  //     v.conjugations.past_indicative.polite.positive.id == id ||
-  //     v.conjugations.past_presumptive.plain.negative.id == id ||
-  //     v.conjugations.past_presumptive.plain.positive.id == id ||
-  //     v.conjugations.past_presumptive.polite.negative.id == id ||
-  //     v.conjugations.past_presumptive.polite.positive.id == id ||
-  //     v.conjugations.past_progressive.plain.negative.id == id ||
-  //     v.conjugations.past_progressive.plain.positive.id == id ||
-  //     v.conjugations.past_progressive.polite.negative.id == id ||
-  //     v.conjugations.past_progressive.polite.positive.id == id ||
-  //     v.conjugations.potential.plain.negative.id == id ||
-  //     v.conjugations.potential.plain.positive.id == id ||
-  //     v.conjugations.potential.polite.negative.id == id ||
-  //     v.conjugations.potential.polite.positive.id == id ||
-  //     v.conjugations.presumptive.plain.negative.id == id ||
-  //     v.conjugations.presumptive.plain.positive.id == id ||
-  //     v.conjugations.presumptive.polite.negative.id == id ||
-  //     v.conjugations.presumptive.polite.positive.id == id ||
-  //     v.conjugations.progressive.plain.negative.id == id ||
-  //     v.conjugations.progressive.plain.positive.id == id ||
-  //     v.conjugations.progressive.polite.negative.id == id ||
-  //     v.conjugations.progressive.polite.positive.id == id ||
-  //     v.conjugations.provisional.plain.negative.id == id ||
-  //     v.conjugations.provisional.plain.positive.id == id ||
-  //     v.conjugations.request.honorific.negative.id == id ||
-  //     v.conjugations.request.honorific.positive.id == id ||
-  //     v.conjugations.request.polite.negative.id == id ||
-  //     v.conjugations.request.polite.positive.id == id ||
-  //     v.conjugations.volitional.plain.negative.id == id ||
-  //     v.conjugations.volitional.plain.positive.id == id ||
-  //     v.conjugations.volitional.polite.negative.id == id ||
-  //     v.conjugations.volitional.polite.positive.id == id
-  //   )
-  // },
-  getQuestions: (
+  getAnsweredCorrectly: (
     state: any,
     getters: any,
     rootState: any,
     rootGetters: any
   ) => {
-    const a = state.verbs.map((p: any) => p.conjugations);
+    const a = state.verbs
+      .filter((l: any) => rootState.options.selected.levels.includes(l.level))
+      .map((p: any) => p.conjugations);
     const b = flatten(
       a.map((b: any) => values(pick(b, rootState.options.selected.form)))
     );
@@ -244,11 +242,84 @@ const getters = {
     const d = flatten(
       c.map((d: any) => values(pick(d, rootState.options.selected.positivity)))
     );
-    // return d;
-    return d.map((d: any) => {
-      return { id: d.id, path: d.path };
-    });
+    const corrects = d.filter(
+      (s: any) => s.answered == eUserAnswer.Correct && s.attempts == 1
+    );
+    return corrects;
   },
+  getAnsweredIncorrectly: (
+    state: any,
+    getters: any,
+    rootState: any,
+    rootGetters: any
+  ) => {
+    const a = state.verbs
+      .filter((l: any) => rootState.options.selected.levels.includes(l.level))
+      .map((p: any) => p.conjugations);
+    const b = flatten(
+      a.map((b: any) => values(pick(b, rootState.options.selected.form)))
+    );
+    const c = flatten(
+      b.map((c: any) => values(pick(c, rootState.options.selected.politeness)))
+    );
+    const d = flatten(
+      c.map((d: any) => values(pick(d, rootState.options.selected.positivity)))
+    );
+    const corrects = d.filter(
+      (s: any) =>
+        s.answered == eUserAnswer.Incorrect ||
+        (s.answered == eUserAnswer.Correct && s.attempts > 1)
+    );
+    return corrects;
+  },
+  getUnanswered: (
+    state: any,
+    getters: any,
+    rootState: any,
+    rootGetters: any
+  ) => {
+    const a = state.verbs
+      .filter((l: any) => rootState.options.selected.levels.includes(l.level))
+      .map((p: any) => p.conjugations);
+    const b = flatten(
+      a.map((b: any) => values(pick(b, rootState.options.selected.form)))
+    );
+    const c = flatten(
+      b.map((c: any) => values(pick(c, rootState.options.selected.politeness)))
+    );
+    const d = flatten(
+      c.map((d: any) => values(pick(d, rootState.options.selected.positivity)))
+    );
+    const corrects = d.filter((s: any) => s.answered == eUserAnswer.Unanswered);
+    return corrects;
+  },
+  getQuestions:
+    (state: any, getters: any, rootState: any, rootGetters: any) => () => {
+      const a = state.verbs
+        .filter((l: any) => rootState.options.selected.levels.includes(l.level))
+        .map((p: any) => p.conjugations);
+      const b = flatten(
+        a.map((b: any) => values(pick(b, rootState.options.selected.form)))
+      );
+      const c = flatten(
+        b.map((c: any) =>
+          values(pick(c, rootState.options.selected.politeness))
+        )
+      );
+      const d = flatten(
+        c.map((d: any) =>
+          values(pick(d, rootState.options.selected.positivity))
+        )
+      );
+      // return d;
+      const q =
+        d.length == 0
+          ? []
+          : d.map((d: any) => {
+              return { id: d.id, path: d.path };
+            });
+      return q;
+    },
 };
 
 export default {
