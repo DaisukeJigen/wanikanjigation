@@ -100,7 +100,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import { mapState, mapActions, mapGetters } from "vuex";
 import HoverHelp from "@/components/HoverHelp.vue";
 
@@ -109,7 +109,7 @@ import HoverHelp from "@/components/HoverHelp.vue";
     "hover-help": HoverHelp,
   },
   computed: {
-    ...mapState("options", ["options", "selected"]),
+    ...mapState("options", ["verbOptions", "adjectiveOptions", "selected"]),
   },
   methods: {
     ...mapActions("options", [
@@ -132,6 +132,7 @@ import HoverHelp from "@/components/HoverHelp.vue";
   },
 })
 export default class Options extends Vue {
+  @Prop() type!: any;
   async setOptions() {
     const self: any = this;
     const isValid = await this.$refs.observer.validate();
@@ -141,7 +142,7 @@ export default class Options extends Vue {
   }
   get ops() {
     const self: any = this;
-    return self.options;
+    return self.type == "verb" ? self.verbOptions : self.adjectiveOptions;
   }
   // get sel() {
   //   const self: any = this;

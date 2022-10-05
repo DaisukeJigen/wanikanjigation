@@ -61,7 +61,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import { mapGetters } from "vuex";
 import { eUserAnswer } from "@/interfaces/common.ts";
 
@@ -82,21 +82,22 @@ import { eUserAnswer } from "@/interfaces/common.ts";
   //}
 })
 export default class Results extends Vue {
+  @Prop() type: any;
   get questions() {
     const self: any = this;
-    return self.getQuestions()();
+    return self.getQuestions()(self.type);
   }
   get correctlyAnswered() {
     const self: any = this;
-    return self.getAnsweredCorrectly();
+    return self.getAnsweredCorrectly()(self.type);
   }
   get incorrectlyAnswered() {
     const self: any = this;
-    return self.getAnsweredIncorrectly();
+    return self.getAnsweredIncorrectly()(self.type);
   }
   get unanswered() {
     const self: any = this;
-    return self.getUnanswered();
+    return self.getUnanswered()(self.type);
   }
 }
 </script>

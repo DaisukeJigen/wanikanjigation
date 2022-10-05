@@ -24,6 +24,7 @@ import { conjugate } from "@/assets/conjugate.ts";
 import { merge } from "lodash";
 // import { store } from "@/store";
 import { v4 as uuidv4 } from "uuid";
+import store from "@/store";
 
 class Verb implements iVerb {
   id: string;
@@ -36,6 +37,7 @@ class Verb implements iVerb {
   readings: Array<string>;
   partsOfSpeech: Array<string>;
   conjugations: iConjugationObject;
+  srsLevel: Function;
 
   constructor(data: any) {
     // console.log(data.data.slug);
@@ -58,6 +60,7 @@ class Verb implements iVerb {
     //     delete conj.polite;
     //   }
     // });
+    this.srsLevel = () => { debugger; return store.getters["assignments/getAssignment"](data.id) };
   }
 }
 

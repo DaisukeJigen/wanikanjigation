@@ -18,14 +18,20 @@
           <span class="error">No questions returned for criteria</span><br />
           <b-button @click.prevent="progress = -1">Retry</b-button>
         </template>
-        <options v-if="progress == -1" @optionsSet="start"></options>
+        <options
+          v-if="progress == -1"
+          @optionsSet="start"
+          :type="questionType"
+        ></options>
         <results
+          :type="questionType"
           v-else-if="(progress > -1 && questions.length == 0) || EarlyFinish"
         ></results>
         <question
           v-else
           @next="nextQuestion"
           :question.sync="currentQuestion"
+          :type="questionType"
           @early-finish="
             () => {
               EarlyFinish = true;
@@ -66,30 +72,17 @@ import Results from "@/components/Results.vue";
   },
 })
 export default class Test extends Vue {
-  // mounted() {
-  //   const self: any = this;
-  //   self.questions = self.getQuestions();
-  //   self.totalQuestions = self.questions.length;
-  // }
-
-  // get correctSoFar(){
-  //   const self: any = this;
-  //   return self.questions.filter((q: any) => q.answered == eUserAnswer.Correct).length;
-  // }
-  //
-  // get incorrectSoFar(){
-  //   const self: any = this;
-  //   return self.questions.filter((q: any) => q.answered == eUserAnswer.Incorrect).length;
-  // }
-
+  get questionType() {
+    const self: any = this;
+    return self.$route.params.type;
+  }
   start() {
     const self: any = this;
     self.progress = 0;
-    // self.questions = self.getQuestions();.then(() => {
-    self.questions = self.getQuestions()();
+    debugger;
+    self.questions = self.getQuestions()(self.questionType);
     self.totalQuestions = self.questions.length;
     self.currentQuestion = self.randomQuestion();
-    // })
   }
 
   nextQuestion(answer = eUserAnswer.Incorrect) {
@@ -103,7 +96,6 @@ export default class Test extends Vue {
 
   randomQuestion() {
     const self: any = this;
-    // return self.getQuestion()(self.questions[random(0, self.questions.length - 1)]);
     return self.questions.filter((q: any) => q.answered != eUserAnswer.Correct)[
       random(0, self.questions.length - 1)
     ];

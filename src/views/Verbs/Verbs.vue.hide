@@ -2,20 +2,23 @@
   <b-container>
     <b-row>
       <b-col>
-        <b-tabs v-if="allVerbs.length > 0" pills vertical>
+        <b-tabs v-if="allVerbs.length > 0" card>
           <b-tab
             lazy
             v-for="level in levels"
             :title="level.toString()"
             :key="level"
           >
-            <b-tabs pills vertical>
+            <b-tabs id="itemTabs" pills vertical>
               <b-tab
                 lazy
                 v-for="verb in verbsForLevel(level)"
                 :title="verb.slug"
                 :key="verb.slug"
               >
+                <template #title>
+                  <div :class="'srsLevel' + verb.srsLevel(verb.id)">{{ verb.slug }}</div>
+                </template>
                 <verb-details :verb="verb" :key="verb.slug"></verb-details>
               </b-tab>
             </b-tabs>

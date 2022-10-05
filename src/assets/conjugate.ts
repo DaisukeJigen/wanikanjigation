@@ -1858,16 +1858,52 @@ const i_adjective = function (word: any) {
         },
       },
     },
-    adverb: { kanji: stem.kanji + "く", kana: stem.kana + "く" },
-    become: { kanji: stem.kanji + "くなる", kana: stem.kana + "くなる" },
-    unbearably: {
-      kanji: stem.kanji + "くてたまらない",
-      kana: stem.kana + "くてたまらない",
+    // adverb: { kanji: stem.kanji + "く", kana: stem.kana + "く" },
+    // become: { kanji: stem.kanji + "くなる", kana: stem.kana + "くなる" },
+    // unbearably: {
+    //   kanji: stem.kanji + "くてたまらない",
+    //   kana: stem.kana + "くてたまらない",
+    // },
+    // noun: { kanji: stem.kanji + "さ", kana: stem.kana + "さ" },
+    // looks: { kanji: stem.kanji + "そう", kana: stem.kana + "そう" },
+    // too: { kanji: stem.kanji + "すぎる", kana: stem.kana + "すぎる" },
+    // attributive: { kanji: word.slug, kana: word.readings[0] },
+    adverb: {
+      plain: {
+        poisitive: { kanji: stem.kanji + "く", kana: stem.kana + "く" },
+      },
     },
-    noun: { kanji: stem.kanji + "さ", kana: stem.kana + "さ" },
-    looks: { kanji: stem.kanji + "そう", kana: stem.kana + "そう" },
-    too: { kanji: stem.kanji + "すぎる", kana: stem.kana + "すぎる" },
-    attributive: { kanji: word.slug, kana: word.readings[0] },
+    become: {
+      plain: {
+        poisitive: { kanji: stem.kanji + "くなる", kana: stem.kana + "くなる" },
+      },
+    },
+    unbearably: {
+      plain: {
+        poisitive: {
+          kanji: stem.kanji + "くてたまらない",
+          kana: stem.kana + "くてたまらない",
+        },
+      },
+    },
+    noun: {
+      plain: {
+        poisitive: { kanji: stem.kanji + "さ", kana: stem.kana + "さ" },
+      },
+    },
+    looks: {
+      plain: {
+        poisitive: { kanji: stem.kanji + "そう", kana: stem.kana + "そう" },
+      },
+    },
+    too: {
+      plain: {
+        poisitive: { kanji: stem.kanji + "すぎる", kana: stem.kana + "すぎる" },
+      },
+    },
+    attributive: {
+      plain: { poisitive: { kanji: word.slug, kana: word.readings[0] } },
+    },
   };
 };
 

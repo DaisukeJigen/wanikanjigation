@@ -51,3 +51,106 @@
   border-radius: 5px;
   padding: 0 5px 0 5px;
 }
+
+#levelTabs {
+  .card-header{
+    ul {
+      li {
+        width: 50px;
+        // border: 1px solid $blue;
+        // border-radius: 5px;
+        // margin: 2px;
+        a {
+          padding: 2px;
+        }
+      }
+    }
+  }
+  // #itemTabs{
+  //   ul{
+  //     li{
+  //         padding: 2px;
+  //       a {
+  //       border-radius: 5px;
+  //       border: 1px solid $blue;
+  //       margin: 2px;
+  //       }
+  //     }
+  //   }
+  // }
+}
+
+#levelTabs,#itemTabs {
+  ul{
+    li{
+        padding: 2px;
+      a {
+        // border-radius: 5px;
+        // border: 1px solid $blue;
+        // margin: 2px;
+        // padding: 8px 16px 16px 8px !important;
+        padding: 0;
+        div {
+          padding: 8px 16px 8px 16px !important;
+          border-color: #dee2e6 #dee2e6 #fff;
+          // border-radius: 4px 4px 0 0;
+          border-radius:4px;
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
+@mixin srsBackground($color, $colorLight) {
+  background-color: $color;
+  background-repeat: repeat-x;
+  background-image: -moz-linear-gradient(-45deg, $colorLight, $color);
+  background-image: -webkit-linear-gradient(-45deg, $colorLight, $color);
+  background-image: -o-linear-gradient(-45deg, $colorLight, $color);
+  background-image: linear-gradient(-45deg, $colorLight, $color);
+  a.active & {
+    // background-image: -moz-linear-gradient(-45deg, darken($colorLight, 20), darken($color, 20));
+    // background-image: -webkit-linear-gradient(-45deg, darken($colorLight, 20), darken($color, 20));
+    // background-image: -o-linear-gradient(-45deg, darken($colorLight, 20), darken($color, 20));
+    // background-image: linear-gradient(-45deg, darken($colorLight, 20), darken($color, 20));
+    background-image: -moz-linear-gradient(-45deg, $green, $color);
+    background-image: -webkit-linear-gradient(-45deg, $green, $color);
+    background-image: -o-linear-gradient(-45deg, $green, $color);
+    background-image: linear-gradient(-45deg, $green, $color);
+  }
+}
+
+.srsLevel0 {
+  @include srsBackground($locked, $lockedLight);
+}
+
+.srsLevel1, .srsLevel2, .srsLevel3, .srsLevel4 {
+  // background-color: $apprentice;
+  // background-repeat: repeat-x;
+  // background-image: -moz-linear-gradient(-45deg, lighten($apprentice, 10), $apprentice);
+  // background-image: -webkit-linear-gradient(-45deg, lighten($apprentice, 10), $apprentice);
+  // background-image: -o-linear-gradient(-45deg, lighten($apprentice, 10), $apprentice);
+  // background-image: linear-gradient(-45deg, lighten($apprentice, 10), $apprentice);
+  @include srsBackground($apprentice, $apprenticeLight);
+}
+.srsLevel5, .srsLevel6 {
+  // background-color: $guru;
+  // background-repeat: repeat-x;
+  @include srsBackground($guru, $guruLight);
+}
+.srsLevel7 {
+  // background-color: $master;
+  // background-repeat: repeat-x;
+  @include srsBackground($master, $masterLight);
+}
+.srsLevel8 {
+  // background-color: $enlightened;
+  // background-repeat: repeat-x;
+  @include srsBackground($enlightened, $enlightenedLight);
+}
+.srsLevel9 {
+  // background-color: $burn;
+  // background-repeat: repeat-x;
+  @include srsBackground($burn, $burnLight);
+}

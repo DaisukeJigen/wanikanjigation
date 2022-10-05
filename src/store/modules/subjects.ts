@@ -219,83 +219,150 @@ const getters = {
 
   getQuestion:
     (state: any, getters: any, rootState: any, rootGetters: any) =>
-    (item: any) => {
+    (item: any, questionType: any) => {
+      let base = [];
       const parts = item.path.split(".");
-      const verb = state.verbs.find((v: any) => v.slug == parts[0]);
-      return verb.conjugations[parts[1]][parts[2]][parts[3]];
+      switch (questionType.toLowerCase()) {
+        case "verbs":
+          base = state.verbs;
+          break;
+        case "naadjectives":
+          base = state.naAdjectives;
+          break;
+        case "iadjectives":
+          base = state.iAdjectives;
+          break;
+        default:
+          base = [];
+          break;
+      }
+      const q = base.find((v: any) => v.slug == parts[0]);
+      return q.conjugations[parts[1]][parts[2]][parts[3]];
     },
-  getAnsweredCorrectly: (
-    state: any,
-    getters: any,
-    rootState: any,
-    rootGetters: any
-  ) => {
-    const a = state.verbs
-      .filter((l: any) => rootState.options.selected.levels.includes(l.level))
-      .map((p: any) => p.conjugations);
-    const b = flatten(
-      a.map((b: any) => values(pick(b, rootState.options.selected.form)))
-    );
-    const c = flatten(
-      b.map((c: any) => values(pick(c, rootState.options.selected.politeness)))
-    );
-    const d = flatten(
-      c.map((d: any) => values(pick(d, rootState.options.selected.positivity)))
-    );
-    const corrects = d.filter(
-      (s: any) => s.answered == eUserAnswer.Correct && s.attempts == 1
-    );
-    return corrects;
-  },
-  getAnsweredIncorrectly: (
-    state: any,
-    getters: any,
-    rootState: any,
-    rootGetters: any
-  ) => {
-    const a = state.verbs
-      .filter((l: any) => rootState.options.selected.levels.includes(l.level))
-      .map((p: any) => p.conjugations);
-    const b = flatten(
-      a.map((b: any) => values(pick(b, rootState.options.selected.form)))
-    );
-    const c = flatten(
-      b.map((c: any) => values(pick(c, rootState.options.selected.politeness)))
-    );
-    const d = flatten(
-      c.map((d: any) => values(pick(d, rootState.options.selected.positivity)))
-    );
-    const corrects = d.filter(
-      (s: any) =>
-        s.answered == eUserAnswer.Incorrect ||
-        (s.answered == eUserAnswer.Correct && s.attempts > 1)
-    );
-    return corrects;
-  },
-  getUnanswered: (
-    state: any,
-    getters: any,
-    rootState: any,
-    rootGetters: any
-  ) => {
-    const a = state.verbs
-      .filter((l: any) => rootState.options.selected.levels.includes(l.level))
-      .map((p: any) => p.conjugations);
-    const b = flatten(
-      a.map((b: any) => values(pick(b, rootState.options.selected.form)))
-    );
-    const c = flatten(
-      b.map((c: any) => values(pick(c, rootState.options.selected.politeness)))
-    );
-    const d = flatten(
-      c.map((d: any) => values(pick(d, rootState.options.selected.positivity)))
-    );
-    const corrects = d.filter((s: any) => s.answered == eUserAnswer.Unanswered);
-    return corrects;
-  },
-  getQuestions:
-    (state: any, getters: any, rootState: any, rootGetters: any) => () => {
+  getAnsweredCorrectly:
+    (state: any, getters: any, rootState: any, rootGetters: any) =>
+    (questionType: string) => {
+      let base = [];
+      switch (questionType.toLowerCase()) {
+        case "verbs":
+          base = state.verbs;
+          break;
+        case "naadjectives":
+          base = state.naAdjectives;
+          break;
+        case "iadjectives":
+          base = state.iadjectives;
+          break;
+        default:
+          base = [];
+          break;
+      }
+      const a = base
+        .filter((l: any) => rootState.options.selected.levels.includes(l.level))
+        .map((p: any) => p.conjugations);
+      const b = flatten(
+        a.map((b: any) => values(pick(b, rootState.options.selected.form)))
+      );
+      const c = flatten(
+        b.map((c: any) =>
+          values(pick(c, rootState.options.selected.politeness))
+        )
+      );
+      const d = flatten(
+        c.map((d: any) =>
+          values(pick(d, rootState.options.selected.positivity))
+        )
+      );
+      const corrects = d.filter(
+        (s: any) => s.answered == eUserAnswer.Correct && s.attempts == 1
+      );
+      return corrects;
+    },
+  getAnsweredIncorrectly:
+    (state: any, getters: any, rootState: any, rootGetters: any) =>
+    (questionType: string) => {
+      const base = [];
       const a = state.verbs
+        .filter((l: any) => rootState.options.selected.levels.includes(l.level))
+        .map((p: any) => p.conjugations);
+      const b = flatten(
+        a.map((b: any) => values(pick(b, rootState.options.selected.form)))
+      );
+      const c = flatten(
+        b.map((c: any) =>
+          values(pick(c, rootState.options.selected.politeness))
+        )
+      );
+      const d = flatten(
+        c.map((d: any) =>
+          values(pick(d, rootState.options.selected.positivity))
+        )
+      );
+      const corrects = d.filter(
+        (s: any) =>
+          s.answered == eUserAnswer.Incorrect ||
+          (s.answered == eUserAnswer.Correct && s.attempts > 1)
+      );
+      return corrects;
+    },
+  getUnanswered:
+    (state: any, getters: any, rootState: any, rootGetters: any) =>
+    (questionType: string) => {
+      let base = [];
+      switch (questionType.toLowerCase()) {
+        case "verbs":
+          base = state.verbs;
+          break;
+        case "naadjectives":
+          base = state.naAdjectives;
+          break;
+        case "iadjectives":
+          base = state.iadjectives;
+          break;
+        default:
+          base = [];
+          break;
+      }
+      const a = base
+        .filter((l: any) => rootState.options.selected.levels.includes(l.level))
+        .map((p: any) => p.conjugations);
+      const b = flatten(
+        a.map((b: any) => values(pick(b, rootState.options.selected.form)))
+      );
+      const c = flatten(
+        b.map((c: any) =>
+          values(pick(c, rootState.options.selected.politeness))
+        )
+      );
+      const d = flatten(
+        c.map((d: any) =>
+          values(pick(d, rootState.options.selected.positivity))
+        )
+      );
+      const corrects = d.filter(
+        (s: any) => s.answered == eUserAnswer.Unanswered
+      );
+      return corrects;
+    },
+  getQuestions:
+    (state: any, getters: any, rootState: any, rootGetters: any) =>
+    (questionType: string) => {
+      let base = [];
+      switch (questionType.toLowerCase()) {
+        case "verbs":
+          base = state.verbs;
+          break;
+        case "naadjectives":
+          base = state.naAdjectives;
+          break;
+        case "iadjectives":
+          base = state.iAdjectives;
+          break;
+        default:
+          base = [];
+          break;
+      }
+      const a = base
         .filter((l: any) => rootState.options.selected.levels.includes(l.level))
         .map((p: any) => p.conjugations);
       const b = flatten(

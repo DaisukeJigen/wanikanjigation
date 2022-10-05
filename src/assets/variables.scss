@@ -64,26 +64,50 @@ $colors: map-merge(
   $colors
 );
 
-$primary:       $blue !default;
-$secondary:     $gray-600 !default;
-$success:       $green !default;
-$info:          $cyan !default;
-$warning:       $yellow !default;
-$danger:        $red !default;
-$light:         $gray-100 !default;
-$dark:          $gray-800 !default;
+$primary:             $blue !default;
+$secondary:           $gray-600 !default;
+$success:             $green !default;
+$info:                $cyan !default;
+$warning:             $yellow !default;
+$danger:              $red !default;
+$light:               $gray-100 !default;
+$dark:                $gray-800 !default;
+$apprentice:          #dd0093 !default;
+$apprenticeLight:     #f0a !default;
+$guru:                #882d9e !default;
+$guruLight:           #aa38c6 !default;
+$master:              #294ddb !default;
+$masterLight:         #5571e2 !default;
+$enlightened:         #0093dd !default;
+$enlightenedLight:    #0af !default;
+$burn:                #fbc042 !default;
+$burnLight:           #fbc550 !default;
+$locked:              $gray-800 !default;
+$lockedLight:         $gray-600;
 
 $theme-colors: () !default;
 $theme-colors: map-merge(
   (
-    "primary":    $primary,
-    "secondary":  $secondary,
-    "success":    $success,
-    "info":       $info,
-    "warning":    $warning,
-    "danger":     $danger,
-    "light":      $light,
-    "dark":       $dark
+    "primary":            $primary,
+    "secondary":          $secondary,
+    "success":            $success,
+    "info":               $info,
+    "warning":            $warning,
+    "danger":             $danger,
+    "light":              $light,
+    "dark":               $dark,
+    "apprentice":         $apprentice,
+    "apprenticeLight":    $apprenticeLight,
+    "guru":               $guru,
+    "guruLight":          $guruLight,
+    "master":             $master,
+    "masterLight":        $masterLight,
+    "enlightened":        $enlightened,
+    "enlightenedLight":   $enlightenedLight,
+    "burn":               $burn,
+    "burnLight":          $burnLight,
+    "locked":             $locked,
+    "lockedLight":        $lockedLight
   ),
   $theme-colors
 );

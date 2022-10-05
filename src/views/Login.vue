@@ -43,6 +43,7 @@ import router from "@/router";
   methods: {
     ...mapActions("userData", ["updateApiKey", "fetchUserData"]),
     ...mapActions("subjects", ["fetchSubjectsVerbs"]),
+    ...mapActions("assignments", ["fetchAssignments"]),
     ...mapGetters("userData", ["getLevels"]),
   },
   data() {
@@ -58,6 +59,7 @@ export default class Login extends Vue {
     // router.push("verbs");
     // });
     self.fetchUserData().then(() => {
+      self.fetchAssignments(self.levels.join(","));
       self.fetchSubjectsVerbs(self.levels.join(",")).then(() => {
         router.push("/");
       });

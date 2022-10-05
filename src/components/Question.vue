@@ -75,6 +75,7 @@ import { bind } from "wanakana";
 })
 export default class Question extends Vue {
   @Prop() question: any;
+  @Prop() type: any;
   mounted() {
     const self: any = this;
     // self.question = self.RandomQuestion();
@@ -94,7 +95,7 @@ export default class Question extends Vue {
 
   get fullQuestion() {
     const self: any = this;
-    return self.getQuestion()(self.question);
+    return self.getQuestion()(self.question, self.type);
   }
 
   // RandomQuestion() {

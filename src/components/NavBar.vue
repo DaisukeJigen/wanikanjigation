@@ -8,13 +8,15 @@
     <b-navbar-nav>
       <b-nav-item-dropdown text="Verbs" v-if="loggedIn">
         <b-dropdown-item to="/verbs">List</b-dropdown-item>
-        <b-dropdown-item to="/test">Test</b-dropdown-item>
+        <b-dropdown-item to="/test/verbs">Test</b-dropdown-item>
       </b-nav-item-dropdown>
       <b-nav-item-dropdown text="NA Adjectives" v-if="loggedIn">
         <b-dropdown-item to="/naAdjectives">List</b-dropdown-item>
+        <b-dropdown-item to="/test/naadjectives">Test</b-dropdown-item>
       </b-nav-item-dropdown>
       <b-nav-item-dropdown text="I Adjectives" v-if="loggedIn">
         <b-dropdown-item to="/iAdjectives">List</b-dropdown-item>
+        <b-dropdown-item to="/test/iadjectives">Test</b-dropdown-item>
       </b-nav-item-dropdown>
       <b-nav-item to="/login" v-if="!loggedIn">Login</b-nav-item>
     </b-navbar-nav>

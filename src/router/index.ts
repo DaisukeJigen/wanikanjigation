@@ -27,7 +27,7 @@ const routes: Array<RouteConfig> = [
       import(/* webpackChunkName: "login" */ "../views/Login.vue"),
   },
   {
-    path: "/test",
+    path: "/test/:type",
     name: "test",
     component: () => import(/* webpackChunkName: "test" */ "../views/Test.vue"),
     beforeEnter: (to, from, next) => {
@@ -39,41 +39,28 @@ const routes: Array<RouteConfig> = [
       }
     },
   },
+  // {
+  //   path: "/verbs",
+  //   name: "verbs",
+  //   component: () =>
+  //     import(/* webpackChunkName: "verbs" */ "../views/Verbs/Verbs.vue"),
+  //   beforeEnter: (to, from, next) => {
+  //     const test = store.getters;
+  //     if (!store.getters["userData/getLoggedIn"]) {
+  //       next("/login");
+  //     } else {
+  //       next();
+  //     }
+  //   },
+  // },
   {
     path: "/verbs",
     name: "verbs",
     component: () =>
-      import(/* webpackChunkName: "verbs" */ "../views/Verbs.vue"),
-    beforeEnter: (to, from, next) => {
-      const test = store.getters;
-      if (!store.getters["userData/getLoggedIn"]) {
-        next("/login");
-      } else {
-        next();
-      }
+      import(/* webpackChunkName: "items" */ "../views/Items/Items.vue"),
+    props: {
+      type: "verbs"
     },
-  },
-  {
-    path: "/naAdjectives",
-    name: "naAdjectives",
-    component: () =>
-      import(
-        /* webpackChunkName: "naAdjectives" */ "../views/NaAdjectives.vue"
-      ),
-    beforeEnter: (to, from, next) => {
-      const test = store.getters;
-      if (!store.getters["userData/getLoggedIn"]) {
-        next("/login");
-      } else {
-        next();
-      }
-    },
-  },
-  {
-    path: "/iAdjectives",
-    name: "iAdjectives",
-    component: () =>
-      import(/* webpackChunkName: "iAdjectives" */ "../views/IAdjectives.vue"),
     beforeEnter: (to, from, next) => {
       const test = store.getters;
       if (!store.getters["userData/getLoggedIn"]) {
@@ -87,7 +74,75 @@ const routes: Array<RouteConfig> = [
     path: "/verblookup/:verb",
     name: "verblookup",
     component: () =>
-      import(/* webpackChunkName: "verblookup" */ "../views/VerbLookup.vue"),
+      import(
+        /* webpackChunkName: "verblookup" */ "../views/Verbs/VerbLookup.vue"
+      ),
+    beforeEnter: (to, from, next) => {
+      const test = store.getters;
+      if (!store.getters["userData/getLoggedIn"]) {
+        next("/login");
+      } else {
+        next();
+      }
+    },
+  },
+  // {
+  //   path: "/naAdjectives",
+  //   name: "naAdjectives",
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "naAdjectives" */ "../views/NaAdjectives/NaAdjectives.vue"
+  //     ),
+  //   beforeEnter: (to, from, next) => {
+  //     const test = store.getters;
+  //     if (!store.getters["userData/getLoggedIn"]) {
+  //       next("/login");
+  //     } else {
+  //       next();
+  //     }
+  //   },
+  // },
+  // {
+  //   path: "/iAdjectives",
+  //   name: "iAdjectives",
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "iAdjectives" */ "../views/IAdjectives/IAdjectives.vue"
+  //     ),
+  //   beforeEnter: (to, from, next) => {
+  //     const test = store.getters;
+  //     if (!store.getters["userData/getLoggedIn"]) {
+  //       next("/login");
+  //     } else {
+  //       next();
+  //     }
+  //   },
+  // },
+  {
+    path: "/naAdjectives",
+    name: "naAdjectives",
+    component: () =>
+      import(/* webpackChunkName: "items" */ "../views/Items/Items.vue"),
+    props: {
+      type: "naAdjectives"
+    },
+    beforeEnter: (to, from, next) => {
+      const test = store.getters;
+      if (!store.getters["userData/getLoggedIn"]) {
+        next("/login");
+      } else {
+        next();
+      }
+    },
+  },
+  {
+    path: "/iAdjectives",
+    name: "iAdjectives",
+    component: () =>
+      import(/* webpackChunkName: "items" */ "../views/Items/Items.vue"),
+    props: {
+      type: "iAdjectives"
+    },
     beforeEnter: (to, from, next) => {
       const test = store.getters;
       if (!store.getters["userData/getLoggedIn"]) {

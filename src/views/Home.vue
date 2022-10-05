@@ -22,10 +22,13 @@
     </p>
     <p v-else>
       <b-button to="verbs">List Verbs</b-button>
-      <b-button to="test">Test Verbs</b-button>
+      <b-button to="test/verbs">Test Verbs</b-button>
       <br />
       <b-button to="naadjectives">NA Adjectives</b-button>
-      <b-button to="naadjectives">I Adjectives</b-button>
+      <b-button to="test/naadjectives">Test Na Adjectives</b-button>
+      <br />
+      <b-button to="iadjectives">I Adjectives</b-button>
+      <b-button to="test/iadjectives">Test I Adjectives</b-button>
     </p>
   </div>
 </template>
@@ -42,6 +45,10 @@ import { mapState } from "vuex";
   },
 })
 export default class Home extends Vue {
+  get verbTestLink() {
+    const self: any = this;
+    return `test/${eQuestionType.Verb}`;
+  }
   login() {
     const self: any = this;
     router.push("login");
