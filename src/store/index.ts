@@ -15,7 +15,9 @@ import optionsModule, { State as optionsState } from "@/store/modules/options";
 import appModule, { State as appState } from "@/store/modules/app";
 import jishoModule, { State as jishoState } from "@/store/modules/jisho";
 import VuexPersistence from "vuex-persist";
-import assignmentsModule, { State as assignmentsState } from "@/store/modules/assignments";
+import assignmentsModule, {
+  State as assignmentsState,
+} from "@/store/modules/assignments";
 
 export interface State {
   userData: userDataState;
@@ -23,7 +25,7 @@ export interface State {
   options: optionsState;
   app: appState;
   jisho: jishoState;
-  assignments: assignmentsState
+  assignments: assignmentsState;
 }
 
 const vuexLocal = new VuexPersistence<State>({
@@ -54,7 +56,7 @@ const store = new Vuex.Store<State>({
     options: optionsModule,
     app: appModule,
     jisho: jishoModule,
-    assignments: assignmentsModule
+    assignments: assignmentsModule,
   },
   plugins: [vuexLocal.plugin],
 });

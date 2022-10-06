@@ -37,7 +37,7 @@ class Verb implements iVerb {
   readings: Array<string>;
   partsOfSpeech: Array<string>;
   conjugations: iConjugationObject;
-  srsLevel: Function;
+  srsLevel: any;
 
   constructor(data: any) {
     // console.log(data.data.slug);
@@ -60,7 +60,9 @@ class Verb implements iVerb {
     //     delete conj.polite;
     //   }
     // });
-    this.srsLevel = () => { debugger; return store.getters["assignments/getAssignment"](data.id) };
+    this.srsLevel = () => {
+      return store.getters["assignments/getAssignment"](data.id);
+    };
   }
 }
 

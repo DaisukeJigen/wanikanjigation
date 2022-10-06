@@ -59,7 +59,7 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(/* webpackChunkName: "items" */ "../views/Items/Items.vue"),
     props: {
-      type: "verbs"
+      type: "verbs",
     },
     beforeEnter: (to, from, next) => {
       const test = store.getters;
@@ -124,7 +124,7 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(/* webpackChunkName: "items" */ "../views/Items/Items.vue"),
     props: {
-      type: "naAdjectives"
+      type: "naAdjectives",
     },
     beforeEnter: (to, from, next) => {
       const test = store.getters;
@@ -141,7 +141,7 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(/* webpackChunkName: "items" */ "../views/Items/Items.vue"),
     props: {
-      type: "iAdjectives"
+      type: "iAdjectives",
     },
     beforeEnter: (to, from, next) => {
       const test = store.getters;

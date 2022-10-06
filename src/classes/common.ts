@@ -154,9 +154,8 @@ class Conjugation implements iConjugation {
   attempts: number;
 
   constructor(path = "", originalKana: string[] = []) {
-    this.answered = eUserAnswer.Unanswered; //[eUserAnswer.Correct, eUserAnswer.Unanswered][
-    //Math.floor(Math.random() * 2)
-    //]; //testing eUserAnswer.Unanswered;
+    this.answered = eUserAnswer.Unanswered;
+    // this.answered = [eUserAnswer.Correct, eUserAnswer.Unanswered][Math.floor(Math.random() * 2)]; //testing
     this.id = uuidv4();
     // this.testable = eTest.Yes;
     // this.testable = store.getters.getSelectedOptions().positivity.includes("")
@@ -164,7 +163,8 @@ class Conjugation implements iConjugation {
     this.kanji = "";
     this.path = `${path}`;
     this.originalKana = originalKana;
-    this.attempts = 0; //Math.floor(Math.random() * 6) + 1; //testing 0;
+    this.attempts = 0;
+    // this.attempts = Math.floor(Math.random() * 6) + 1; //testing
   }
 }
 

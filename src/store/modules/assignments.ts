@@ -9,7 +9,7 @@ export interface State {
 }
 
 const state: State = {
-  assignments: []
+  assignments: [],
 };
 
 const mutations = {
@@ -27,9 +27,7 @@ const actions = {
         .get(url, {})
         .then((ret: any) => {
           context.commit("app/updateLoading", -1, { root: true });
-          context.commit(
-            "updateAssignments",
-            ret)
+          context.commit("updateAssignments", ret);
         })
         .catch((error: any) => {
           context.commit("app/updateLoading", -1, { root: true });
@@ -50,7 +48,8 @@ const actions = {
 
 const getters = {
   getAssignment: (state: any) => (id: any) => {
-    return state.assignments.find((v: any) => v.data.subject_id == id).data.srs_stage;
+    return state.assignments.find((v: any) => v.data.subject_id == id).data
+      .srs_stage;
   },
 };
 

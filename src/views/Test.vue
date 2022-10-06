@@ -79,7 +79,6 @@ export default class Test extends Vue {
   start() {
     const self: any = this;
     self.progress = 0;
-    debugger;
     self.questions = self.getQuestions()(self.questionType);
     self.totalQuestions = self.questions.length;
     self.currentQuestion = self.randomQuestion();

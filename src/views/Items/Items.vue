@@ -22,9 +22,15 @@
                 :key="item.slug"
               >
                 <template #title>
-                  <div :class="'srsLevel' + item.srsLevel(item.id)">{{ item.slug }}</div>
+                  <div :class="'srsLevel' + item.srsLevel(item.id)">
+                    {{ item.slug }}
+                  </div>
                 </template>
-                <item-details :item="item" :type="type" :key="item.slug"></item-details>
+                <item-details
+                  :item="item"
+                  :type="type"
+                  :key="item.slug"
+                ></item-details>
               </b-tab>
             </b-tabs>
           </b-tab>
@@ -75,7 +81,7 @@ export default class Items extends Vue {
     const self: any = this;
     console.log("level " + level);
     // return self.getVerbsForLevel()(level);
-    switch(self.type){
+    switch (self.type) {
       case "verbs":
         return self.getVerbsForLevel()(level);
       case "naAdjectives":
@@ -89,8 +95,7 @@ export default class Items extends Vue {
   get allItems() {
     const self: any = this;
     // return self.verbs;
-    debugger;
-    switch(self.type){
+    switch (self.type) {
       case "verbs":
         return self.verbs;
       case "naAdjectives":

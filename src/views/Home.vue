@@ -45,10 +45,6 @@ import { mapState } from "vuex";
   },
 })
 export default class Home extends Vue {
-  get verbTestLink() {
-    const self: any = this;
-    return `test/${eQuestionType.Verb}`;
-  }
   login() {
     const self: any = this;
     router.push("login");

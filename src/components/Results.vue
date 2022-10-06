@@ -1,62 +1,34 @@
 <template>
   <b-container>
-    <b-row>
-      <b-col>
-        <span id="correct">Correct</span>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col
-        v-for="ans in correctlyAnswered"
-        class="question"
-        :key="ans.kanji + '_correct'"
-      >
-        <!-- <div v-for="ans in correctlyAnswered" class="question"> -->
-        <!-- <template v-for="ans in correctlyAnswered"> -->
-        <span class="kanji">{{ ans.kanji }}</span
-        ><span class="kana">({{ ans.kana }})</span>
-        <!-- </template> -->
-        <!-- </div> -->
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <span id="incorrect">Incorrect</span>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col
-        v-for="ans in incorrectlyAnswered"
-        class="question"
-        :key="ans.kanji + '_incorrect'"
-      >
-        <!-- <div v-for="ans in incorrectlyAnswered" class="question"> -->
-        <!-- <template v-for="ans in incorrectlyAnswered"> -->
-        <span class="kanji">{{ ans.kanji }}</span
-        ><br /><span class="kana">({{ ans.kana }})</span>
-        <!-- </template> -->
-        <!-- </div> -->
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <span id="unanswered">Unanswered</span>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col
-        v-for="ans in unanswered"
-        class="question"
-        :key="ans.kanji + '_unanswered'"
-      >
-        <!-- <div v-for="ans in unanswered" class="question"> -->
-        <!-- <template v-for="ans in unanswered"> -->
-        <span class="kanji">{{ ans.kanji }}</span
-        ><br /><span class="kana">({{ ans.kana }})</span>
-        <!-- </template> -->
-        <!-- </div> -->
-      </b-col>
-    </b-row>
+    <template
+      v-for="answers in [
+        { type: 'Correct', answers: correctlyAnswered },
+        { type: 'Incorrect', answers: incorrectlyAnswered },
+        { type: 'Unanswered', answers: unanswered },
+      ]"
+    >
+      <b-row :key="answers.type + '_header'">
+        <b-col :id="answers.type.toLowerCase()">
+          <span>{{ answers.type }}</span>
+        </b-col>
+      </b-row>
+      <b-row :key="answers.type + '_body'">
+        <template v-for="ans in answers.answers">
+          <b-col class="question" :key="ans.id" :id="ans.id">
+            <span class="kanji">{{ ans.kanji }}</span>
+          </b-col>
+          <b-popover
+            :key="ans.id + '_popover'"
+            :target="ans.id"
+            triggers="hover"
+            placement="top"
+          >
+            <template #title>{{ ans.path }}</template>
+            <span>{{ ans.kana }}</span>
+          </b-popover>
+        </template>
+      </b-row>
+    </template>
   </b-container>
 </template>
 
@@ -122,6 +94,9 @@ export default class Results extends Vue {
 #incorrect,
 #unanswered {
   color: $white;
+  font-size: 2rem;
+  border-radius: 5px;
+  margin: 5px;
 }
 .kana {
   font-size: 0.8rem;

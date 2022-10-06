@@ -21,7 +21,7 @@ interface iVerb {
   readings: Array<string>;
   partsOfSpeech: Array<string>;
   conjugations: iConjugationObject;
-  srsLevel: Function;
+  srsLevel: any;
 }
 
 interface iConjugationObject {

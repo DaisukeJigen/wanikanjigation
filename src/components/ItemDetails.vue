@@ -85,10 +85,6 @@
       </b-col>
     </b-row>
 
-
-
-
-
     <template v-if="type == 'naAdjectives' || type == 'iAdjectives'">
       <!-- <b-row>
         <b-col>

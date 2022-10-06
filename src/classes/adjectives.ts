@@ -39,7 +39,7 @@ class NaAdjective implements iNaAdjective {
   readings: Array<string>;
   partsOfSpeech: Array<string>;
   conjugations: iConjugationObject;
-  srsLevel: Function;
+  srsLevel: any;
 
   constructor(data: any) {
     this.id = data.id;
@@ -54,7 +54,9 @@ class NaAdjective implements iNaAdjective {
       conjugate.na_adjective(this)
     );
     // this.conjugations = conjugate.na_adjective(this);
-    this.srsLevel = () => { debugger; return store.getters["assignments/getAssignment"](data.id) };
+    this.srsLevel = () => {
+      return store.getters["assignments/getAssignment"](data.id);
+    };
   }
 }
 
@@ -67,7 +69,7 @@ class IAdjective implements iIAdjective {
   readings: Array<string>;
   partsOfSpeech: Array<string>;
   conjugations: any; //iConjugationObject;
-  srsLevel: Function;
+  srsLevel: any;
 
   constructor(data: any) {
     this.id = data.id;
@@ -82,7 +84,9 @@ class IAdjective implements iIAdjective {
       conjugate.i_adjective(this)
     );
     // this.conjugations = conjugate.i_adjective(this);
-    this.srsLevel = () => { debugger; return store.getters["assignments/getAssignment"](data.id) };
+    this.srsLevel = () => {
+      return store.getters["assignments/getAssignment"](data.id);
+    };
   }
 }
 

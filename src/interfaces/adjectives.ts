@@ -19,7 +19,7 @@ interface iNaAdjective {
   readings: Array<string>;
   partsOfSpeech: Array<string>;
   conjugations: any; //iConjugationObject;
-  srsLevel: Function;
+  srsLevel: any;
 }
 interface iIAdjective {
   id: string;
@@ -30,7 +30,7 @@ interface iIAdjective {
   readings: Array<string>;
   partsOfSpeech: Array<string>;
   conjugations: any; //iConjugationObject;
-  srsLevel: Function;
+  srsLevel: any;
 }
 
 interface iConjugationObject {
