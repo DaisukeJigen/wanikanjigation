@@ -1,91 +1,103 @@
-<template>
-  <b-navbar type="dark" variant="dark">
-    <b-navbar-brand to="/"
-      >WaniKanjigation<span class="version">
-        {{ version }}</span
-      ></b-navbar-brand
-    >
-    <b-navbar-nav>
-      <b-nav-item-dropdown text="Verbs" v-if="loggedIn">
-        <b-dropdown-item to="/verbs">List</b-dropdown-item>
-        <b-dropdown-item to="/test/verbs">Test</b-dropdown-item>
-      </b-nav-item-dropdown>
-      <b-nav-item-dropdown text="NA Adjectives" v-if="loggedIn">
-        <b-dropdown-item to="/naAdjectives">List</b-dropdown-item>
-        <b-dropdown-item to="/test/naadjectives">Test</b-dropdown-item>
-      </b-nav-item-dropdown>
-      <b-nav-item-dropdown text="I Adjectives" v-if="loggedIn">
-        <b-dropdown-item to="/iAdjectives">List</b-dropdown-item>
-        <b-dropdown-item to="/test/iadjectives">Test</b-dropdown-item>
-      </b-nav-item-dropdown>
-      <b-nav-item to="/login" v-if="!loggedIn">Login</b-nav-item>
-    </b-navbar-nav>
-    <b-navbar-nav class="ml-auto">
-      <b-form-input
-        v-model="searchTerm"
-        @keyup.enter="search"
-        ref="search"
-      ></b-form-input>
-      <b-button @click="search">Verb Lookup</b-button>
-      <b-avatar :text="username"></b-avatar>
-    </b-navbar-nav>
-  </b-navbar>
-</template>
+<script setup lang="ts">
+// defineProps<{
+//   msg: string
+// }>()
+import { computed, ref } from "vue";
+import Menubar from 'primevue/menubar';
+import Button from 'primevue/button';
+import Avatar from 'primevue/avatar';
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { mapState } from "vuex";
-import { bind } from "wanakana";
+const version = __APP_VERSION__;
+const searchTerm = ref("");
+const items = ref([
+    {
+      label: 'Login',
+      route: '/login'
+    },
+          {
+              label: 'Verbs',
+              // icon: 'pi pi-fw pi-plus',
+              items: [
+                  {
+                      label: 'List',
+                      route: 'verbs'
+                  },
+                  {
+                      label: 'Test',
+                      route: 'test/verbs'
+                  }
+              ]
+          },
+          {
+              label: 'NA Adjectives',
+              // icon: 'pi pi-fw pi-plus',
+              items: [
+                  {
+                      label: 'List',
+                      route: 'naadjectives'
+                  },
+                  {
+                      label: 'Test',
+                      route: 'test/naadjectives'
+                  }
+              ]
+          },
+          {
+              label: 'I Adjectives',
+              // icon: 'pi pi-fw pi-plus',
+              items: [
+                  {
+                      label: 'List',
+                      route: 'iadjectives'
+                  },
+                  {
+                      label: 'Test',
+                      route: 'test/iadjectives'
+                  }
+              ]
+          },
+    ]);
 
-@Component({
-  components: {},
-  computed: {
-    ...mapState("userData", ["userData"]),
-  },
-  //methods: {
-  //},
-  data() {
-    return {
-      searchTerm: "",
-    };
-  },
-})
-export default class NavBar extends Vue {
-  mounted() {
-    const self: any = this;
-    bind(self.$refs["search"].$el);
-  }
-  get version() {
-    const self: any = this;
-    return process.env.VUE_APP_VERSION;
-  }
-  get loggedIn() {
-    const self: any = this;
-    return self.userData.username != undefined;
-  }
-
-  get username() {
-    const self: any = this;
-    const username = self.userData.username;
-    return username == undefined ? "" : username.substring(0, 1);
-  }
-
-  search() {
+    function search(this: any) {
     const self: any = this;
     // self.$router.push({ name: 'verblookup', params: { verb: self.searchTerm } })
     self.$router.push(`/verblookup/${self.searchTerm}`);
   }
-}
 </script>
 
-<style scoped lang="scss">
-.navbar {
-  // background-color: blue;
-  .version {
-    font-size: 10px;
-  }
-  .btn {
-    white-space: nowrap;
-  }
-}
+<template>
+  <Menubar :model="items">
+    <template #start>
+      <span class="title">WaniKanjigation</span>
+      <span class="version">
+        {{ version }}</span
+      >
+    </template>
+    <template #item="{ label, item, props, root, hasSubmenu }">
+        <router-link v-if="item.route" v-slot="routerProps" :to="item.route" custom>
+            <a :href="routerProps.href" v-bind="props.action">
+                <!-- <span v-bind="props.icon" /> -->
+                <span v-bind="props.label">{{ label }}</span>
+            </a>
+        </router-link>
+        <a v-else :href="item.url" :target="item.target" v-bind="props.action">
+            <!-- <span v-bind="props.icon" /> -->
+            <span v-bind="props.label">{{ label }}</span>
+            <span :class="[hasSubmenu && (root ? 'pi pi-fw pi-angle-down' : 'pi pi-fw pi-angle-right')]" v-bind="props.submenuicon" />
+        </a>
+    </template>
+    <template #end>
+      <InputText placeholder="Search" type="text" />
+      <InputText
+        v-model="searchTerm"
+        @keyup.enter="search"
+        ref="search"
+      ></InputText>
+      <Button @click="search">Verb Lookup</Button>
+      <Avatar :text="username"></Avatar>
+    </template>
+  </Menubar>
+</template>
+
+<style scoped>
 </style>

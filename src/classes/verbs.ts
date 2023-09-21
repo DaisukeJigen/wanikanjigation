@@ -1,5 +1,5 @@
-import { iVerb, iConjugationObject } from "@/interfaces/verbs.ts";
-import {
+import type { iVerb, iConjugationObject } from "@/interfaces/verbs";
+import type {
   iConjugationTypeStandard,
   iConjugationTypeOnlyPlain,
   iConjugationTypeAbrupt,
@@ -9,7 +9,7 @@ import {
   iKanjiAndKana,
   eUserAnswer,
   eTest,
-} from "@/interfaces/common.ts";
+} from "@/interfaces/common";
 import {
   ConjugationObject,
   ConjugationTypeStandard,
@@ -20,11 +20,13 @@ import {
   Conjugation,
   KanjiAndKana,
 } from "@/classes/common";
-import { conjugate } from "@/assets/conjugate.ts";
+import { conjugate } from "@/assets/conjugate";
 import { merge } from "lodash";
 // import { store } from "@/store";
 import { v4 as uuidv4 } from "uuid";
-import store from "@/store";
+// import store from "@/store";
+import { useAssignmentsStore } from '@/stores/assignments';
+const assignmentsData = useAssignmentsStore();
 
 class Verb implements iVerb {
   id: string;
@@ -61,7 +63,7 @@ class Verb implements iVerb {
     //   }
     // });
     this.srsLevel = () => {
-      return store.getters["assignments/getAssignment"](data.id);
+      return assignmentsData.getAssignment(data.id);
     };
   }
 }

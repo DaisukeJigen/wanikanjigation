@@ -1,161 +1,31 @@
-import Vue from "vue";
-import VueRouter, { RouteConfig } from "vue-router";
-import Home from "../views/Home.vue";
-import store from "@/store/index";
+import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
 
-Vue.use(VueRouter);
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: HomeView
+    },
+    {
+      path: '/about',
+      name: 'about',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/AboutView.vue')
+    },
+    {
+      path: '/login',
+      name: 'login',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/LoginView.vue')
+    }
+  ]
+})
 
-const routes: Array<RouteConfig> = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
-  {
-    path: "/login",
-    name: "login",
-    component: () =>
-      import(/* webpackChunkName: "login" */ "../views/Login.vue"),
-  },
-  {
-    path: "/test/:type",
-    name: "test",
-    component: () => import(/* webpackChunkName: "test" */ "../views/Test.vue"),
-    beforeEnter: (to, from, next) => {
-      const test = store.getters;
-      if (!store.getters["userData/getLoggedIn"]) {
-        next("/login");
-      } else {
-        next();
-      }
-    },
-  },
-  // {
-  //   path: "/verbs",
-  //   name: "verbs",
-  //   component: () =>
-  //     import(/* webpackChunkName: "verbs" */ "../views/Verbs/Verbs.vue"),
-  //   beforeEnter: (to, from, next) => {
-  //     const test = store.getters;
-  //     if (!store.getters["userData/getLoggedIn"]) {
-  //       next("/login");
-  //     } else {
-  //       next();
-  //     }
-  //   },
-  // },
-  {
-    path: "/verbs",
-    name: "verbs",
-    component: () =>
-      import(/* webpackChunkName: "items" */ "../views/Items/Items.vue"),
-    props: {
-      type: "verbs",
-    },
-    beforeEnter: (to, from, next) => {
-      const test = store.getters;
-      if (!store.getters["userData/getLoggedIn"]) {
-        next("/login");
-      } else {
-        next();
-      }
-    },
-  },
-  {
-    path: "/verblookup/:verb",
-    name: "verblookup",
-    component: () =>
-      import(
-        /* webpackChunkName: "verblookup" */ "../views/Verbs/VerbLookup.vue"
-      ),
-    beforeEnter: (to, from, next) => {
-      const test = store.getters;
-      if (!store.getters["userData/getLoggedIn"]) {
-        next("/login");
-      } else {
-        next();
-      }
-    },
-  },
-  // {
-  //   path: "/naAdjectives",
-  //   name: "naAdjectives",
-  //   component: () =>
-  //     import(
-  //       /* webpackChunkName: "naAdjectives" */ "../views/NaAdjectives/NaAdjectives.vue"
-  //     ),
-  //   beforeEnter: (to, from, next) => {
-  //     const test = store.getters;
-  //     if (!store.getters["userData/getLoggedIn"]) {
-  //       next("/login");
-  //     } else {
-  //       next();
-  //     }
-  //   },
-  // },
-  // {
-  //   path: "/iAdjectives",
-  //   name: "iAdjectives",
-  //   component: () =>
-  //     import(
-  //       /* webpackChunkName: "iAdjectives" */ "../views/IAdjectives/IAdjectives.vue"
-  //     ),
-  //   beforeEnter: (to, from, next) => {
-  //     const test = store.getters;
-  //     if (!store.getters["userData/getLoggedIn"]) {
-  //       next("/login");
-  //     } else {
-  //       next();
-  //     }
-  //   },
-  // },
-  {
-    path: "/naAdjectives",
-    name: "naAdjectives",
-    component: () =>
-      import(/* webpackChunkName: "items" */ "../views/Items/Items.vue"),
-    props: {
-      type: "naAdjectives",
-    },
-    beforeEnter: (to, from, next) => {
-      const test = store.getters;
-      if (!store.getters["userData/getLoggedIn"]) {
-        next("/login");
-      } else {
-        next();
-      }
-    },
-  },
-  {
-    path: "/iAdjectives",
-    name: "iAdjectives",
-    component: () =>
-      import(/* webpackChunkName: "items" */ "../views/Items/Items.vue"),
-    props: {
-      type: "iAdjectives",
-    },
-    beforeEnter: (to, from, next) => {
-      const test = store.getters;
-      if (!store.getters["userData/getLoggedIn"]) {
-        next("/login");
-      } else {
-        next();
-      }
-    },
-  },
-];
-
-const router = new VueRouter({
-  routes,
-});
-
-export default router;
+export default router

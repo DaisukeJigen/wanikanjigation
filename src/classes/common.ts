@@ -1,4 +1,4 @@
-import {
+import type {
   iConjugationTypeStandard,
   iConjugationTypeOnlyPlain,
   iConjugationTypeAbrupt,
@@ -6,9 +6,11 @@ import {
   iSign,
   iConjugation,
   iKanjiAndKana,
+} from "@/interfaces/common";
+import {
   eUserAnswer,
-} from "@/interfaces/common.ts";
-import { iConjugationObject } from "@/interfaces/verbs.ts";
+} from "@/interfaces/common";
+import { type iConjugationObject } from "@/interfaces/verbs";
 import { v4 as uuidv4 } from "uuid";
 import { merge } from "lodash";
 

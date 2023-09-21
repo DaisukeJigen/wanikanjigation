@@ -1,9 +1,9 @@
-import {
+import type {
   iNaAdjective,
   iIAdjective,
   iConjugationObject,
-} from "@/interfaces/adjectives.ts";
-import {
+} from "@/interfaces/adjectives";
+import type {
   iConjugationTypeStandard,
   iConjugationTypeOnlyPlain,
   iConjugationTypeAbrupt,
@@ -13,7 +13,7 @@ import {
   iKanjiAndKana,
   eUserAnswer,
   eTest,
-} from "@/interfaces/common.ts";
+} from "@/interfaces/common";
 import {
   ConjugationObject,
   ConjugationTypeStandard,
@@ -23,12 +23,14 @@ import {
   Sign,
   Conjugation,
   KanjiAndKana,
-} from "@/classes/common.ts";
-import { conjugate } from "@/assets/conjugate.ts";
+} from "@/classes/common";
+import { conjugate } from "@/assets/conjugate";
 import { merge } from "lodash";
 // import { store } from "@/store";
 import { v4 as uuidv4 } from "uuid";
-import store from "@/store";
+// import store from "@/store";
+import { useAssignmentsStore } from '@/stores/assignments';
+const assignmentsData = useAssignmentsStore();
 
 class NaAdjective implements iNaAdjective {
   id: string;
@@ -55,7 +57,7 @@ class NaAdjective implements iNaAdjective {
     );
     // this.conjugations = conjugate.na_adjective(this);
     this.srsLevel = () => {
-      return store.getters["assignments/getAssignment"](data.id);
+      return assignmentsData.getAssignment(data.id);
     };
   }
 }
@@ -85,7 +87,7 @@ class IAdjective implements iIAdjective {
     );
     // this.conjugations = conjugate.i_adjective(this);
     this.srsLevel = () => {
-      return store.getters["assignments/getAssignment"](data.id);
+      return assignmentsData.getAssignment(data.id);
     };
   }
 }

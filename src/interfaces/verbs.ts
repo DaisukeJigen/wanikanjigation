@@ -1,4 +1,4 @@
-import {
+import type {
   iConjugationTypeStandard,
   iConjugationTypeOnlyPlain,
   iConjugationTypeAbrupt,
@@ -43,4 +43,4 @@ interface iConjugationObject {
   te_stem: iKanjiAndKana;
 }
 
-export { iVerb, iConjugationObject };
+export type { iVerb, iConjugationObject };

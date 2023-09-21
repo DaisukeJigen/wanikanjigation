@@ -1,4 +1,4 @@
-import {
+import type {
   iConjugationTypeStandard,
   iConjugationTypeOnlyPlain,
   iConjugationTypeAbrupt,
@@ -8,7 +8,7 @@ import {
   iKanjiAndKana,
   eUserAnswer,
   eTest,
-} from "@/interfaces/common.ts";
+} from "@/interfaces/common";
 
 interface iNaAdjective {
   id: string;
@@ -50,4 +50,4 @@ interface iConjugationObject {
   unbearably: iKanjiAndKana;
 }
 
-export { iNaAdjective, iIAdjective, iConjugationObject };
+export type { iNaAdjective, iIAdjective, iConjugationObject };

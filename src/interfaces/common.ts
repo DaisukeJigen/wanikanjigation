@@ -49,13 +49,15 @@ enum eTest {
 }
 
 export {
-  iConjugationTypeStandard,
-  iConjugationTypeOnlyPlain,
-  iConjugationTypeAbrupt,
-  iConjugationTypeHonorific,
-  iSign,
-  iConjugation,
-  iKanjiAndKana,
   eUserAnswer,
-  eTest,
-};
+  eTest
+};  export type {
+    iConjugationTypeStandard,
+    iConjugationTypeOnlyPlain,
+    iConjugationTypeAbrupt,
+    iConjugationTypeHonorific,
+    iSign,
+    iConjugation,
+    iKanjiAndKana
+  };
+
