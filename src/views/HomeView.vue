@@ -1,15 +1,9 @@
 <script setup lang="ts">
+import { useUserDataStore } from '@/stores/userData';
+const userData = useUserDataStore();
 import { computed } from "vue";
 import Button from 'primevue/button';
-// function login(this: any) {
-//   const self: any = this;
-//   router.push("login");
-// }
-const loggedIn = computed(() => {
-  const self: any = this;
-  // return self.userData.username != undefined;
-  return false;
-})
+
 </script>
 
 <template>
@@ -31,8 +25,7 @@ const loggedIn = computed(() => {
       I know, its ugly and clunky. It'll get better. Probably. Unless I abandon
       it. Who Knows.
     </p>
-    <p v-if="!loggedIn">
-      <!-- <Button @click="login">Login</Button> -->
+    <p v-if="!userData.loggedIn">
       <RouterLink to="/login"><Button>Login</Button></RouterLink>
     </p>
     <p v-else>

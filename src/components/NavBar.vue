@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useRouter, useRoute } from 'vue-router'
+const router = useRouter()
+import { useUserDataStore } from '@/stores/userData';
+const userData = useUserDataStore();
 // defineProps<{
 //   msg: string
 // }>()
@@ -59,9 +63,7 @@ const items = ref([
     ]);
 
     function search(this: any) {
-    const self: any = this;
-    // self.$router.push({ name: 'verblookup', params: { verb: self.searchTerm } })
-    self.$router.push(`/verblookup/${self.searchTerm}`);
+    router.push(`/verblookup/${searchTerm}`);
   }
 </script>
 
@@ -94,7 +96,8 @@ const items = ref([
         ref="search"
       ></InputText>
       <Button @click="search">Verb Lookup</Button>
-      <Avatar :text="username"></Avatar>
+      <!-- <Avatar :label="userData.userData.username.substring(0,1)"></Avatar> -->
+      <span>{{ userData.userData.username }}</span>
     </template>
   </Menubar>
 </template>

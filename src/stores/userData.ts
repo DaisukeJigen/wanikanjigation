@@ -12,12 +12,12 @@ export const useUserDataStore = defineStore('userData', () => {
   });
   const levels = computed(() => {
     debugger;
-    return userData.value.level == undefined
+    return userData.value.level == undefined && userData.value.level == 0
       ? []
       : Array.from({ length: userData.value.level }).map((_, i) => i + 1);
   })
   const loggedIn = computed(() => {
-    return userData.value.username != undefined;
+    return userData.value.username != undefined && userData.value.username != "";
   })
   function updateApiKey(data: string) {
     apiKey.value = data;

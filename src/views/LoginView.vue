@@ -9,6 +9,8 @@ import { useSubjectsStore } from "@/stores/subjects";
 const userData = useUserDataStore();
 const assignmentsData = useAssignmentsStore();
 const subjectsData = useSubjectsStore();
+import { useRouter, useRoute } from 'vue-router'
+const router = useRouter()
 
 const key = computed({
   get(){
@@ -26,7 +28,7 @@ const login = function() {
     console.log("fetched assignments");
       subjectsData.fetchSubjectsVerbs(userData.levels.join(",")).then(() => {
         console.log("fetched subjects");
-        // router.push("/");
+        router.push("/");
       });
       // console.log("hello");
     });
