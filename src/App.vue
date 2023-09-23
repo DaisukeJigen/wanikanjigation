@@ -29,6 +29,9 @@ const mainStore = useMainStore();
 <!-- </BlockUI> -->
 
   <RouterView />
+  <footer>
+    <div id="alerts"></div>
+  </footer>
 </template>
 
 <style scoped lang="scss">

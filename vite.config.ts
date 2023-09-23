@@ -9,7 +9,7 @@ export default defineConfig({
     vue(),
   ],
   esbuild: {
-    drop: ['console', 'debugger'],
+    // drop: ['console', 'debugger'],
     // minify: true,
     treeShaking: true
   },

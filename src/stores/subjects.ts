@@ -13,6 +13,7 @@ export const useSubjectsStore = defineStore('subjects', () => {
     const verbs = ref<InstanceType<any>>([]);
     const naAdjectives = ref<InstanceType<any>>([]);
     const iAdjectives = ref<InstanceType<any>>([]);
+    const everything = ref<InstanceType<any>>([]);
 
     function getVerb(verb: any) {
         return verbs.value.find((v: any) => v.verb == verb);
@@ -168,7 +169,7 @@ export const useSubjectsStore = defineStore('subjects', () => {
             break;
         }
         const a = base
-          .filter((l: any) => optionsData.selected.includes(l.level))
+          .filter((l: any) => optionsData.selected.levels.includes(l.level))
           .map((p: any) => p.conjugations);
         const b = flatten(
           a.map((b: any) => values(pick(b, optionsData.selected.form)))
@@ -209,6 +210,7 @@ export const useSubjectsStore = defineStore('subjects', () => {
             axiosWaniKani
             .get(url, {})
             .then((ret: any) => {
+              everything.value = ret;
                 verbs.value = ret
                 .filter(
                   (v: any) =>
@@ -218,30 +220,30 @@ export const useSubjectsStore = defineStore('subjects', () => {
                     !v.data.parts_of_speech.includes("する verb")
                 )
                 .map((v: any) => new Verb(v));
-                naAdjectives.value = uniq(
-                    flatten(
-                      ret
-                        .filter(
-                          (v: any) =>
-                            v.data.parts_of_speech.includes("な adjective") &&
-                            v.data.slug.slice(-2) != "ない"
-                        )
-                        .map((v: any) => new NaAdjective(v))
-                      // .map((v: any) => v.data.parts_of_speech)))
-                    )
-                  );
-                iAdjectives.value = uniq(
-                    flatten(
-                      ret
-                        .filter(
-                          (v: any) =>
-                            v.data.parts_of_speech.includes("い adjective") &&
-                            v.data.slug.slice(-2) != "ない"
-                        )
-                        .map((v: any) => new IAdjective(v))
-                      // .map((v: any) => v.data.parts_of_speech)))
-                    )
-                  );
+                // naA'[djectives.value = uniq(
+                //     flatten(
+                //       ret
+                //         .filter(
+                //           (v: any) =>
+                //             v.data.parts_of_speech.includes("な adjective") &&
+                //             v.data.slug.slice(-2) != "ない"
+                //         )
+                //         // .map((v: any) => new NaAdjective(v))
+                //       // .map((v: any) => v.data.parts_of_speech)))
+                //     )
+                //   );
+                // iAdjectives.value = uniq(
+                //     flatten(
+                //       ret
+                //         .filter(
+                //           (v: any) =>
+                //             v.data.parts_of_speech.includes("い adjective") &&
+                //             v.data.slug.slice(-2) != "ない"
+                //         )
+                //         // .map((v: any) => new IAdjective(v))
+                //       // .map((v: any) => v.data.parts_of_speech)))
+                //     )
+                //   );]'
             })
             .catch((error: any) => {
                 console.log(error.message);
@@ -260,5 +262,5 @@ export const useSubjectsStore = defineStore('subjects', () => {
 
     return { verbs, naAdjectives, iAdjectives, getVerb, getVerbsForLevel, getIAdjective, getIAdjectivesForLevel, getNaAdjective,
                 getNaAdjectivesForLevel, getQuestion, getQuestions, getAnsweredCorrectly, getAnsweredIncorrectly, getUnanswered,
-            updateAnswer, fetchSubjectsVerbs }
+            updateAnswer, fetchSubjectsVerbs, everything }
 })

@@ -7,7 +7,6 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config: any) => {
-  debugger;
   // const userData = useUserDataStore()
   // // const test = store;
   // const apiKey = userData.apiKey;
@@ -17,7 +16,6 @@ instance.interceptors.request.use((config: any) => {
 });
 
 instance.interceptors.response.use((response: any) => {
-  debugger;
   const data = response.data.data;
   if (response.data.pages !== undefined) {
     if (response.data.pages.next_url !== null) {

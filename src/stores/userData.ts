@@ -5,13 +5,13 @@ import axiosWaniKani from "@/axios/axios-wanikani";
 
 export const useUserDataStore = defineStore('userData', () => {
   const apiKey = ref("")
+  const loading = ref(false);
   // const baseURL = "https://api.wanikani.com/v2/";
   const userData = ref({
     level: 0,
     username: ""
   });
   const levels = computed(() => {
-    debugger;
     return userData.value.level == undefined && userData.value.level == 0
       ? []
       : Array.from({ length: userData.value.level }).map((_, i) => i + 1);
@@ -24,6 +24,7 @@ export const useUserDataStore = defineStore('userData', () => {
   }
   function fetchUserData() {
     return new Promise((resolve, reject) => {
+      loading.value = true;
       const url = `user`;
       axiosWaniKani
         .get(url, {})
@@ -35,9 +36,11 @@ export const useUserDataStore = defineStore('userData', () => {
         })
         .then(
           (response: any) => {
+            loading.value = false;
             resolve(response); // Let the calling function know that http is done. You may send some data back
           },
           (error: any) => {
+            loading.value = false;
             // http failed, let the calling function know that action did not work out
             reject(error);
           }
@@ -46,5 +49,5 @@ export const useUserDataStore = defineStore('userData', () => {
   }
   
 
-  return { apiKey, userData, levels, loggedIn, updateApiKey, fetchUserData }
+  return { apiKey, userData, levels, loggedIn, updateApiKey, fetchUserData, loading }
 })

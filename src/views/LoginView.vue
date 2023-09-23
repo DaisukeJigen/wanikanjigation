@@ -28,7 +28,7 @@ const login = function() {
     console.log("fetched assignments");
       subjectsData.fetchSubjectsVerbs(userData.levels.join(",")).then(() => {
         console.log("fetched subjects");
-        router.push("/");
+        // router.push("/");
       });
       // console.log("hello");
     });
@@ -36,6 +36,11 @@ const login = function() {
 </script>
 
 <template>
+  <Teleport to="alerts">
+    <div>
+      <span>Loading User Data</span>
+    </div>
+  </Teleport>
   <Card>
     <template #header>
         <img alt="logo" src="../assets/logo.png" />
