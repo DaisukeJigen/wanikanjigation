@@ -41,6 +41,19 @@ header {
   left: 0;
   width: 100vw;
 }
+footer {
+  width: 100vw;
+  left: 0;
+  position: absolute;
+  background: lightblue;
+  border-top: 2px solid blue;
+  #alerts {
+    div {
+      padding-top: 5px;
+      padding-bottom: 5px;;
+    }
+  }
+}
 /* header {
   line-height: 1.5;
   max-height: 100vh;

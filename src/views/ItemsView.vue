@@ -9,6 +9,9 @@ const subjects = useSubjectsStore();
 import { computed } from "vue";
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
+import ItemDetails from "@/components/ItemDetails.vue";
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
 // import ItemDetails from "@/components/ItemDetails";
 // const self = this;
 
@@ -44,14 +47,36 @@ const levels = computed(() => {
 </script>
 
 <template>
-    <TabView v-if="allItems.length > 0">
+    <TabView v-if="allItems.length > 0" scrollable>
         <TabPanel v-for="level in levels"
-            :title="level.toString()"
+            :header="level.toString()"
             :key="level">
+            <Accordion class="itemTabs">
+              <AccordionTab
+                lazy
+                v-for="item in itemsForLevel(level)"
+                :key="item.slug"
+              >
+                <template #header>
+                  <div :class="'srsLevel' + item.srsLevel(item.id)">
+                    {{ item.slug }}
+                  </div>
+                </template>
+                <ItemDetails
+                  :item="item"
+                  :type="type"
+                  :key="item.slug"
+                ></ItemDetails>
+              </AccordionTab>
+            </Accordion>
         </TabPanel>
     </TabView>
 </template>
 
 
 <style scoped lang="scss">
+.p-tabview-nav {
+  flex-direction: column;
+}
+
 </style>

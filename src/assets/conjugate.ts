@@ -30,7 +30,7 @@ function a_base(word: any) {
     const sound = sounds.filter(function (arr: any) {
       return arr[0] === ending;
     })[0];
-    return sound[1];
+    return sound == undefined ? '' : sound[1];
   }
 }
 function i_base(word: any) {
@@ -56,7 +56,7 @@ function i_base(word: any) {
     const sound = sounds.filter(function (arr: any) {
       return arr[0] === ending;
     })[0];
-    return sound[1];
+    return sound == undefined ? '' : sound[1];
   }
 }
 function e_base(word: any) {
@@ -79,7 +79,7 @@ function e_base(word: any) {
   const sound = sounds.filter(function (arr: any) {
     return arr[0] === ending;
   })[0];
-  return sound[1];
+  return sound == undefined ? '' : sound[1];
 }
 function o_base(word: any) {
   const sounds = [
@@ -104,7 +104,7 @@ function o_base(word: any) {
     const sound = sounds.filter(function (arr: any) {
       return arr[0] === ending;
     })[0];
-    return sound[1];
+    return sound == undefined ? '' : sound[1];
   }
 }
 function u_base(word: any) {

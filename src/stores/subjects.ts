@@ -14,6 +14,7 @@ export const useSubjectsStore = defineStore('subjects', () => {
     const naAdjectives = ref<InstanceType<any>>([]);
     const iAdjectives = ref<InstanceType<any>>([]);
     const everything = ref<InstanceType<any>>([]);
+    const loading = ref(false);
 
     function getVerb(verb: any) {
         return verbs.value.find((v: any) => v.verb == verb);
@@ -206,6 +207,7 @@ export const useSubjectsStore = defineStore('subjects', () => {
 
     function fetchSubjectsVerbs(data: any) {
         return new Promise((resolve, reject) => {
+          loading.value = true;
             const url = `subjects?types=vocabulary&levels=${data}`;
             axiosWaniKani
             .get(url, {})
@@ -220,39 +222,41 @@ export const useSubjectsStore = defineStore('subjects', () => {
                     !v.data.parts_of_speech.includes("する verb")
                 )
                 .map((v: any) => new Verb(v));
-                // naA'[djectives.value = uniq(
-                //     flatten(
-                //       ret
-                //         .filter(
-                //           (v: any) =>
-                //             v.data.parts_of_speech.includes("な adjective") &&
-                //             v.data.slug.slice(-2) != "ない"
-                //         )
-                //         // .map((v: any) => new NaAdjective(v))
-                //       // .map((v: any) => v.data.parts_of_speech)))
-                //     )
-                //   );
-                // iAdjectives.value = uniq(
-                //     flatten(
-                //       ret
-                //         .filter(
-                //           (v: any) =>
-                //             v.data.parts_of_speech.includes("い adjective") &&
-                //             v.data.slug.slice(-2) != "ない"
-                //         )
-                //         // .map((v: any) => new IAdjective(v))
-                //       // .map((v: any) => v.data.parts_of_speech)))
-                //     )
-                //   );]'
+                naAdjectives.value = uniq(
+                    flatten(
+                      ret
+                        .filter(
+                          (v: any) =>
+                            v.data.parts_of_speech.includes("な adjective") &&
+                            v.data.slug.slice(-2) != "ない"
+                        )
+                        .map((v: any) => new NaAdjective(v))
+                      // .map((v: any) => v.data.parts_of_speech)))
+                    )
+                  );
+                iAdjectives.value = uniq(
+                    flatten(
+                      ret
+                        .filter(
+                          (v: any) =>
+                            v.data.parts_of_speech.includes("い adjective") &&
+                            v.data.slug.slice(-2) != "ない"
+                        )
+                        .map((v: any) => new IAdjective(v))
+                      // .map((v: any) => v.data.parts_of_speech)))
+                    )
+                  );
             })
             .catch((error: any) => {
                 console.log(error.message);
             })
             .then(
                 (response: any) => {
+                  loading.value = false;
                 resolve(response); // Let the calling function know that http is done. You may send some data back
                 },
                 (error: any) => {
+                  loading.value = false;
                 // http failed, let the calling function know that action did not work out
                 reject(error);
                 }
@@ -262,5 +266,5 @@ export const useSubjectsStore = defineStore('subjects', () => {
 
     return { verbs, naAdjectives, iAdjectives, getVerb, getVerbsForLevel, getIAdjective, getIAdjectivesForLevel, getNaAdjective,
                 getNaAdjectivesForLevel, getQuestion, getQuestions, getAnsweredCorrectly, getAnsweredIncorrectly, getUnanswered,
-            updateAnswer, fetchSubjectsVerbs, everything }
+            updateAnswer, fetchSubjectsVerbs, everything, loading }
 })
