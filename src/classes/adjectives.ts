@@ -15,7 +15,7 @@ import type {
   eTest,
 } from "@/interfaces/common";
 import {
-  ConjugationObject,
+  // ConjugationObject,
   ConjugationTypeStandard,
   ConjugationTypeOnlyPlain,
   ConjugationTypeAbrupt,
@@ -31,6 +31,68 @@ import { v4 as uuidv4 } from "uuid";
 // import store from "@/store";
 import { useAssignmentsStore } from '@/stores/assignments';
 const assignmentsData = useAssignmentsStore();
+
+class ConjugationObject implements iConjugationObject {
+  adverb: iKanjiAndKana;
+  attributive: iKanjiAndKana;
+  become: iKanjiAndKana;
+  conditional: iConjugationTypeStandard;
+  continuative: iConjugationTypeStandard;
+  indicative: iConjugationTypeStandard;
+  looks: iKanjiAndKana;
+  noun: iKanjiAndKana;
+  past_indicative: iConjugationTypeStandard;
+  past_presumptive: iConjugationTypeStandard;
+  presumptive: iConjugationTypeStandard;
+  provisional: iConjugationTypeOnlyPlain;
+  i_stem: iKanjiAndKana;
+  too: iKanjiAndKana;
+  unbearably: iKanjiAndKana;
+  // testOn: () => boolean;
+
+  constructor(path = "", originalKana: string[] = []) {
+    this.adverb = new KanjiAndKana();
+    this.attributive = new KanjiAndKana();
+    this.become = new KanjiAndKana();
+    this.conditional = new ConjugationTypeStandard(
+      `${path}.conditional`,
+      originalKana
+    );
+    this.continuative = new ConjugationTypeStandard(
+      `${path}.continuative`,
+      originalKana
+    );
+    this.indicative = new ConjugationTypeStandard(
+      `${path}.indicative`,
+      originalKana
+    );
+    this.looks = new KanjiAndKana();
+    this.noun = new KanjiAndKana();
+    this.past_indicative = new ConjugationTypeStandard(
+      `${path}.past_indicative`,
+      originalKana
+    );
+    this.past_presumptive = new ConjugationTypeStandard(
+      `${path}.past_presumptive`,
+      originalKana
+    );
+    this.presumptive = new ConjugationTypeStandard(
+      `${path}.presumptive`,
+      originalKana
+    );
+    this.provisional = new ConjugationTypeOnlyPlain(
+      `${path}.provisional`,
+      originalKana
+    );
+    this.i_stem = new KanjiAndKana();
+    this.too = new KanjiAndKana();
+    this.unbearably = new KanjiAndKana();
+
+    // this.testOn = () => {
+    //   return this.conditional.
+    // }
+  }
+}
 
 class NaAdjective implements iNaAdjective {
   id: string;

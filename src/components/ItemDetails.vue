@@ -2,11 +2,11 @@
 // import { type iVerb } from "@/interfaces/verbs";
 import { computed } from "vue";
 import { useSubjectsStore } from "@/stores/subjects";
-import FormTable from "@/components/FormTable.vue";
+import ConjTable from "@/components/ConjTable.vue";
 const subjectData = useSubjectsStore();
 
 const props = defineProps<{
-  msg: string,
+  type: string | undefined,
   item: any
 }>()
 
@@ -24,121 +24,50 @@ const props = defineProps<{
     </div>
     <div class="row">
       <div class="col">
-        <FormTable type="Indicative" :conj="conj.indicative"></FormTable>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <FormTable
-          type="Past Indicative"
-          :conj="conj.past_indicative"
-        ></FormTable>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <FormTable type="Presumptive" :conj="conj.presumptive"></FormTable>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <FormTable
-          type="Past Presumptive"
-          :conj="conj.past_presumptive"
-        ></FormTable>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <FormTable type="Progressive" :conj="conj.progressive"></FormTable>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <FormTable
-          type="Past Progressive"
-          :conj="conj.past_progressive"
-        ></FormTable>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <FormTable type="Imperative" :conj="conj.imperative"></FormTable>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <FormTable type="Request" :conj="conj.request"></FormTable>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <FormTable type="Potential" :conj="conj.potential"></FormTable>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <FormTable type="Volitional" :conj="conj.volitional"></FormTable>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <FormTable type="Causative" :conj="conj.causative"></FormTable>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <FormTable type="Passive" :conj="conj.passive"></FormTable>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <FormTable type="Provisional" :conj="conj.provisional"></FormTable>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <FormTable type="Conditional" :conj="conj.conditional"></FormTable>
+        <!-- <ConjTable class="table" type="Indicative" :conj="conj.indicative"></ConjTable> -->
+        <ConjTable v-for="co in conj" class="table" :type="Object.keys(co)[0]" :conj="co"></ConjTable>
       </div>
     </div>
 
-    <template v-if="type == 'naAdjectives' || type == 'iAdjectives'">
+
+
+    <!-- <template v-if="type == 'naAdjectives' || type == 'iAdjectives'">
       <div class="row">
         <div class="col">
-          <FormTable type="Adverb" :conj="conj.adverb"></FormTable>
+          <ConjTable type="Adverb" :conj="conj.adverb"></ConjTable>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <FormTable type="Attributive" :conj="conj.attributive"></FormTable>
+          <ConjTable type="Attributive" :conj="conj.attributive"></ConjTable>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <FormTable type="Become" :conj="conj.become"></FormTable>
+          <ConjTable type="Become" :conj="conj.become"></ConjTable>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <FormTable type="Looks" :conj="conj.looks"></FormTable>
+          <ConjTable type="Looks" :conj="conj.looks"></ConjTable>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <FormTable type="Noun" :conj="conj.noun"></FormTable>
+          <ConjTable type="Noun" :conj="conj.noun"></ConjTable>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <FormTable type="Too" :conj="conj.too"></FormTable>
+          <ConjTable type="Too" :conj="conj.too"></ConjTable>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <FormTable type="Unbearably" :conj="conj.unbearably"></FormTable>
+          <ConjTable type="Unbearably" :conj="conj.unbearably"></ConjTable>
         </div>
       </div>
-    </template>
+    </template> -->
   </div>
 </template>
 

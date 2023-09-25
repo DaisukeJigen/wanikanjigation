@@ -6,7 +6,7 @@ import { useUserDataStore } from '@/stores/userData';
 const userData = useUserDataStore();
 import { useSubjectsStore } from '@/stores/subjects';
 const subjects = useSubjectsStore();
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import ItemDetails from "@/components/ItemDetails.vue";
@@ -14,6 +14,7 @@ import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
 // import ItemDetails from "@/components/ItemDetails";
 // const self = this;
+const selectedLevel = ref(1);
 
 const levels = computed(() => {
     return userData.levels;
@@ -50,7 +51,8 @@ const levels = computed(() => {
     <TabView v-if="allItems.length > 0" scrollable>
         <TabPanel v-for="level in levels"
             :header="level.toString()"
-            :key="level">
+            :key="level"
+            @click.stop.prevent="selectedLevel = level">
             <Accordion class="itemTabs">
               <AccordionTab
                 lazy
@@ -66,6 +68,7 @@ const levels = computed(() => {
                   :item="item"
                   :type="type"
                   :key="item.slug"
+                  v-show="selectedLevel == level"
                 ></ItemDetails>
               </AccordionTab>
             </Accordion>

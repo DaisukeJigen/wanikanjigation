@@ -116,3 +116,15 @@ nav a:first-of-type {
   }
 } */
 </style>
+
+<style lang="scss">
+// .table{
+  .row {
+    display: flex;  /* aligns all child elements (flex items) in a row */
+  }
+
+  .col {
+    flex: 1;        /* distributes space on the line equally among items */
+  }
+// }
+</style>

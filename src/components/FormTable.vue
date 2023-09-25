@@ -1,41 +1,40 @@
 <script setup lang="ts">
-defineProps<{
-  msg: string
+// import { type iVerb } from "@/interfaces/verbs";
+import { computed, onMounted } from "vue";
+import { useSubjectsStore } from "@/stores/subjects";
+import { formToJSON } from "axios";
+const subjectData = useSubjectsStore();
+
+const props = defineProps<{
+//   name: string,
+  form: any
 }>()
+
+const name = computed(() => {
+    const c: any =  Object.values(props.form)[0];
+    return c == undefined ? "" : c.path?.split(".")[2];
+})
+
+onMounted(() => {
+    const test = props;
+  debugger;
+})
 </script>
 
 <template>
-  <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
-    <h3>
-      You’ve successfully created a project with
-      <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
-      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>. What's next?
-    </h3>
-  </div>
+      <div class="row">
+        <!-- <div class="col"><span>{{ Object.keys({form})[0] }}</span></div> -->
+        <div class="col"><span>{{ name }}</span></div>
+        <div class="col" v-for="s in props.form"><span>{{ s.kanji }}</span></div>
+      </div>
 </template>
 
 <style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  position: relative;
-  top: -10px;
+.breakdown {
+  text-align: left;
 }
-
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
+.title {
+  font-size: 18px;
+  font-weight: bold;
 }
 </style>
