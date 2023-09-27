@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { KanjiAndKana, Sign } from "@/classes/common";
+
 const props = defineProps<{
   // type: string,
   conj: any
@@ -10,6 +12,18 @@ const name = computed(() => {
     const c: any =  Object.values(b)[0];
     return c == undefined ? "" : c.path?.split(".")[1];
 })
+
+
+  // function isKanjiAndKana(c: any){
+  //   debugger
+  //   if(!(c instanceof Sign)){
+  //     debugger;
+  //     console.log('hello: ' + c);
+  //     return true;
+  //   };
+  //   return false;
+  //   // debugger;
+  // }
 
 const subForms = computed(() => {
     const b: any = Object.values(props.conj)[0]

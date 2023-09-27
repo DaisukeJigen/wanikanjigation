@@ -17,7 +17,6 @@ const name = computed(() => {
 
 onMounted(() => {
     const test = props;
-  debugger;
 })
 </script>
 

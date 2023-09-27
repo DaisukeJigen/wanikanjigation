@@ -3,6 +3,8 @@
 import { computed } from "vue";
 import { useSubjectsStore } from "@/stores/subjects";
 import ConjTable from "@/components/ConjTable.vue";
+import { KanjiAndKana } from "@/classes/common";
+import instance from "@/axios/axios-wanikani";
 const subjectData = useSubjectsStore();
 
 const props = defineProps<{
@@ -10,9 +12,24 @@ const props = defineProps<{
   item: any
 }>()
 
-  const conj = computed(() => {
+const conj = computed(() => {
     return props.item.conjugations;
   })
+  
+  const longConj = computed(() => {
+    return Object.values(props.item.conjugations).filter((c: any) => !(c instanceof KanjiAndKana));
+  })
+
+  // function isKanjiAndKana(c: any){
+  //   debugger
+  //   if(c instanceof KanjiAndKana){
+  //     debugger;
+  //     console.log('hello: ' + c);
+  //     return true;
+  //   };
+  //   return false;
+  //   // debugger;
+  // }
 </script>
 
 <template>
@@ -25,7 +42,7 @@ const props = defineProps<{
     <div class="row">
       <div class="col">
         <!-- <ConjTable class="table" type="Indicative" :conj="conj.indicative"></ConjTable> -->
-        <ConjTable v-for="co in conj" class="table" :type="Object.keys(co)[0]" :conj="co"></ConjTable>
+        <ConjTable v-for="co in longConj" class="table" :type="Object.keys(co)[0]" :conj="co"></ConjTable>
       </div>
     </div>
 
