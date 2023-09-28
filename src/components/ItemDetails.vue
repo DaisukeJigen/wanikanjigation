@@ -3,6 +3,7 @@
 import { computed } from "vue";
 import { useSubjectsStore } from "@/stores/subjects";
 import ConjTable from "@/components/ConjTable.vue";
+import ShortConjTable from "@/components/ShortConjTable.vue";
 import { KanjiAndKana } from "@/classes/common";
 import instance from "@/axios/axios-wanikani";
 const subjectData = useSubjectsStore();
@@ -13,12 +14,16 @@ const props = defineProps<{
 }>()
 
 const conj = computed(() => {
-    return props.item.conjugations;
+    // return props.item.conjugations;
+    return {
+      short: Object.values(props.item.conjugations).filter((c: any) => (c instanceof KanjiAndKana)),
+      long: Object.values(props.item.conjugations).filter((c: any) => !(c instanceof KanjiAndKana)),
+    }
   })
   
-  const longConj = computed(() => {
-    return Object.values(props.item.conjugations).filter((c: any) => !(c instanceof KanjiAndKana));
-  })
+  // const longConj = computed(() => {
+  //   return Object.values(props.item.conjugations).filter((c: any) => !(c instanceof KanjiAndKana));
+  // })
 
   // function isKanjiAndKana(c: any){
   //   debugger
@@ -42,7 +47,14 @@ const conj = computed(() => {
     <div class="row">
       <div class="col">
         <!-- <ConjTable class="table" type="Indicative" :conj="conj.indicative"></ConjTable> -->
-        <ConjTable v-for="co in longConj" class="table" :type="Object.keys(co)[0]" :conj="co"></ConjTable>
+        <ConjTable v-for="(co, i) in conj.long" :key="i" class="table" :type="Object.keys(co)[0]" :conj="co"></ConjTable>
+        <!-- <span v-for="(co, i) in conj.long" :key="i">{{ co }}</span> -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <!-- <span>{{ conj.short }}</span> -->
+        <ShortConjTable v-for="(co, i) in conj.long" :key="i" class="table" :type="Object.keys(co)[0]" :conj="co"></ShortConjTable>
       </div>
     </div>
 

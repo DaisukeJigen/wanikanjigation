@@ -27,14 +27,15 @@ const name = computed(() => {
 
 const subForms = computed(() => {
     const b: any = Object.values(props.conj)[0]
-    return Object.keys(b);
+    const y = Object.keys(b);
+    return y;
 })
 
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';   // optional
 import Row from 'primevue/row';                   // optional
-import FormTable from "@/components/FormTable.vue";
+import ShortFormTable from "@/components/ShortFormTable.vue";
 </script>
 
 <template>
@@ -44,7 +45,8 @@ import FormTable from "@/components/FormTable.vue";
       <div class="col" v-for="s in subForms"><span>{{ s }}</span></div>
     </div>
     <template v-for="c in conj">
-      <FormTable :form="c"></FormTable>
+      <ShortFormTable :form="c"></ShortFormTable>
+      <!-- <span>{{ c }}</span> -->
     </template>
   </div>
   </template>
