@@ -1,0 +1,130 @@
+<!-- <template>
+
+</template>
+
+
+-->
+
+
+
+<script setup lang="ts">
+// import { conjugate } from "@/assets/conjugate.ts";
+import { computed } from "vue";
+import FormTable from "@/components/FormTable.vue";
+import { Verb } from "@/classes/verbs";
+import ItemDetails from "@/components/ItemDetails.vue";
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
+
+const props = defineProps<{
+  verb: Verb
+}>()
+
+const conj = computed(() => {
+  return props.verb.conjugations
+})
+
+
+</script>
+
+<template>
+    <b-container>
+    <!-- <b-row>
+      <b-col>
+        <span class="title">verb: {{ verb.slug }}</span>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <span>{{ conj.indicative }}</span>
+        <form-table :form="conj.indicative"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table
+          :form="conj.past_indicative"
+        ></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table :form="conj.presumptive"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table
+          :form="conj.past_presumptive"
+        ></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table :form="conj.progressive"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table
+          :form="conj.past_progressive"
+        ></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table :form="conj.imperative"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table :form="conj.request"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table :form="conj.potential"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table :form="conj.volitional"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table :form="conj.causative"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table :form="conj.passive"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table :form="conj.provisional"></form-table>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <form-table :form="conj.conditional"></form-table>
+      </b-col>
+    </b-row> -->
+                <ItemDetails
+                  :item="verb"
+                  type="verb"
+                  :key="verb.slug"
+                ></ItemDetails>
+  </b-container>
+</template>
+
+<style>
+.breakdown {
+  text-align: left;
+}
+.title {
+  font-size: 18px;
+  font-weight: bold;
+}
+</style>

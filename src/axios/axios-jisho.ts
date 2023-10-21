@@ -2,8 +2,8 @@ import axios from "axios";
 // import store from "@/store/index";
 
 const instance = axios.create({
-  // baseURL: "https://jisho.org/api/v1/search/",
-  baseURL: "https://jotoba.de/api/search/words",
+  baseURL: "http://jisho.org/api/v1/search/",
+  // baseURL: "https://jotoba.de/api/search/words",
 });
 
 instance.interceptors.request.use((config: any) => {

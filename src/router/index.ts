@@ -52,19 +52,19 @@ const router = createRouter({
       //   }
       // },
     },
-    // {
-    //   path: "/verblookup/:verb",
-    //   name: "verblookup",
-    //   component: () =>
-    //     import("../views/Verbs/VerbLookupView.vue"),
-    //   beforeEnter: (to, from, next) => {
-    //     if (!userData.loggedIn) {
-    //       next("/login");
-    //     } else {
-    //       next();
-    //     }
-    //   },
-    // },
+    {
+      path: "/verblookup/:verb",
+      name: "verblookup",
+      component: () =>
+        import("../views/VerbLookupView.vue"),
+      // beforeEnter: (to, from, next) => {
+      //   if (!userData.loggedIn) {
+      //     next("/login");
+      //   } else {
+      //     next();
+      //   }
+      // },
+    },
     {
       path: "/naAdjectives",
       name: "naAdjectives",

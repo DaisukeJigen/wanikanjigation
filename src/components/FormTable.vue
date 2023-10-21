@@ -12,6 +12,7 @@ const props = defineProps<{
 
 const name = computed(() => {
     const c: any =  Object.values(props.form)[0];
+    debugger;
     return c == undefined ? "" : c.path?.split(".")[2];
 })
 

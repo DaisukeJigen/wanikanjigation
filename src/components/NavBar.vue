@@ -10,6 +10,7 @@ import { computed, ref } from "vue";
 import Menubar from 'primevue/menubar';
 import Button from 'primevue/button';
 import Avatar from 'primevue/avatar';
+import InputText from 'primevue/inputtext';
 
 const version = __APP_VERSION__;
 const searchTerm = ref("");
@@ -63,7 +64,7 @@ const items = ref([
     ]);
 
     function search(this: any) {
-    router.push(`/verblookup/${searchTerm}`);
+    router.push(`/verblookup/${searchTerm.value}`);
   }
 </script>
 
@@ -89,7 +90,7 @@ const items = ref([
         </a>
     </template>
     <template #end>
-      <InputText placeholder="Search" type="text" />
+      <!-- <InputText placeholder="Search" type="text" /> -->
       <InputText
         v-model="searchTerm"
         @keyup.enter="search"
