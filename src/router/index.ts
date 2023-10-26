@@ -24,18 +24,18 @@ const router = createRouter({
       name: 'login',
       component: () => import('../views/LoginView.vue')
     },
-    // {
-    //   path: "/test/:type",
-    //   name: "test",
-    //   component: () => import("../views/TestView.vue"),
-    //   beforeEnter: (to, from, next) => {
-    //     if (!userData.loggedIn) {
-    //       next("/login");
-    //     } else {
-    //       next();
-    //     }
-    //   },
-    // },
+    {
+      path: "/test/:type",
+      name: "test",
+      component: () => import("../views/TestView.vue"),
+      // beforeEnter: (to, from, next) => {
+      //   if (!userData.loggedIn) {
+      //     next("/login");
+      //   } else {
+      //     next();
+      //   }
+      // },
+    },
     {
       path: "/verbs",
       name: "verbs",

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, watch, ref, type Ref } from "vue";
-import { conjugate } from "@/assets/conjugate.ts";
-import VerbDetails from "@/components/VerbDetails.vue";
+import { computed, onMounted, watch, ref, type Ref, toRaw } from "vue";
+// import { conjugate } from "@/assets/conjugate.ts";
+// import VerbDetails from "@/components/VerbDetails.vue";
 import ItemDetails from "@/components/ItemDetails.vue";
 import { Verb } from "@/classes/verbs";
+import { IAdjective, NaAdjective } from "@/classes/adjectives";
 import { mapState, mapActions } from "pinia";
 import { flattenDeep } from "lodash";
 // import { useJishoStore } from "@/stores/jisho"
@@ -14,6 +15,8 @@ const jotobaStore = useJotobaStore();
 import { useRoute } from "vue-router";
 
 const verbs: Ref<Verb[]> = ref([])
+const iAdjectives: Ref<IAdjective[]> = ref([]);
+const naAdjectives: Ref<NaAdjective[]> = ref([])
 // const t = ref(0);
 const verbFromParam = computed(() => {
     const route = useRoute()
@@ -31,12 +34,14 @@ const verbFromParam = computed(() => {
 
 function go() {
   verbs.value = [];
+  iAdjectives.value = [];
+  naAdjectives.value = [];
   // jishoStore.fetchWord(verbFromParam.value).then(() => {
   //   jishoStore.word.words.forEach((el: any) => {
     jotobaStore.fetchWord(verbFromParam.value).then(() => {
-      jotobaStore.word.words.forEach((el: any) => {
       debugger;
-        const v = new Verb({
+      jotobaStore.word.words.filter(t => t.reading.kana == verbFromParam.value || t.reading.kana == verbFromParam.value).forEach((el: any) => {
+        const obj = {
           //data: {
           data: {
             id: -99,
@@ -54,8 +59,19 @@ function go() {
             parts_of_speech: [],
             //}
           },
-        });
+        }
+      if(flattenDeep(el.senses.map((p: any) => [...toRaw(p.pos)])).find((t: any) => t.Verb) != undefined){
+        const v = new Verb(obj);
         verbs.value.push(v);
+      }
+      if(flattenDeep(el.senses.map((p: any) => [...toRaw(p.pos)])).find((t: any) => t.Adjective == 'I') != undefined){
+        const i = new IAdjective(obj);
+        iAdjectives.value.push(i);
+      }        
+      if(flattenDeep(el.senses.map((p: any) => [...toRaw(p.pos)])).find((t: any) => t.Adjective == 'Na') != undefined){
+        const n = new NaAdjective(obj);
+        naAdjectives.value.push(n);
+      }
       });
     });
   }
@@ -70,11 +86,6 @@ function go() {
       <b-col>
         <template
             v-if="verb != null">
-          <!-- <verb-details
-            v-if="verb.slug != undefined"
-            :verb="verb"
-            :key="verb.slug"
-          ></verb-details> -->
           <item-details
             v-if="verb.slug != undefined"
             type="verb"

@@ -50,4 +50,9 @@ export const useUserDataStore = defineStore('userData', () => {
   
 
   return { apiKey, userData, levels, loggedIn, updateApiKey, fetchUserData, loading }
+},
+{
+  persist: {
+    paths: ['apiKey']
+  }
 })

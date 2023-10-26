@@ -14,7 +14,7 @@ const router = useRouter()
 
 const key = computed({
   get(){
-    userData.apiKey
+    return userData.apiKey
   },
   set(value: any){
     userData.updateApiKey(value);
