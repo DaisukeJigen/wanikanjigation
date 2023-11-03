@@ -7,10 +7,11 @@ import App from './App.vue'
 import router from './router'
 
 import PrimeVue from 'primevue/config';
-import '@/assets/main.css'
-import 'primevue/resources/themes/lara-light-teal/theme.css';
-import 'primevue/resources/primevue.min.css';
+// import '@/assets/main.css'
+// import 'primevue/resources/themes/lara-light-teal/theme.css';
+// import 'primevue/resources/primevue.min.css';
 // import 'primeicons/primeicons.css';    
+import '@/assets/scss/main.scss';
 
 const app = createApp(App)
 

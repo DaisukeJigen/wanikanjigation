@@ -1,0 +1,59 @@
+$sizes: (
+    'xs': 0,
+    'sm': 576px,
+    'md': 768px,
+    'lg': 992px,
+    'xl': 1200px
+);
+
+$twelve: calc(100% / 12);
+$gutter: 5px;
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -0.5rem;
+    margin-left: -0.5rem;
+    margin-top: -0.5rem;
+}
+
+.grid-noogutter {
+    margin-right: 0;
+    margin-left: 0;
+    margin-top: 0;
+}
+
+.col {
+    flex-grow: 1;
+    flex-basis: 0;
+    padding: $gutter
+}
+
+.col-fixed {
+    flex: 0 0 auto;
+    padding: $gutter;
+}
+
+@each $name, $px in $sizes {
+    @media screen and (min-width: $px) {
+        .col-#{$name}-#{$i} {
+            flex: 0 0 auto;
+            padding: $gutter;
+            width: calc(#{$twelve} * #{$i}) !important;
+        }
+        .col-offset-#{$name}-#{$i} {
+            margin-left: calc(#{$twelve} + #{$i}) !important;
+        }
+    }
+}
+
+@for $i from 1 through 12 {
+    .col-#{$i} {
+        flex: 0 0 auto;
+        padding: $gutter;
+        width: calc(#{$twelve} * #{$i});
+    }
+    .col-offset-#{$i} {
+        margin-left: calc(#{$twelve} * #{$i});
+    }
+}
