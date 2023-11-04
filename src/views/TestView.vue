@@ -7,6 +7,7 @@ import { eUserAnswer } from "@/interfaces/common";
 import Results from "@/components/Results.vue";
 import { useSubjectsStore } from "@/stores/subjects"
 import { useRoute } from 'vue-router'
+import Button from 'primevue/button';
 
 const subjectsStore = useSubjectsStore()
 const route = useRoute()
@@ -17,10 +18,12 @@ const totalQuestions = ref(0)
 const progress = ref(-1)
 const earlyFinish = ref(false)
 const questionType = computed(() => {
+  debugger;
     return route.params.type;
   })
 
   function   start() {
+    debugger
     progress.value = 0;
     questions.value = subjectsStore.getQuestions(<string>questionType.value);
     totalQuestions.value = questions.value.length;
@@ -61,7 +64,7 @@ const questionType = computed(() => {
       <b-col>
         <template v-if="progress == 0 && questions.length == 0">
           <span class="error">No questions returned for criteria</span><br />
-          <b-button @click.prevent="progress = -1">Retry</b-button>
+          <Button @click.prevent="progress = -1">Retry</Button>
         </template>
         <options
           v-if="progress == -1"

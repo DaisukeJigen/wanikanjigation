@@ -3,6 +3,9 @@ import { ref, defineProps, computed, defineEmits } from "vue"
 import HoverHelp from "@/components/HoverHelp.vue";
 import { useOptionsStore } from "@/stores/options";
 import { useUserDataStore } from "@/stores/userData";
+import Checkbox from 'primevue/checkbox';
+import Button from 'primevue/button';
+
 
 const optionsStore = useOptionsStore();
 const userDataStore = useUserDataStore();
@@ -75,64 +78,36 @@ set(value: any){
     <b-container>
       <b-row>
         <b-col>
-            <b-form-group label="Levels" label-for="chkLevels">
-              <b-form-checkbox-group
-                :class="['chk']"
-                id="chkLevels"
-                name="Levels"
-                v-model="selectedLevels"
-                :options="levels"
-              />
-            </b-form-group>
+            <div v-for="level in levels">
+              <Checkbox v-model="selectedLevels" :inputId="'level' + level" :name="level" :value="level"></Checkbox>
+              <label :for="'level' + level">{{ level }}</label>
+            </div>
         </b-col>
         <b-col>
-            <b-form-group label="Positivity" label-for="chkPositivity">
-              <b-form-checkbox-group
-                :class="['chk']"
-                id="chkPositivity"
-                name="Positivity"
-                v-model="selectedPositivity"
-                :options="ops.positivity"
-              />
-            </b-form-group>
+            <div v-for="positivity in ops.positivity">
+              <Checkbox v-model="selectedPositivity" :inputId="'positivity' + positivity" :name="positivity.text" :value="positivity.value"></Checkbox>
+              <label :for="'positivity' + positivity">{{ positivity.text }}</label>
+            </div>
         </b-col>
-
         <b-col>
-            <b-form-group label="Politeness" label-for="chkPoliteness">
-              <b-form-checkbox-group
-                :class="['chk']"
-                id="chkPoliteness"
-                name="Politeness"
-                v-model="selectedPoliteness"
-                :options="ops.politeness"
-              />
-            </b-form-group>
+            <div v-for="politeness in ops.politeness">
+              <Checkbox v-model="selectedPoliteness" :inputId="'politeness' + politeness" :name="politeness.text" :value="politeness.value"></Checkbox>
+              <label :for="'politeness' + politeness">{{ politeness.text }}</label>
+            </div>
         </b-col>
-
         <b-col>
-            <b-form-group label="Form" label-for="chkForm">
-              <b-form-checkbox-group
-                :class="['chk']"
-                id="chkForm"
-                name="Form"
-                v-model="selectedForm"
-                ><template v-for="form in ops.form" :key="form.text">
-                  <div class="formDiv">
-                    <b-form-checkbox :value="form.value">
-                      {{ form.text }}
-                    </b-form-checkbox>
-                    <hover-help
+            <div v-for="form in ops.form">
+              <Checkbox v-model="selectedForm" :inputId="'form' + form" :name="form.text" :value="form.value"></Checkbox>
+              <label :for="'form' + form">{{ form.text }}<hover-help
                       :title="form.text"
                       :body="form.help"
-                    ></hover-help></div
-                ></template>
-              </b-form-checkbox-group>
-            </b-form-group>
+                    ></hover-help></label>
+            </div>
         </b-col>
       </b-row>
       <b-row>
         <b-col>
-          <b-button @click.prevent="setOptions">Go</b-button>
+          <Button @click.prevent="setOptions">Go</Button>
         </b-col>
       </b-row>
     </b-container>
