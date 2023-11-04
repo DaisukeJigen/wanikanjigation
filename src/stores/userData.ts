@@ -12,6 +12,7 @@ export const useUserDataStore = defineStore('userData', () => {
     username: ""
   });
   const levels = computed(() => {
+    debugger;
     return userData.value.level == undefined && userData.value.level == 0
       ? []
       : Array.from({ length: userData.value.level }).map((_, i) => i + 1);

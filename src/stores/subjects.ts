@@ -155,6 +155,7 @@ export const useSubjectsStore = defineStore('subjects', () => {
       };
     function getQuestions(questionType: string) {
         let base = [];
+        debugger;
         switch (questionType.toLowerCase()) {
           case "verbs":
             base = verbs.value;
@@ -169,6 +170,7 @@ export const useSubjectsStore = defineStore('subjects', () => {
             base = [];
             break;
         }
+        debugger;
         const a = base
           .filter((l: any) => optionsData.selected.levels.includes(l.level))
           .map((p: any) => p.conjugations);
