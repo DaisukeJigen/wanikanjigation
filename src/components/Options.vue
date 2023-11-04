@@ -1,81 +1,123 @@
+<script setup lang="ts">
+import { ref, defineProps, computed, defineEmits } from "vue"
+import HoverHelp from "@/components/HoverHelp.vue";
+import { useOptionsStore } from "@/stores/options";
+import { useUserDataStore } from "@/stores/userData";
+
+const optionsStore = useOptionsStore();
+const userDataStore = useUserDataStore();
+const observer = ref(null);
+
+const props = defineProps({
+  type: {
+    type: null
+  }
+})
+const emit = defineEmits({
+  optionsSet: null
+})
+
+ async function setOptions() {
+  // @ts-ignore
+    // const isValid = observer.validate();
+    // if (isValid) {
+      emit("optionsSet", true);
+    // }
+  }
+
+  const ops = computed(() => {
+    return props.type == "verb" ? optionsStore.verbOptions : optionsStore.adjectiveOptions;
+  })
+
+  const levels = computed(() => {
+    return userDataStore.levels;
+  })
+
+const selectedPositivity = computed({
+get(){
+  return optionsStore.selected.positivity
+},
+set(value: any){
+  optionsStore.updateSelectedPositivity(value)
+}
+})
+
+const selectedPoliteness = computed({
+get(){
+  return optionsStore.selected.politeness
+},
+set(value: any){
+  optionsStore.updateSelectedPoliteness(value)
+}
+})
+
+const selectedForm = computed({
+get(){
+  return optionsStore.selected.form
+},
+set(value: any){
+  optionsStore.updateSelectedForm(value)
+}
+})
+
+const selectedLevels = computed({
+get(){
+  return optionsStore.selected.levels
+},
+set(value: any){
+  optionsStore.updateSelectedLevels(value)
+}
+})
+  
+</script>
+
 <template>
-  <ValidationObserver ref="observer" v-slot="{ invalid }">
     <b-container>
       <b-row>
         <b-col>
-          <ValidationProvider
-            name="Levels"
-            rules="required"
-            mode="eager"
-            v-slot="{ errors, classes }"
-          >
             <b-form-group label="Levels" label-for="chkLevels">
               <b-form-checkbox-group
-                :class="['chk', classes]"
+                :class="['chk']"
                 id="chkLevels"
                 name="Levels"
                 v-model="selectedLevels"
                 :options="levels"
               />
             </b-form-group>
-            <span class="error">{{ errors[0] }}</span>
-          </ValidationProvider>
         </b-col>
         <b-col>
-          <ValidationProvider
-            name="Positivity"
-            rules="required"
-            mode="eager"
-            v-slot="{ errors, classes }"
-          >
             <b-form-group label="Positivity" label-for="chkPositivity">
               <b-form-checkbox-group
-                :class="['chk', classes]"
+                :class="['chk']"
                 id="chkPositivity"
                 name="Positivity"
                 v-model="selectedPositivity"
                 :options="ops.positivity"
               />
             </b-form-group>
-            <span class="error">{{ errors[0] }}</span>
-          </ValidationProvider>
         </b-col>
 
         <b-col>
-          <ValidationProvider
-            name="Politeness"
-            rules="required"
-            mode="eager"
-            v-slot="{ errors, classes }"
-          >
             <b-form-group label="Politeness" label-for="chkPoliteness">
               <b-form-checkbox-group
-                :class="['chk', classes]"
+                :class="['chk']"
                 id="chkPoliteness"
                 name="Politeness"
                 v-model="selectedPoliteness"
                 :options="ops.politeness"
               />
             </b-form-group>
-            <span class="error">{{ errors[0] }}</span>
-          </ValidationProvider>
         </b-col>
 
         <b-col>
-          <ValidationProvider
-            name="Form"
-            rules="required"
-            mode="eager"
-            v-slot="{ errors, classes }"
-          >
             <b-form-group label="Form" label-for="chkForm">
               <b-form-checkbox-group
-                :class="['chk', classes]"
+                :class="['chk']"
                 id="chkForm"
                 name="Form"
                 v-model="selectedForm"
-                ><template v-for="form in ops.form">
-                  <div class="formDiv" :key="form.text">
+                ><template v-for="form in ops.form" :key="form.text">
+                  <div class="formDiv">
                     <b-form-checkbox :value="form.value">
                       {{ form.text }}
                     </b-form-checkbox>
@@ -86,8 +128,6 @@
                 ></template>
               </b-form-checkbox-group>
             </b-form-group>
-            <span class="error">{{ errors[0] }}</span>
-          </ValidationProvider>
         </b-col>
       </b-row>
       <b-row>
@@ -96,100 +136,7 @@
         </b-col>
       </b-row>
     </b-container>
-  </ValidationObserver>
 </template>
-
-<script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
-import { mapState, mapActions, mapGetters } from "vuex";
-import HoverHelp from "@/components/HoverHelp.vue";
-
-@Component({
-  components: {
-    "hover-help": HoverHelp,
-  },
-  computed: {
-    ...mapState("options", ["verbOptions", "adjectiveOptions", "selected"]),
-  },
-  methods: {
-    ...mapActions("options", [
-      // "updatedSelected",
-      "updateSelectedPositivity",
-      "updateSelectedPoliteness",
-      "updateSelectedForm",
-      "updateSelectedLevels",
-    ]),
-    ...mapGetters("userData", ["getLevels"]),
-  },
-  data() {
-    return {
-      // selected: {
-      //   positivity: [],
-      //   politeness: [],
-      //   form: []
-      // },
-    };
-  },
-})
-export default class Options extends Vue {
-  @Prop() type!: any;
-  async setOptions() {
-    const self: any = this;
-    const isValid = await this.$refs.observer.validate();
-    if (isValid) {
-      self.$emit("optionsSet", true);
-    }
-  }
-  get ops() {
-    const self: any = this;
-    return self.type == "verb" ? self.verbOptions : self.adjectiveOptions;
-  }
-  // get sel() {
-  //   const self: any = this;
-  //   return self.selected;
-  // }
-  // set sel(value) {
-  //   const self: any = this;
-  //   self.updateSelected(value);
-  // }
-  get levels() {
-    const self: any = this;
-    return self.getLevels();
-  }
-  get selectedPositivity() {
-    const self: any = this;
-    return self.selected.positivity;
-  }
-  set selectedPositivity(value) {
-    const self: any = this;
-    self.updateSelectedPositivity(value);
-  }
-  get selectedPoliteness() {
-    const self: any = this;
-    return self.selected.politeness;
-  }
-  set selectedPoliteness(value) {
-    const self: any = this;
-    self.updateSelectedPoliteness(value);
-  }
-  get selectedForm() {
-    const self: any = this;
-    return self.selected.form;
-  }
-  set selectedForm(value) {
-    const self: any = this;
-    self.updateSelectedForm(value);
-  }
-  get selectedLevels() {
-    const self: any = this;
-    return self.selected.levels;
-  }
-  set selectedLevels(value) {
-    const self: any = this;
-    self.updateSelectedLevels(value);
-  }
-}
-</script>
 
 <style scoped lang="scss">
 .chk {

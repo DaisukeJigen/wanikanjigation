@@ -1,54 +1,50 @@
-<script setup lang='ts'>
-import { ref, onMounted, computed } from 'vue'
+<script setup lang="ts">
+import { ref, computed } from "vue"
 import Question from "@/components/Question.vue";
-import Options from "@/components/Options";
+import Options from "@/components/Options.vue";
 import { random } from "lodash";
-import { eUserAnswer } from "@/interfaces/common.ts";
+import { eUserAnswer } from "@/interfaces/common";
 import Results from "@/components/Results.vue";
-import { useSubjectsStore } from "@/stores/subjects.ts";
+import { useSubjectsStore } from "@/stores/subjects"
+import { useRoute } from 'vue-router'
+
 const subjectsStore = useSubjectsStore()
-import { useRoute } from "vue-router";
+const route = useRoute()
 
 const questions = ref([])
 const currentQuestion = ref(null)
 const totalQuestions = ref(0)
 const progress = ref(-1)
-const EarlyFinish = ref(false)
-
-onMounted(() => {
-})
-
-const questionType = computed (() => {
-    const route = useRoute()
-    return (route.params.type as string);
+const earlyFinish = ref(false)
+const questionType = computed(() => {
+    return route.params.type;
   })
-  const start = () => {
+
+  function   start() {
     progress.value = 0;
-    questions.value = subjectsStore.getQuestions(questionType.value);
+    questions.value = subjectsStore.getQuestions(<string>questionType.value);
     totalQuestions.value = questions.value.length;
     currentQuestion.value = randomQuestion();
   }
 
-  const nextQuestion = (answer = eUserAnswer.Incorrect) => {
-    const self: any = this;
+  function nextQuestion(answer = eUserAnswer.Incorrect) {
     if (answer == eUserAnswer.Correct) {
-      self.progress = self.progress + 1;
-      self.questions.pop(self.currentQuestion);
+      progress.value = progress.value + 1;
+      // questions.value.pop(currentQuestion.value);
+      questions.value = questions.value.filter((q: any) => q != currentQuestion.value)
     }
-    self.currentQuestion = self.randomQuestion();
+    currentQuestion.value = randomQuestion();
   }
 
-  const randomQuestion = () => {
-    const self: any = this;
-    return self.questions.filter((q: any) => q.answered != eUserAnswer.Correct)[
-      random(0, self.questions.length - 1)
+  function randomQuestion() {
+    return questions.value.filter((q: any) => q.answered != eUserAnswer.Correct)[
+      random(0, questions.value.length - 1)
     ];
   }
-}
 </script>
 
 <template>
-  <b-container>
+<b-container>
     <b-row v-if="currentQuestion != null">
       <b-col>
         <span>Answered: </span
@@ -74,7 +70,7 @@ const questionType = computed (() => {
         ></options>
         <results
           :type="questionType"
-          v-else-if="(progress > -1 && questions.length == 0) || EarlyFinish"
+          v-else-if="(progress > -1 && questions.length == 0) || earlyFinish"
         ></results>
         <question
           v-else
@@ -83,7 +79,7 @@ const questionType = computed (() => {
           :type="questionType"
           @early-finish="
             () => {
-              EarlyFinish = true;
+              earlyFinish = true;
             }
           "
         ></question>
@@ -92,5 +88,5 @@ const questionType = computed (() => {
   </b-container>
 </template>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 </style>

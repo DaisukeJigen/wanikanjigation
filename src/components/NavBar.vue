@@ -11,6 +11,7 @@ import Menubar from 'primevue/menubar';
 import Button from 'primevue/button';
 import Avatar from 'primevue/avatar';
 import InputText from 'primevue/inputtext';
+import { toKana } from 'wanakana';
 
 const version = __APP_VERSION__;
 const searchTerm = ref("");
@@ -94,6 +95,7 @@ const items = ref([
       <InputText
         v-model="searchTerm"
         @keyup.enter="search"
+        @keyup="searchTerm = toKana(searchTerm)"
         ref="search"
       ></InputText>
       <Button @click="search">Verb Lookup</Button>

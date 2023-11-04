@@ -1,5 +1,71 @@
+<script setup lang="ts">
+import { ref, defineProps, onMounted, computed, defineEmits, watch } from "vue"
+import { eUserAnswer } from "@/interfaces/common";
+import { bind } from "wanakana";
+import { useSubjectsStore } from "@/stores/subjects";
+
+const subjectsStore = useSubjectsStore()
+
+const answer = ref("")
+const answered = ref(false)
+const input = ref(null)
+const correct = ref(false)
+const props = defineProps({
+  question: {
+    type: null
+  },
+  type: {
+    type: null
+  }
+})
+const emit = defineEmits({
+    next: null
+})
+
+onMounted(() => {
+    // @ts-ignore
+    bind(input.$el);
+})
+
+const fullQuestion = computed(() => {
+    return subjectsStore.getQuestion(props.question, props.type);
+  })
+
+const pathPieces = computed(() => {
+    return fullQuestion.value.path.split(".");
+  })
+
+  function submit() {
+    correct.value =
+    answer == fullQuestion.value.kana ||
+    answer == fullQuestion.value.kanji;
+    answered.value = true;
+    subjectsStore.updateAnswer({
+      path: fullQuestion.value.path,
+      answer: correct.value ? eUserAnswer.Correct : eUserAnswer.Incorrect,
+    });
+  }
+
+  function enter() {
+    if (!answered.value) {
+      submit();
+    } else {
+      // const p = {id: self.fullQuestion.id, answer: self.correct ? eUserAnswer.Correct : eUserAnswer.Incorrect};
+      emit(
+        "next",
+        correct.value ? eUserAnswer.Correct : eUserAnswer.Incorrect
+      );
+    }
+  }
+
+  watch(props.question, async (newVal, oldVal) => {
+    answer.value = ""
+    answered.value = false;
+  })
+</script>
+
 <template>
-  <b-container>
+<b-container>
     <!-- <b-row>
       <b-col>
         {{ fullQuestion }}
@@ -52,94 +118,8 @@
   </b-container>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Prop, Watch } from "vue-property-decorator";
-import { mapGetters, mapActions } from "vuex";
-// import { random } from "lodash";
-import { eUserAnswer } from "@/interfaces/verbs";
-import { bind } from "wanakana";
-
-@Component({
-  components: {},
-  methods: {
-    ...mapGetters("subjects", ["getQuestions", "getQuestion"]),
-    ...mapActions("subjects", ["updateAnswer"]),
-  },
-  data() {
-    return {
-      // question: null,
-      answer: "",
-      answered: false,
-    };
-  },
-})
-export default class Question extends Vue {
-  @Prop() question: any;
-  @Prop() type: any;
-  mounted() {
-    const self: any = this;
-    // self.question = self.RandomQuestion();
-    bind(self.$refs["input"].$el);
-  }
-
-  get pathPieces() {
-    const self: any = this;
-    return self.fullQuestion.path.split(".");
-  }
-
-  // nextQuestion(){
-  //   // self.question = self.RandomQuestion();
-  //   self.answer = "";
-  //   self.answered = false;
-  // }
-
-  get fullQuestion() {
-    const self: any = this;
-    return self.getQuestion()(self.question, self.type);
-  }
-
-  // RandomQuestion() {
-  //   const self: any = this;
-  //   // return self.getQuestions();
-  //   const qs = self.getQuestions();
-  //   return self.getQuestion()(qs[random(0, qs.length - 1)]);
-  // }
-
-  submit() {
-    const self: any = this;
-    self.correct =
-      self.answer == self.fullQuestion.kana ||
-      self.answer == self.fullQuestion.kanji;
-    self.answered = true;
-    self.updateAnswer({
-      path: self.fullQuestion.path,
-      answer: self.correct ? eUserAnswer.Correct : eUserAnswer.Incorrect,
-    });
-  }
-
-  enter() {
-    const self: any = this;
-    if (!self.answered) {
-      self.submit();
-    } else {
-      // const p = {id: self.fullQuestion.id, answer: self.correct ? eUserAnswer.Correct : eUserAnswer.Incorrect};
-      self.$emit(
-        "next",
-        self.correct ? eUserAnswer.Correct : eUserAnswer.Incorrect
-      );
-    }
-  }
-
-  @Watch("question")
-  questionChange() {
-    const self: any = this;
-    self.answer = "";
-    self.answered = false;
-  }
-}
-</script>
-
 <style scoped lang="scss">
+@import '@/assets/scss/custom-variables.scss';
 ul {
   text-align: left;
   list-style: none;

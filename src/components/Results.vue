@@ -1,24 +1,52 @@
+<script setup lang="ts">
+import { ref, defineProps, computed } from "vue"
+import { eUserAnswer } from "@/interfaces/common";
+import { useSubjectsStore } from "@/stores/subjects";
+
+const subjectsStore = useSubjectsStore()
+const props = defineProps({
+  type: {
+    type: null
+  }
+})
+
+const questions = computed(() => {
+    return subjectsStore.getQuestions(props.type)
+})
+
+const correctlyAnswered = computed(() => {
+    return subjectsStore.getAnsweredCorrectly(props.type);
+})
+
+const incorrectlyAnswered = computed(() => {
+    return subjectsStore.getAnsweredIncorrectly(props.type);
+})
+
+const unanswered = computed(() => {
+    return subjectsStore.getUnanswered(props.type);
+})
+</script>
+
 <template>
-  <b-container>
+    <b-container>
     <template
       v-for="answers in [
         { type: 'Correct', answers: correctlyAnswered },
         { type: 'Incorrect', answers: incorrectlyAnswered },
         { type: 'Unanswered', answers: unanswered },
-      ]"
+      ]" :key="answers.type + '_header'"
     >
-      <b-row :key="answers.type + '_header'">
+      <b-row>
         <b-col :id="answers.type.toLowerCase()">
           <span>{{ answers.type }}</span>
         </b-col>
       </b-row>
-      <b-row :key="answers.type + '_body'">
-        <template v-for="ans in answers.answers">
-          <b-col class="question" :key="ans.id" :id="ans.id">
+      <b-row>
+        <template v-for="ans in answers.answers" :key="ans.id">
+          <b-col class="question" :id="ans.id">
             <span class="kanji">{{ ans.kanji }}</span>
           </b-col>
           <b-popover
-            :key="ans.id + '_popover'"
             :target="ans.id"
             triggers="hover"
             placement="top"
@@ -32,49 +60,8 @@
   </b-container>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
-import { mapGetters } from "vuex";
-import { eUserAnswer } from "@/interfaces/common.ts";
-
-@Component({
-  components: {},
-  methods: {
-    ...mapGetters("subjects", [
-      "getQuestions",
-      "getAnsweredCorrectly",
-      "getAnsweredIncorrectly",
-      "getUnanswered",
-    ]),
-  },
-  //data() {
-  //  return {
-  //
-  //  }
-  //}
-})
-export default class Results extends Vue {
-  @Prop() type: any;
-  get questions() {
-    const self: any = this;
-    return self.getQuestions()(self.type);
-  }
-  get correctlyAnswered() {
-    const self: any = this;
-    return self.getAnsweredCorrectly()(self.type);
-  }
-  get incorrectlyAnswered() {
-    const self: any = this;
-    return self.getAnsweredIncorrectly()(self.type);
-  }
-  get unanswered() {
-    const self: any = this;
-    return self.getUnanswered()(self.type);
-  }
-}
-</script>
-
 <style scoped lang="scss">
+@import "@/assets/scss/custom-variables.scss";
 .question {
   border: 1px solid $gray-700;
   border-radius: 5px;
