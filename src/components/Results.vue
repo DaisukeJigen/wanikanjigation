@@ -28,7 +28,6 @@ const unanswered = computed(() => {
 </script>
 
 <template>
-    <b-container>
     <template
       v-for="answers in [
         { type: 'Correct', answers: correctlyAnswered },
@@ -36,16 +35,16 @@ const unanswered = computed(() => {
         { type: 'Unanswered', answers: unanswered },
       ]" :key="answers.type + '_header'"
     >
-      <b-row>
-        <b-col :id="answers.type.toLowerCase()">
+      <div class="grid">
+        <div class="col" :id="answers.type.toLowerCase()">
           <span>{{ answers.type }}</span>
-        </b-col>
-      </b-row>
-      <b-row>
+        </div>
+      </div>
+      <div class="grid">
         <template v-for="ans in answers.answers" :key="ans.id">
-          <b-col class="question" :id="ans.id">
+          <div class="col question" :id="ans.id">
             <span class="kanji">{{ ans.kanji }}</span>
-          </b-col>
+          </div>
           <b-popover
             :target="ans.id"
             triggers="hover"
@@ -55,9 +54,8 @@ const unanswered = computed(() => {
             <span>{{ ans.kana }}</span>
           </b-popover>
         </template>
-      </b-row>
+      </div>
     </template>
-  </b-container>
 </template>
 
 <style scoped lang="scss">

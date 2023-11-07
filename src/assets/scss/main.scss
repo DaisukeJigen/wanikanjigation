@@ -1,2 +1,7 @@
 @import './custom-variables.scss';
 @import '@/assets/scss/primevue-sass-theme-main/primevue-sass-theme-main/themes/lara/lara-light/teal/theme.scss';
+@import "./grid-system.scss";
+
+body {
+    margin: 0;
+}

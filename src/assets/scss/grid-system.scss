@@ -36,13 +36,16 @@ $gutter: 5px;
 
 @each $name, $px in $sizes {
     @media screen and (min-width: $px) {
-        .col-#{$name}-#{$i} {
-            flex: 0 0 auto;
-            padding: $gutter;
-            width: calc(#{$twelve} * #{$i}) !important;
-        }
-        .col-offset-#{$name}-#{$i} {
-            margin-left: calc(#{$twelve} + #{$i}) !important;
+        @for $i from 1 through 12 {
+            .col-#{$name}-#{$i} {
+                flex: 0 0 auto;
+                padding: $gutter;
+                width: calc(#{$twelve} * #{$i}) !important;
+                display: flex;
+            }
+            .col-offset-#{$name}-#{$i} {
+                margin-left: calc(#{$twelve} + #{$i}) !important;
+            }
         }
     }
 }
@@ -52,6 +55,7 @@ $gutter: 5px;
         flex: 0 0 auto;
         padding: $gutter;
         width: calc(#{$twelve} * #{$i});
+        display: flex;
     }
     .col-offset-#{$i} {
         margin-left: calc(#{$twelve} * #{$i});

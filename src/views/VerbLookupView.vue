@@ -39,7 +39,6 @@ function go() {
   // jishoStore.fetchWord(verbFromParam.value).then(() => {
   //   jishoStore.word.words.forEach((el: any) => {
     jotobaStore.fetchWord(verbFromParam.value).then(() => {
-      debugger;
       jotobaStore.word.words.filter(t => t.reading.kana == verbFromParam.value || t.reading.kana == verbFromParam.value).forEach((el: any) => {
         const obj = {
           //data: {
@@ -78,12 +77,11 @@ function go() {
 </script>
 
 <template>
-  <b-container>
-    <b-row>
-      <b-col> Verb Lookup </b-col>
-    </b-row>
-    <b-row v-for="verb in verbs" :key="verb.slug">
-      <b-col>
+    <div class="grid">
+      <div class="col"> Verb Lookup </div>
+    </div>
+    <div class="grid" v-for="verb in verbs" :key="verb.slug">
+      <div class="col">
         <template
             v-if="verb != null">
           <item-details
@@ -93,9 +91,8 @@ function go() {
             :key="verb.slug"
           ></item-details>
         </template>
-      </b-col>
-    </b-row>
-  </b-container>
+      </div>
+    </div>
 </template>
 
 <style>

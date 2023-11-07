@@ -18,12 +18,10 @@ const totalQuestions = ref(0)
 const progress = ref(-1)
 const earlyFinish = ref(false)
 const questionType = computed(() => {
-  debugger;
     return route.params.type;
   })
 
   function   start() {
-    debugger
     progress.value = 0;
     questions.value = subjectsStore.getQuestions(<string>questionType.value);
     totalQuestions.value = questions.value.length;
@@ -47,21 +45,20 @@ const questionType = computed(() => {
 </script>
 
 <template>
-<b-container>
-    <b-row v-if="currentQuestion != null">
-      <b-col>
+    <div class="grid" v-if="currentQuestion != null">
+      <div class="col">
         <span>Answered: </span
         ><span>{{ progress }} / {{ questions.length }}</span>
-      </b-col>
+        </div>
       <!-- <b-col>
         <span>Incorrect: </span><span>{{ incorrectSoFar }}</span>
       </b-col>
       <b-col>
         <span>Correct: </span><span>{{ correctSoFar }}</span>
       </b-col> -->
-    </b-row>
-    <b-row>
-      <b-col>
+    </div>
+    <div class="grid">
+      <div class="col">
         <template v-if="progress == 0 && questions.length == 0">
           <span class="error">No questions returned for criteria</span><br />
           <Button @click.prevent="progress = -1">Retry</Button>
@@ -86,9 +83,8 @@ const questionType = computed(() => {
             }
           "
         ></question>
-      </b-col>
-    </b-row>
-  </b-container>
+          </div>
+    </div>
 </template>
 
 <style scoped lang="scss">

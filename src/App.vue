@@ -14,32 +14,28 @@ const mainStore = useMainStore();
   <!-- <ProgressSpinner></ProgressSpinner> -->
   <!-- <BlockUI :blocked="mainStore.isLoading" fullScreen> -->
   <header>
-    <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div> -->
   <NavBar></NavBar>
   </header>
 <!-- </BlockUI> -->
-
-  <RouterView />
+<div class="app">
+  <RouterView/>
+</div>
   <footer>
     <div id="alerts"></div>
   </footer>
 </template>
 
 <style scoped lang="scss">
-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
+// header {
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  // width: 100vw;
+// }
+.app {
+  padding: 20px;
+  width: 90vw;
+  margin: auto;
 }
 footer {
   width: 100vw;
@@ -115,16 +111,4 @@ nav a:first-of-type {
     margin-top: 1rem;
   }
 } */
-</style>
-
-<style lang="scss">
-// .table{
-  .row {
-    display: flex;  /* aligns all child elements (flex items) in a row */
-  }
-
-  .col {
-    flex: 1;        /* distributes space on the line equally among items */
-  }
-// }
 </style>

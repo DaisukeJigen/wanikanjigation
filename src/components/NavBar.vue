@@ -13,12 +13,15 @@ import Avatar from 'primevue/avatar';
 import InputText from 'primevue/inputtext';
 import { toKana } from 'wanakana';
 
+const isLoggedIn = computed(() => userData.loggedIn)
+
 const version = __APP_VERSION__;
 const searchTerm = ref("");
 const items = ref([
     {
       label: 'Login',
-      route: '/login'
+      route: '/login',
+      visible: () => !isLoggedIn.value
     },
           {
               label: 'Verbs',
@@ -32,7 +35,8 @@ const items = ref([
                       label: 'Test',
                       route: 'test/verbs'
                   }
-              ]
+              ],
+              visible: () => isLoggedIn.value
           },
           {
               label: 'NA Adjectives',
@@ -46,7 +50,8 @@ const items = ref([
                       label: 'Test',
                       route: 'test/naadjectives'
                   }
-              ]
+              ],
+              visible: () => isLoggedIn.value
           },
           {
               label: 'I Adjectives',
@@ -60,7 +65,8 @@ const items = ref([
                       label: 'Test',
                       route: 'test/iadjectives'
                   }
-              ]
+              ],
+              visible: () => isLoggedIn.value
           },
     ]);
 

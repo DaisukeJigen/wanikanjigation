@@ -155,7 +155,6 @@ export const useSubjectsStore = defineStore('subjects', () => {
       };
     function getQuestions(questionType: string) {
         let base = [];
-        debugger;
         switch (questionType.toLowerCase()) {
           case "verbs":
             base = verbs.value;
@@ -170,7 +169,6 @@ export const useSubjectsStore = defineStore('subjects', () => {
             base = [];
             break;
         }
-        debugger;
         const a = base
           .filter((l: any) => optionsData.selected.levels.includes(l.level))
           .map((p: any) => p.conjugations);
@@ -201,7 +199,7 @@ export const useSubjectsStore = defineStore('subjects', () => {
         return new Promise((resolve, reject) => {
             const parts = data.path.split(".");
             const verb = verbs.value.find((v: any) => v.slug == parts[0]);
-            const conj = verb.value.conjugations[parts[1]][parts[2]][parts[3]];
+            const conj = verb.conjugations[parts[1]][parts[2]][parts[3]];
             conj.answered = data.answer;
             conj.attempts = conj.attempts + 1;
           });
