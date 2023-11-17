@@ -44,14 +44,14 @@ const conj = computed(() => {
         <span class="title">item: {{ item.slug }}</span>
       </div>
     </div>
-    <div class="row">
+    <div class="row conjRow">
       <div class="col">
         <!-- <ConjTable class="table" type="Indicative" :conj="conj.indicative"></ConjTable> -->
         <ConjTable v-for="(co, i) in conj.long" :key="i" class="table" :type="Object.keys(co)[0]" :conj="co"></ConjTable>
         <!-- <span v-for="(co, i) in conj.long" :key="i">{{ co }}</span> -->
       </div>
     </div>
-    <div class="row">
+    <div class="row conjRow">
       <div class="col">
         <!-- <span>{{ conj.short }}</span> -->
         <ShortConjTable v-for="(co, i) in conj.long" :key="i" class="table" :type="Object.keys(co)[0]" :conj="co"></ShortConjTable>
@@ -100,7 +100,7 @@ const conj = computed(() => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .breakdown {
   text-align: left;
 }
@@ -108,4 +108,15 @@ const conj = computed(() => {
   font-size: 18px;
   font-weight: bold;
 }
+.container {
+  width: 50vw;
+  flex-direction: column;
+    align-items: center;
+}
+// .row {
+//   flex-direction: column;
+//   &.conjRow {
+//     align-items: center;
+//   }
+// }
 </style>

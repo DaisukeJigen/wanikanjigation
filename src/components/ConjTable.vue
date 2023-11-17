@@ -40,7 +40,7 @@ import FormTable from "@/components/FormTable.vue";
 <template>
   <div class="conjTable">
     <div class="row header">
-      <div class="col"><span>{{ name }}</span></div>
+      <div class="col name"><span>{{ name }}</span></div>
       <div class="col" v-for="s in subForms"><span>{{ s }}</span></div>
     </div>
     <template v-for="c in conj">
@@ -49,9 +49,17 @@ import FormTable from "@/components/FormTable.vue";
   </div>
   </template>
 
-<style scoped>
+<style scoped lang="scss">
 .kana {
   font-size: 0.8rem;
 }
-
+.conjTable {
+  width: 50vw !important;
+  background-color: #ededed;
+  border: gray solid 1px;
+  margin-bottom: 5px;
+   .name {
+    font-weight: bold;
+  }
+}
 </style>
