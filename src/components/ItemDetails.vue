@@ -16,8 +16,8 @@ const props = defineProps<{
 const conj = computed(() => {
     // return props.item.conjugations;
     return {
-      short: Object.values(props.item.conjugations).filter((c: any) => (c instanceof KanjiAndKana)),
-      long: Object.values(props.item.conjugations).filter((c: any) => !(c instanceof KanjiAndKana)),
+      short: Object.values(props.item.conjugations).filter((c: any) => (c instanceof KanjiAndKana)) as object,
+      long: Object.values(props.item.conjugations).filter((c: any) => !(c instanceof KanjiAndKana)) as object,
     }
   })
   

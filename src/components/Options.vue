@@ -83,13 +83,13 @@ set(value: any){
   </div>
       <div class="grid">
         <div class="col-3 options">
-            <div v-for="level in levels">
-              <Checkbox v-model="selectedLevels" :inputId="'level' + level" :name="level" :value="level"></Checkbox>
+            <div v-for="level in levels" :key="level">
+              <Checkbox v-model="selectedLevels" :inputId="'level' + level" :name="level.toString()" :value="level"></Checkbox>
               <label :for="'level' + level">{{ level }}</label>
             </div>
           </div>
         <div class="col-3 options">
-            <div v-for="positivity in ops.positivity">
+            <div v-for="positivity in ops.positivity" :key="positivity.text">
               <Checkbox v-model="selectedPositivity" :inputId="'positivity' + positivity" :name="positivity.text" :value="positivity.value"></Checkbox>
               <label :for="'positivity' + positivity">{{ positivity.text }}</label>
             </div>

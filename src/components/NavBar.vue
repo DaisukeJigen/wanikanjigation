@@ -15,6 +15,7 @@ import { toKana } from 'wanakana';
 
 const isLoggedIn = computed(() => userData.loggedIn)
 
+// @ts-ignore
 const version = __APP_VERSION__;
 const searchTerm = ref("");
 const items = ref([

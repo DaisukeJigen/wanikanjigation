@@ -97,7 +97,7 @@ const pathPieces = computed(() => {
           </li>
         </ul>
       </div>
-    <div>
+    </div>
     <div class="grid">
       <div class="col">
         <InputText
@@ -116,14 +116,14 @@ const pathPieces = computed(() => {
           >
         </template>
       </div>
-    <div>
+    </div>
     <div class="grid">
       <div class="col">
         <Button v-if="!answered" @click.prevent="submit">Submit</Button>
         <Button v-else @click.prevent="$emit('next', true)">Next</Button>
         <Button @click.prevent="$emit('early-finish', true)">Done</Button>
       </div>
-    <div>
+    </div>
 </template>
 
 <style scoped lang="scss">

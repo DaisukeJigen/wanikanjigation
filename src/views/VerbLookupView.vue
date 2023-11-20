@@ -39,7 +39,8 @@ function go() {
   // jishoStore.fetchWord(verbFromParam.value).then(() => {
   //   jishoStore.word.words.forEach((el: any) => {
     jotobaStore.fetchWord(verbFromParam.value).then(() => {
-      jotobaStore.word.words.filter(t => t.reading.kana == verbFromParam.value || t.reading.kana == verbFromParam.value).forEach((el: any) => {
+      // @ts-ignore
+      jotobaStore.word.words.filter((t: any) => t.reading.kana == verbFromParam.value || t.reading.kana == verbFromParam.value).forEach((el: any) => {
         const obj = {
           //data: {
           data: {

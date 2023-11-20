@@ -181,7 +181,7 @@ class KanjiAndKana implements iKanjiAndKana {
 }
 
 export {
-  ConjugationObject,
+  //ConjugationObject,
   ConjugationTypeStandard,
   ConjugationTypeOnlyPlain,
   ConjugationTypeAbrupt,

@@ -15,7 +15,7 @@ $gutter: 5px;
     margin-right: -0.5rem;
     margin-left: -0.5rem;
     margin-top: -0.5rem;
-    flex-direction: column;
+    // flex-direction: column;
 }
 
 .grid-noogutter {
@@ -24,9 +24,9 @@ $gutter: 5px;
     margin-top: 0;
 }
 
-.row {
-    display: flex;
-}
+// .row {
+//     display: flex;
+// }
 
 .col {
     flex-grow: 1;
@@ -46,7 +46,7 @@ $gutter: 5px;
                 flex: 0 0 auto;
                 padding: $gutter;
                 width: calc(#{$twelve} * #{$i}) !important;
-                display: flex;
+                // display: flex;
             }
             .col-offset-#{$name}-#{$i} {
                 margin-left: calc(#{$twelve} + #{$i}) !important;
@@ -60,7 +60,7 @@ $gutter: 5px;
         flex: 0 0 auto;
         padding: $gutter;
         width: calc(#{$twelve} * #{$i});
-        display: flex;
+        // display: flex;
     }
     .col-offset-#{$i} {
         margin-left: calc(#{$twelve} * #{$i});
