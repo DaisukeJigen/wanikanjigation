@@ -3,12 +3,16 @@ import { ref, defineProps, computed, defineEmits } from "vue"
 import HoverHelp from "@/components/HoverHelp.vue";
 import { useOptionsStore } from "@/stores/options";
 import { useUserDataStore } from "@/stores/userData";
+import { useSubjectsStore } from "@/stores/subjects";
 import Checkbox from 'primevue/checkbox';
 import Button from 'primevue/button';
+import Tree from 'primevue/tree';
+import { sortUserPlugins } from "vite";
 
 
 const optionsStore = useOptionsStore();
 const userDataStore = useUserDataStore();
+const subjectsStore = useSubjectsStore();
 const observer = ref(null);
 
 const props = defineProps({
@@ -34,6 +38,35 @@ const emit = defineEmits({
 
   const levels = computed(() => {
     return userDataStore.levels;
+  })
+
+  const levelBreakdownWithItems = computed(() => {
+    let data = userDataStore.levelBreakdown;
+    data.forEach((group: any) => {
+      group.children.forEach((level: any) => {
+        let kids: any = [];
+        const t = subjectsStore.getVerbsForLevel(level.label)
+        t.forEach((verb: any) => {
+      debugger;
+          kids.push({
+            key: verb.id,
+            label: verb.slug
+          })
+        });
+        level.children = kids;
+      });
+    });
+    return data;
+  })
+
+  const selectedItems = computed({
+    get(){
+      return optionsStore.selected.items;
+    },
+    set(value: any){
+      debugger;
+      optionsStore.updateSelectedItems(value)
+    }
   })
 
 const selectedPositivity = computed({
@@ -83,10 +116,13 @@ set(value: any){
   </div>
       <div class="grid">
         <div class="col-3 options">
-            <div v-for="level in levels" :key="level">
+            <!-- <div v-for="level in levels" :key="level">
               <Checkbox v-model="selectedLevels" :inputId="'level' + level" :name="level.toString()" :value="level"></Checkbox>
               <label :for="'level' + level">{{ level }}</label>
-            </div>
+            </div> -->
+            <!-- <span v-for="lg in levelBreakdown" :key="lg">{{ lg }}</span> -->
+            <span>{{ selectedItems }}</span>
+            <Tree v-model:selectionKeys="selectedItems" selectionMode="checkbox"  :value="levelBreakdownWithItems"></Tree>
           </div>
         <div class="col-3 options">
             <div v-for="positivity in ops.positivity" :key="positivity.text">

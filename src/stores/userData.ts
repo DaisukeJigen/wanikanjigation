@@ -48,8 +48,33 @@ export const useUserDataStore = defineStore('userData', () => {
     });
   }
   
+  const array_chunks = (array: any, chunk_size: any) => Array(Math.ceil(array.length / chunk_size)).fill().map((_, index) => index * chunk_size).map(begin => array.slice(begin, begin + chunk_size));
+  const levelGroups = computed(() => {
+    return array_chunks(levels.value, 10)
+  })
+  const levelGroupName = ["Pleasent", "Painful", "Death", "Hell", "Paradise", "Reality"]
 
-  return { apiKey, userData, levels, loggedIn, updateApiKey, fetchUserData, loading }
+  const levelBreakdown = computed(() => {
+    let data: any = [];
+    for(let i = 0; i< levelGroups.value.length; i++){
+      let kids: any = [];
+      levelGroups.value[i].forEach((e: any, index: any) => {
+        kids.push({
+          key: i + '-' + e,
+          label: e
+        });
+      });
+      data.push({
+        key: i,
+        label: levelGroupName[i],
+        children: kids
+      })
+    }
+    return data;
+  })
+  
+
+  return { apiKey, userData, levels, loggedIn, updateApiKey, fetchUserData, loading, levelGroups, levelBreakdown }
 },
 {
   persist: {

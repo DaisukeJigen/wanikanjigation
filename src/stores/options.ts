@@ -18,6 +18,7 @@ interface State {
       politeness: string[];
       form: string[];
       levels: number[];
+      items: string[];
     };
   }
   
@@ -189,6 +190,7 @@ export const useOptionsStore = defineStore('options', () => {
         politeness: <InstanceType<any>>[],
         form: <InstanceType<any>>[],
         levels: <InstanceType<any>>[],
+        items: <InstanceType<any>>[],
       });
 
       function updateSelected(data: any) {
@@ -206,6 +208,11 @@ export const useOptionsStore = defineStore('options', () => {
       function updateSelectedLevels(data: any)  {
         selected.value.levels = data;
       };
+      function updateSelectedItems(data: any)  {
+        selected.value.items = data;
+      };
 
-      return { verbOptions, adjectiveOptions, selected, updateSelected, updateSelectedPositivity, updateSelectedPoliteness, updateSelectedForm, updateSelectedLevels }
+      return { verbOptions, adjectiveOptions, selected, updateSelected, updateSelectedPositivity,
+        updateSelectedPoliteness, updateSelectedForm, updateSelectedLevels,
+        updateSelectedItems }
 });

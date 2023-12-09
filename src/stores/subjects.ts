@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import axiosWaniKani from "@/axios/axios-wanikani";
 import { Verb } from "@/classes/verbs";
 import { NaAdjective, IAdjective } from "@/classes/adjectives";
-import { pick, values, flatten, chain, uniq } from "lodash";
+import { pick, values, flatten, chain, uniq, findKey } from "lodash";
 import { eUserAnswer } from "@/interfaces/common";
 import { useOptionsStore } from '@/stores/options';
 const optionsData = useOptionsStore();
@@ -169,9 +169,16 @@ export const useSubjectsStore = defineStore('subjects', () => {
             base = [];
             break;
         }
+        let test = Object.entries(optionsData.selected.items).map(([key, value]) => ({ key, value }));
+        test = test.filter((g: any) => g.value.checked).map(p => p.key)
+        debugger;
+        // const a = base
+        //   .filter((l: any) => optionsData.selected.levels.includes(l.level))
+        //   .map((p: any) => p.conjugations);//TODO change to selected items no level
         const a = base
-          .filter((l: any) => optionsData.selected.levels.includes(l.level))
-          .map((p: any) => p.conjugations);
+          .filter((l: any) => test.includes(l.id.toString()))
+          .map((p: any) => p.conjugations);//TODO change to selected items no level
+          debugger;
         const b = flatten(
           a.map((b: any) => values(pick(b, optionsData.selected.form)))
         );
