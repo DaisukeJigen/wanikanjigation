@@ -38,7 +38,7 @@ import FormTable from "@/components/FormTable.vue";
 </script>
 
 <template>
-  <div class="conjTable">
+  <div class="conjTable container">
     <div class="row header">
       <div class="col name"><span>{{ name }}</span></div>
       <div class="col" v-for="s in subForms"><span>{{ s }}</span></div>

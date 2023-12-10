@@ -30,11 +30,11 @@ const items = ref([
               items: [
                   {
                       label: 'List',
-                      route: 'verbs'
+                      route: '/verbs'
                   },
                   {
                       label: 'Test',
-                      route: 'test/verbs'
+                      route: '/test/verbs'
                   }
               ],
               visible: () => isLoggedIn.value
@@ -45,11 +45,11 @@ const items = ref([
               items: [
                   {
                       label: 'List',
-                      route: 'naadjectives'
+                      route: '/naadjectives'
                   },
                   {
                       label: 'Test',
-                      route: 'test/naadjectives'
+                      route: '/test/naadjectives'
                   }
               ],
               visible: () => isLoggedIn.value
@@ -60,11 +60,11 @@ const items = ref([
               items: [
                   {
                       label: 'List',
-                      route: 'iadjectives'
+                      route: '/iadjectives'
                   },
                   {
                       label: 'Test',
-                      route: 'test/iadjectives'
+                      route: '/test/iadjectives'
                   }
               ],
               visible: () => isLoggedIn.value

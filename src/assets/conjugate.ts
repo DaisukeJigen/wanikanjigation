@@ -2,7 +2,7 @@
 
 function get_root(word: any) {
   return {
-    kanji: word.slug.substring(0, word.slug.length - 1),
+    kanji: word.slug == undefined ? '' : word.slug.substring(0, word.slug.length - 1),
     kana: word.readings[0].substring(0, word.readings[0].length - 1),
   };
 }
@@ -23,7 +23,7 @@ function a_base(word: any) {
     ["む", "ま"],
     ["る", "ら"],
   ];
-  const ending = word.slug.substr(word.slug.length - 1);
+  const ending = word.slug == undefined ? '' : word.slug.substr(word.slug.length - 1);
   if (word.category === "ichidan") {
     return "";
   } else {
@@ -49,7 +49,7 @@ function i_base(word: any) {
     ["む", "み"],
     ["る", "り"],
   ];
-  const ending = word.slug.substr(word.slug.length - 1);
+  const ending = word.slug == undefined ? '' : word.slug.substr(word.slug.length - 1);
   if (word.category === "ichidan") {
     return "";
   } else {
@@ -75,7 +75,7 @@ function e_base(word: any) {
     ["む", "め"],
     ["る", "れ"],
   ];
-  const ending = word.slug.substr(word.slug.length - 1);
+  const ending = word.slug == undefined ? '' : word.slug.substr(word.slug.length - 1);
   const sound = sounds.filter(function (arr: any) {
     return arr[0] === ending;
   })[0];
@@ -97,7 +97,7 @@ function o_base(word: any) {
     ["む", "もう"],
     ["る", "ろう"],
   ];
-  const ending = word.slug.substr(word.slug.length - 1);
+  const ending = word.slug == undefined ? '' : word.slug.substr(word.slug.length - 1);
   if (word.category === "ichidan") {
     return "よう";
   } else {
@@ -108,11 +108,11 @@ function o_base(word: any) {
   }
 }
 function u_base(word: any) {
-  const ending = word.slug.substr(word.slug.length - 1);
+  const ending = word.slug == undefined ? '' : word.slug.substr(word.slug.length - 1);
   return ending;
 }
 function te_base(word: any) {
-  const ending = word.slug.substr(word.slug.length - 1);
+  const ending = word.slug == undefined ? '' : word.slug.substr(word.slug.length - 1);
   if (word.category === "ichidan") {
     return "て";
   } else {
@@ -135,7 +135,7 @@ function te_base(word: any) {
   }
 }
 function ta_base(word: any) {
-  const ending = word.slug.substr(word.slug.length - 1);
+  const ending = word.slug == undefined ? '' : word.slug.substr(word.slug.length - 1);
   if (word.category === "ichidan") {
     return "た";
   } else {

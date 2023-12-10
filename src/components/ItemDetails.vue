@@ -108,11 +108,11 @@ const conj = computed(() => {
   font-size: 18px;
   font-weight: bold;
 }
-.container {
-  width: 50vw;
-  flex-direction: column;
-    align-items: center;
-}
+// .container {
+//   width: 50vw;
+//   // flex-direction: column;
+//     align-items: center;
+// }
 // .row {
 //   flex-direction: column;
 //   &.conjRow {

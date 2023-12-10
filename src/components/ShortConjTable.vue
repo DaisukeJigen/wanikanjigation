@@ -39,9 +39,9 @@ import ShortFormTable from "@/components/ShortFormTable.vue";
 </script>
 
 <template>
-  <div class="conjTable">
+  <div class="conjTable container">
     <div class="row header">
-      <div class="col"><span>{{ name }}</span></div>
+      <div class="col name"><span>{{ name }}</span></div>
       <div class="col" v-for="s in subForms"><span>{{ s }}</span></div>
     </div>
     <template v-for="c in conj">
@@ -54,6 +54,15 @@ import ShortFormTable from "@/components/ShortFormTable.vue";
 <style scoped>
 .kana {
   font-size: 0.8rem;
+}
+.conjTable {
+  width: 50vw !important;
+  background-color: #ededed;
+  border: gray solid 1px;
+  margin-bottom: 5px;
+   .name {
+    font-weight: bold;
+  }
 }
 
 </style>

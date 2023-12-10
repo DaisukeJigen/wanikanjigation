@@ -215,4 +215,9 @@ export const useOptionsStore = defineStore('options', () => {
       return { verbOptions, adjectiveOptions, selected, updateSelected, updateSelectedPositivity,
         updateSelectedPoliteness, updateSelectedForm, updateSelectedLevels,
         updateSelectedItems }
-});
+},
+{
+  persist: {
+    paths: ['selected']
+  }
+  });

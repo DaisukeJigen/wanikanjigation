@@ -78,10 +78,13 @@ function go() {
 </script>
 
 <template>
-    <div class="grid">
+    <div class="container">
+      <div class="row">
       <div class="col"> Verb Lookup </div>
     </div>
-    <div class="grid" v-for="verb in verbs" :key="verb.slug">
+    </div>
+    <div class="container" v-for="verb in verbs" :key="verb.slug">
+      <div class="row">
       <div class="col">
         <template
             v-if="verb != null">
@@ -92,6 +95,7 @@ function go() {
             :key="verb.slug"
           ></item-details>
         </template>
+      </div>
       </div>
     </div>
 </template>
